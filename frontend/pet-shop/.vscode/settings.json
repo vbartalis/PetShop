@@ -1,0 +1,19 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "json.schemas": [
+      {
+        "fileMatch": [
+            ".prettierrc.json"
+        ],
+        "url": "http://json.schemastore.org/prettierrc"
+    },
+    {
+        "fileMatch": [
+            "tslint.json"
+        ],
+        "url": "http://json.schemastore.org/tslint"
+    }
+    ],
+    "scss.lint.duplicateProperties": "error"
+}
