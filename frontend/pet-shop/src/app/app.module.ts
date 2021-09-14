@@ -3,20 +3,30 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SharedModule } from './shared/shared.module';
+import { AuthenticationLayoutComponent } from './layout/authentication-layout.component';
+import { GuestLayoutComponent } from './layout/guest-layout.component';
+import { UserLayoutComponent } from './layout/user-layout.component';
+import { AdminLayoutComponent } from './layout/admin-layout.component';
+import { UserHeaderComponent } from './layout/components/user-header/user-header.component';
+import { AdminHeaderComponent } from './layout/components/admin-header/admin-header.component';
+import { GuestHeaderComponent } from './layout/components/guest-header/guest-header.component';
+import { FooterComponent } from './layout/components/footer/footer.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AuthenticationLayoutComponent,
+    GuestLayoutComponent,
+    UserLayoutComponent,
+    AdminLayoutComponent,
+    UserHeaderComponent,
+    AdminHeaderComponent,
+    GuestHeaderComponent,
+    FooterComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    FontAwesomeModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, SharedModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

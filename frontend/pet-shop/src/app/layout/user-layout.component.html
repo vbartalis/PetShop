@@ -1,0 +1,22 @@
+<div class="h-100 d-flex flex-column">
+  <header>
+    <nav>
+      <app-user-header></app-user-header>
+    </nav>
+  </header>
+  <main class="container">
+    <h4>
+      <div class="badge my-1">
+        <xng-breadcrumb [autoGenerate]="false">
+          <ng-container *xngBreadcrumbItem="let breadcrumb">
+            <ng-container>{{ breadcrumb | titlecase }}</ng-container>
+          </ng-container>
+        </xng-breadcrumb>
+      </div>
+    </h4>
+    <router-outlet></router-outlet>
+  </main>
+  <footer class="bg-primary mt-auto">
+    <app-footer></app-footer>
+  </footer>
+</div>
