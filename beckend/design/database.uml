@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST</OriginalElement>
+  <nodes>
+    <node x="435.00000000000006" y="434.0">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST_IMAGE</node>
+    <node x="0.0" y="195.0">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.PROFILE</node>
+    <node x="601.5" y="33.0">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.ROLE</node>
+    <node x="293.00000000000006" y="445.5">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST_TAGS</node>
+    <node x="198.00000000000003" y="239.0">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.TAG</node>
+    <node x="14.0" y="434.0">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.PROFILE_IMAGE</node>
+    <node x="396.0" y="195.0">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST</node>
+    <node x="243.25000000000006" y="0.0">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.USER</node>
+    <node x="602.0" y="250.5">6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.USER_ROLES</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST_TAGS" target="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST" relationship="REFERENCES">
+      <point x="30.5" y="-39.0" />
+      <point x="384.50000000000006" y="409.0" />
+      <point x="442.5" y="409.0" />
+      <point x="-46.5" y="94.5" />
+    </edge>
+    <edge source="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.USER_ROLES" target="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.ROLE" relationship="REFERENCES">
+      <point x="31.0" y="-39.0" />
+      <point x="695.0" y="175.0" />
+      <point x="669.0" y="175.0" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.PROFILE" target="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.USER" relationship="REFERENCES">
+      <point x="0.0" y="-94.5" />
+      <point x="89.0" y="175.0" />
+      <point x="289.00000000000006" y="175.0" />
+      <point x="289.00000000000006" y="165.0" />
+      <point x="285.25000000000006" y="165.0" />
+      <point x="-42.0" y="72.5" />
+    </edge>
+    <edge source="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.PROFILE_IMAGE" target="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.PROFILE" relationship="REFERENCES">
+      <point x="0.0" y="-50.5" />
+      <point x="0.0" y="94.5" />
+    </edge>
+    <edge source="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.USER_ROLES" target="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.USER" relationship="REFERENCES">
+      <point x="-31.0" y="-39.0" />
+      <point x="633.0" y="165.0" />
+      <point x="369.25000000000006" y="165.0" />
+      <point x="42.0" y="72.5" />
+    </edge>
+    <edge source="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST_TAGS" target="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.TAG" relationship="REFERENCES">
+      <point x="-30.5" y="-39.0" />
+      <point x="323.50000000000006" y="409.0" />
+      <point x="287.0" y="409.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST_IMAGE" target="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST" relationship="REFERENCES">
+      <point x="-5.6843418860808015E-14" y="-50.5" />
+      <point x="499.0" y="409.0" />
+      <point x="535.5" y="409.0" />
+      <point x="46.5" y="94.5" />
+    </edge>
+    <edge source="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.POST" target="6ddc21cb-f469-4581-ad71-de38d6f4933e.TABLE:DEMO.PUBLIC.USER" relationship="REFERENCES">
+      <point x="0.0" y="-94.5" />
+      <point x="489.0" y="175.0" />
+      <point x="289.00000000000006" y="175.0" />
+      <point x="289.00000000000006" y="165.0" />
+      <point x="285.25000000000006" y="165.0" />
+      <point x="-42.0" y="72.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="387.0" y="267.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
