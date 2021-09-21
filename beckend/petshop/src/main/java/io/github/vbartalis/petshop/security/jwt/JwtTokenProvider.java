@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.security.jwt;
 
-import io.github.vbartalis.petshop.service.MyUserDetailsService;
+import io.github.vbartalis.petshop.service.impl.MyUserDetailsService;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

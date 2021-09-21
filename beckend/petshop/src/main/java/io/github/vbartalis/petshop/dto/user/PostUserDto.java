@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.dto.user;
 
-import io.github.vbartalis.petshop.dto.role.RoleDto;
+import io.github.vbartalis.petshop.dto.response.RoleDto;
 import lombok.Getter;
 import lombok.Setter;
 

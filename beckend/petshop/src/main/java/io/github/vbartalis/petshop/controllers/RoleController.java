@@ -1,9 +1,9 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.role.RoleDto;
+import io.github.vbartalis.petshop.dto.response.RoleDto;
 import io.github.vbartalis.petshop.entity.Role;
 import io.github.vbartalis.petshop.security.methodlevel.IsAdmin;
-import io.github.vbartalis.petshop.service.RoleService;
+import io.github.vbartalis.petshop.service.impl.RoleServiceImpl;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -19,7 +19,7 @@ import java.util.List;
 public class RoleController {
 
     @Autowired
-    RoleService roleService;
+    RoleServiceImpl roleService;
 
     @Autowired
     DtoEntityConverter converter;
@@ -28,7 +28,7 @@ public class RoleController {
     @IsAdmin
     @GetMapping()
     public List<RoleDto> getRole() {
-        List<Role> roles = roleService.findAll();
+        List<Role> roles = roleService.getAllRoles();
         return converter.convertToListDto(roles, RoleDto.class);
     }
 

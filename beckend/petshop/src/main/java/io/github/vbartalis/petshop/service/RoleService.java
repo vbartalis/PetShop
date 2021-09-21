@@ -1,19 +1,18 @@
 package io.github.vbartalis.petshop.service;
 
 import io.github.vbartalis.petshop.entity.Role;
-import io.github.vbartalis.petshop.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class RoleService {
+public interface RoleService {
 
-    @Autowired
-    RoleRepository roleRepository;
+    List<Role> getAllRoles();
 
-    public List<Role> findAll() {
-        return roleRepository.findAll();
-    }
+//    Role createRole(Role roleRequest);
+
+//    Role updateRole(long id, Role roleRequest);
+
+//    void deleteRole(long id);
+
+//    Role getRoleById(long id);
 }

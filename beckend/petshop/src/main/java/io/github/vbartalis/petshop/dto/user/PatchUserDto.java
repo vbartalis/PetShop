@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.dto.user;
 
-import io.github.vbartalis.petshop.dto.role.RoleDto;
+import io.github.vbartalis.petshop.dto.response.RoleDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +16,7 @@ public class PatchUserDto {
     private Long id;
 //    @NotEmpty
 //    private String username;
-//    private String password;
+    private String password;
     private Boolean isLocked;
     private Date expiration;
 //    private Profile profile;

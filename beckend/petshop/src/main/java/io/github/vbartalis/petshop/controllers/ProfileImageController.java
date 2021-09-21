@@ -2,7 +2,7 @@ package io.github.vbartalis.petshop.controllers;
 
 import io.github.vbartalis.petshop.dto.profileimage.EmptyProfileImageDto;
 import io.github.vbartalis.petshop.entity.ProfileImage;
-import io.github.vbartalis.petshop.service.ProfileImageService;
+import io.github.vbartalis.petshop.service.impl.ProfileImageServiceImpl;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -23,38 +23,38 @@ import javax.validation.constraints.NotNull;
 public class ProfileImageController {
 
     @Autowired
-    ProfileImageService profileImageService;
+    ProfileImageServiceImpl profileImageService;
 
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "get ProfileImage By ProfileImage Id")
-    @GetMapping("/{id}")
-    public String getImage(@PathVariable("id") @NotNull Long id) {
-        ProfileImage response = profileImageService.findById(id);
-        byte[] img = response.getData();
-        if (img != null) {
-        return "data:image/jpeg;base64," +
-                StringUtils.newStringUtf8(Base64.encodeBase64(response.getData()));
-        }
-        return null;
-    }
-
-    @Operation(summary = "update ProfileImage Data", description = "Can be used by Owner or Admin", security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkProfileImage(new Long(#id), authentication) || hasAuthority('ROLE_ADMIN')")
-    @PatchMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE } )
-    public EmptyProfileImageDto patchImage(
-            @RequestPart(value = "id") @NotNull String id,
+    @Operation(summary = "update ProfileImage", description = "Can be used by Owner or Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @PreAuthorize("@ownerChecker.checkProfileImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, value = "/{id}")
+    public EmptyProfileImageDto updateProfileImage(
+            @PathVariable(value = "id") @NotNull Long id,
             @RequestPart(value = "image") @NotNull MultipartFile multipartFile
-            ) {
-        ProfileImage response = profileImageService.patch(Long.valueOf(id), multipartFile);
+    ) {
+        ProfileImage response = profileImageService.updateProfileImage(id, multipartFile);
         return converter.convertToDto(response, EmptyProfileImageDto.class);
     }
 
-    @Operation(summary = "delete ProfileImage Data", description = "Can be used by Owner or Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "delete ProfileImage", description = "Can be used by Owner or Admin", security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkProfileImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    public void deleteImage(@PathVariable("id") Long id) {
-        profileImageService.deleteData(id);
+    public void deleteProfileImage(@PathVariable("id") @NotNull Long id) {
+        profileImageService.deleteProfileImage(id);
+    }
+
+    @Operation(summary = "get ProfileImage by it's Id")
+    @GetMapping("/{id}")
+    public String getProfileImageById(@PathVariable("id") @NotNull Long id) {
+        ProfileImage response = profileImageService.getProfileImageById(id);
+        byte[] img = response.getData();
+        if (img != null) {
+            return "data:image/jpeg;base64," +
+                    StringUtils.newStringUtf8(Base64.encodeBase64(response.getData()));
+        }
+        return null;
     }
 }

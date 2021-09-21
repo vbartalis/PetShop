@@ -1,9 +1,9 @@
 package io.github.vbartalis.petshop.controllers;
 
 import io.github.vbartalis.petshop.dto.profile.PatchProfileDto;
-import io.github.vbartalis.petshop.dto.profile.ProfileDto;
+import io.github.vbartalis.petshop.dto.response.ProfileDto;
 import io.github.vbartalis.petshop.entity.Profile;
-import io.github.vbartalis.petshop.service.ProfileService;
+import io.github.vbartalis.petshop.service.impl.ProfileServiceImpl;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -21,31 +21,28 @@ import javax.validation.constraints.NotNull;
 public class ProfileController {
 
     @Autowired
-    ProfileService profileService;
+    ProfileServiceImpl profileService;
 
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "get Profile by Profile Id")
-    @GetMapping("/{id}")
-    public ProfileDto getProfileById(@PathVariable("id") @NotNull Long id) {
-        Profile responseProfile = profileService.findById(id);
-        return converter.convertToDto(responseProfile, ProfileDto.class);
-    }
-
-    @Operation(summary = "get Profile by User Id")
-    @GetMapping("/user/{id}")
-    public ProfileDto getProfileByUserId(@PathVariable("id") @NotNull Long id) {
-        Profile responseProfile = profileService.findByUserId(id);
-        return converter.convertToDto(responseProfile, ProfileDto.class);
-    }
-
     @Operation(summary = "update Profile", description = "Can be used by Owner or Admin", security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkProfile(#dto.id, authentication) || hasAuthority('ROLE_ADMIN')")
-    @PatchMapping
-    public ProfileDto patchProfile(@Valid @RequestBody PatchProfileDto dto) {
+    @PatchMapping("/{id}")
+    public ProfileDto updateProfile(
+            @PathVariable("id") @NotNull Long id,
+            @Valid @RequestBody PatchProfileDto dto
+    ) {
         Profile profile = converter.convertToEntity(dto, Profile.class);
-        Profile responseProfile = profileService.patch(profile);
+        Profile responseProfile = profileService.updateProfile(id, profile);
         return converter.convertToDto(responseProfile, ProfileDto.class);
     }
+
+    @Operation(summary = "get Profile by it's Id")
+    @GetMapping("/{id}")
+    public ProfileDto getProfileById(@PathVariable("id") @NotNull Long id) {
+        Profile responseProfile = profileService.getProfileById(id);
+        return converter.convertToDto(responseProfile, ProfileDto.class);
+    }
+
 }

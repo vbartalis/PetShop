@@ -1,7 +1,7 @@
 package io.github.vbartalis.petshop;
 
 import io.github.vbartalis.petshop.entity.*;
-import io.github.vbartalis.petshop.repository.*;
+import io.github.vbartalis.petshop.repository.entityRepository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
