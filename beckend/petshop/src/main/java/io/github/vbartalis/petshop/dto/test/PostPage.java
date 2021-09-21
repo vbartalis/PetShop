@@ -2,9 +2,10 @@ package io.github.vbartalis.petshop.dto.test;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.domain.Sort;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class PostPage {
     private int pageNumber = 0;
     private int pageSize = 10;

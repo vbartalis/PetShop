@@ -39,7 +39,6 @@ public class TestService {
     }
 
     public Page<Post> getPosts(PostPage postPage, PostSearchCriteria postSearchCriteria) {
-        if (Objects.isNull(postPage)) postPage = new PostPage();
         return testCriteriaRepository.findAllWithFilters(postPage, postSearchCriteria);
     }
 

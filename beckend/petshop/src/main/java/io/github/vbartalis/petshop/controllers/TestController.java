@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -44,16 +45,30 @@ public class TestController {
         return converter.convertToPageDto(users, UserDto.class);
     }
 
+//    @GetMapping(value = "/post1")
+//    public ResponseEntity<Page<PostDto>> getPosts1(@RequestParam(required = false) PostPage postPage, @RequestParam(required = false) PostSearchCriteria postSearchCriteria) {
+//
+//        if (Objects.nonNull(postPage)) log.warn("postPage: ", postPage.toString());
+//        else log.warn("postPage: null");
+//        if (Objects.nonNull(postSearchCriteria)) log.warn("postSearchCriteria: ", postSearchCriteria.toString());
+//        else log.warn("postSearchCriteria: null");
+//
+//        Page<Post> responsePost = testService.getPosts(postPage, postSearchCriteria);
+//        Page<PostDto> response =  converter.convertToPageDto(responsePost, PostDto.class);;
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
-    @GetMapping
-    public ResponseEntity<Page<PostDto>> getPosts(@RequestParam(required = false) PostPage postPage, @RequestParam(required = false) PostSearchCriteria postSearchCriteria) {
+    @GetMapping(value = "/post2")
+    public ResponseEntity<Page<PostDto>> getPosts2(PostPage postPage, PostSearchCriteria postSearchCriteria) {
+
         Page<Post> responsePost = testService.getPosts(postPage, postSearchCriteria);
-        Page<PostDto> response =  converter.convertToPageDto(responsePost, PostDto.class);;
+        Page<PostDto> response =  converter.convertToPageDto(responsePost, PostDto.class);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping(value = "/post")
     public ResponseEntity<Post> addPost(@RequestBody Post post){
         return new ResponseEntity<>(testService.addPost(post), HttpStatus.OK);
     }

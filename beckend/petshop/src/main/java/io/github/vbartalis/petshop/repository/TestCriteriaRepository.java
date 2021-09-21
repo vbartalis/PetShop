@@ -46,16 +46,14 @@ public class TestCriteriaRepository {
 
     private Predicate getPredicate(PostSearchCriteria postSearchCriteria, Root<Post> postRoot) {
         List<Predicate> predicates = new ArrayList<>();
-        if (Objects.nonNull(postSearchCriteria)){
-        if (Objects.nonNull(postSearchCriteria.getTitle())) {
-            predicates.add(criteriaBuilder.like(postRoot.get("id"), "%" + postSearchCriteria.getId() + "%"));
+        if (Objects.nonNull(postSearchCriteria.getId())) {
+            predicates.add(criteriaBuilder.equal(postRoot.get("id"),  postSearchCriteria.getId()));
         }
         if (Objects.nonNull(postSearchCriteria.getTitle())) {
             predicates.add(criteriaBuilder.like(postRoot.get("title"), "%" + postSearchCriteria.getTitle() + "%"));
         }
-        if (Objects.nonNull(postSearchCriteria.getTitle())) {
+        if (Objects.nonNull(postSearchCriteria.getDescription())) {
             predicates.add(criteriaBuilder.like(postRoot.get("description"), "%" + postSearchCriteria.getDescription() + "%"));
-        }
         }
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }

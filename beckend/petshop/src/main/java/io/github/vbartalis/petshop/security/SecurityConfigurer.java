@@ -45,6 +45,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/post", "/post/**").permitAll()
                 .antMatchers("/postimage", "/postimage/**").permitAll()
                 .antMatchers("/tag", "/tag/**").permitAll()
+                .antMatchers("/test", "/test/**").permitAll()
                 .anyRequest().authenticated();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
