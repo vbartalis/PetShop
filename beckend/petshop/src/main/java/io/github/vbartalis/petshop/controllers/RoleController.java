@@ -24,7 +24,9 @@ public class RoleController {
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "get All Roles", description = "Can be used by Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Get All Roles.",
+            description = "Can be used by Admin.",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @GetMapping()
     public List<RoleDto> getRole() {

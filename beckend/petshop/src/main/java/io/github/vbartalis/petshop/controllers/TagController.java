@@ -1,7 +1,5 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.tag.PatchTagDto;
-import io.github.vbartalis.petshop.dto.tag.PostTagDto;
 import io.github.vbartalis.petshop.dto.response.TagDto;
 import io.github.vbartalis.petshop.entity.Tag;
 import io.github.vbartalis.petshop.security.methodlevel.IsAdmin;
@@ -28,42 +26,48 @@ public class TagController {
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "get All Tags")
+    @Operation(summary = "Get All Tags.")
     @GetMapping
     public List<TagDto> getAllTags() {
         List<Tag> tags = tagService.getAllTags();
         return converter.convertToListDto(tags, TagDto.class);
     }
 
-    @Operation(summary = "create a new Tag", description = "Can be used by Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Create a new Tag.",
+            description = "Can be used by Admin.",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @PostMapping()
-    public TagDto createTag(@RequestBody PostTagDto dto) {
+    public TagDto createTag(@RequestBody TagDto dto) {
         Tag tag = converter.convertToEntity(dto, Tag.class);
         Tag responseTag = tagService.createTag(tag);
         return converter.convertToDto(responseTag, TagDto.class);
     }
 
-    @Operation(summary = "update Tag", description = "Can be used by Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Update Tag.",
+            description = "Can be used by Admin.",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @PutMapping("/{id}")
     public TagDto updateTag(
             @PathVariable(value = "id") @NotNull Long id,
-            @Valid @RequestBody PatchTagDto dto
+            @Valid @RequestBody TagDto dto
     ) {
         Tag tag = converter.convertToEntity(dto, Tag.class);
         Tag responseTag = tagService.updateTag(id, tag);
         return converter.convertToDto(responseTag, TagDto.class);
     }
 
-    @Operation(summary = "delete Tag", description = "Can be used by Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Delete Tag.",
+            description = "Can be used by Admin.",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @DeleteMapping("/{id}")
     public void deleteTag(@PathVariable("id") @NotNull Long id) {
         tagService.deleteTag(id);
     }
 
-    @Operation(summary = "get Tag By Tag Id")
+    @Operation(summary = "Get Tag By Tag Id.")
     @GetMapping("/{id}")
     public TagDto getTag(@PathVariable("id") @NotNull Long id) {
         Tag responseTag = tagService.getTagById(id);

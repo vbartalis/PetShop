@@ -1,27 +1,21 @@
 package io.github.vbartalis.petshop.dto.request;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.domain.Sort;
 
-@Getter
+@Getter @Setter
 public class PostPage {
-    private final int pageNumber = 0;
-    private final int pageSize = 10;
-    private final Sort.Direction sortDirection = Sort.Direction.ASC;
-    private final PostPageSort sortBy = PostPageSort.creationDate;
-
-    public enum PostPageSort {
-        id,
-        title,
-        creationDate,
-        updateDate
-    }
+    private int pageNumber = 0;
+    private int pageSize = 10;
+    private Sort.Direction sortDirection = Sort.Direction.ASC;
+    private String sortBy = "creationDate";
 
     public String getSortBy() {
         switch (sortBy) {
-            case id: return "id";
-            case title: return "title";
-            case updateDate: return "updateDate";
+            case "id": return "id";
+            case "title": return "title";
+            case "updateDate": return "updateDate";
             default: return "creationDate";
         }
     }

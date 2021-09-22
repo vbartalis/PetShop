@@ -28,7 +28,9 @@ public class PostImageController {
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "update PostImage", description = "Can be used by Owner or Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Update PostImage.",
+            description = "Can be used by Owner or Admin.",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkPostImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
     @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, value = "/{id}")
     public PostImageDto updatePostImage(
@@ -38,14 +40,16 @@ public class PostImageController {
         return converter.convertToDto(response, PostImageDto.class);
     }
 
-    @Operation(summary = "delete PostImage", description = "Can be used by Owner or Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Delete PostImage.",
+            description = "Can be used by Owner or Admin.",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkPostImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public void deletePostImage(@PathVariable("id") @NotNull Long id) {
         postImageService.deletePostImage(id);
     }
 
-    @Operation(summary = "get PostImage by it's Id")
+    @Operation(summary = "Get PostImage by it's Id.")
     @GetMapping("/{id}")
     public String getPostImageById(@PathVariable("id") @NotNull Long id) {
         PostImage response = postImageService.getPostImageById(id);

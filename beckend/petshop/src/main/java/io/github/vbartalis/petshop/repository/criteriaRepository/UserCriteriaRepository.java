@@ -3,8 +3,8 @@ package io.github.vbartalis.petshop.repository.criteriaRepository;
 
 import io.github.vbartalis.petshop.dto.request.UserPage;
 import io.github.vbartalis.petshop.dto.request.UserSearchCriteria;
-import io.github.vbartalis.petshop.entity.Post;
 import io.github.vbartalis.petshop.entity.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @Repository
 public class UserCriteriaRepository {
     private final EntityManager entityManager;
@@ -40,8 +41,7 @@ public class UserCriteriaRepository {
         typedQuery.setMaxResults(userPage.getPageSize());
 
         Pageable pageable = getPageable(userPage);
-
-        long usersCount = getPostsCount(predicate);
+        long usersCount = getUsersCount(predicate);
         return new PageImpl<>(typedQuery.getResultList(), pageable, usersCount);
     }
 
@@ -74,9 +74,9 @@ public class UserCriteriaRepository {
         return PageRequest.of(userPage.getPageNumber(),userPage.getPageSize(), sort);
     }
 
-    private long getPostsCount(Predicate predicate) {
+    private long getUsersCount(Predicate predicate) {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Post> countRoot = countQuery.from(Post.class);
+        Root<User> countRoot = countQuery.from(User.class);
         countQuery.select(criteriaBuilder.count(countRoot)).where(predicate);
         return entityManager.createQuery(countQuery).getSingleResult();
     }

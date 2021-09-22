@@ -1,22 +1,14 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.request.PostPage;
-import io.github.vbartalis.petshop.dto.request.PostSearchCriteria;
 import io.github.vbartalis.petshop.dto.request.UserPage;
 import io.github.vbartalis.petshop.dto.request.UserSearchCriteria;
-import io.github.vbartalis.petshop.dto.response.PostDto;
-import io.github.vbartalis.petshop.dto.user.PatchUserDto;
-import io.github.vbartalis.petshop.dto.user.PatchUserPasswordDto;
-import io.github.vbartalis.petshop.dto.user.PostUserDto;
 import io.github.vbartalis.petshop.dto.response.UserDto;
-import io.github.vbartalis.petshop.entity.Post;
+import io.github.vbartalis.petshop.dto.user.PatchUserDto;
 import io.github.vbartalis.petshop.entity.User;
 import io.github.vbartalis.petshop.security.methodlevel.IsAdmin;
-import io.github.vbartalis.petshop.service.impl.AuthenticationService;
 import io.github.vbartalis.petshop.service.impl.UserServiceImpl;
 import io.github.vbartalis.petshop.util.AuthenticationContext;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
-import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +20,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Slf4j
@@ -45,33 +36,34 @@ public class UserController {
     @Autowired
     AuthenticationContext authenticationContext;
 
-    @Operation(summary = "get all Users, can be ordered by id, username, isLocked properties, " +
-            "it can also be filtered by id, username, expiration properties",
-            description = "Can be used by Admin",
+    @Operation(summary = "Get all Users. ",
+            description = "Can be used by Admin." +
+                    "Can be filtered by id, username, isLocked properties. " +
+                    "Can be sorted by id, username, expiration properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @GetMapping
     public ResponseEntity<Page<UserDto>> getAllUsers(UserPage userPage, UserSearchCriteria userSearchCriteria) {
-        log.warn(Json.pretty(userPage));
-        log.warn(Json.pretty(userSearchCriteria));
         Page<User> responsePost = userService.getAllUsers(userPage, userSearchCriteria);
         Page<UserDto> response = converter.convertToPageDto(responsePost, UserDto.class);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(summary = "create a new User", description = "Can be used by Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Create a new User.",
+            description = "Can be used by Admin.",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @PostMapping
-    public UserDto createUser(@Valid @RequestBody PostUserDto dto) {
+    public UserDto createUser(@Valid @RequestBody UserDto dto) {
         User user = converter.convertToEntity(dto, User.class);
         User responseUser = userService.createUser(user);
         return converter.convertToDto(responseUser, UserDto.class);
     }
 
     @Operation(
-            summary = "update User",
+            summary = "Update User.",
             description = "Can be used by Admin to update password, isLocked, Expiration, roles properties. " +
-                    "Can be used by Owner to update the password property",
+                    "Can be used by Owner to update the password property.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkUser(#id, authentication) || hasAuthority('ROLE_ADMIN')")
     @PatchMapping("/{id}")
@@ -90,7 +82,9 @@ public class UserController {
         return converter.convertToDto(responseUser, UserDto.class);
     }
 
-    @Operation(summary = "get User by it's Id", description = "Can be used by Owner or Admin", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Get User by it's Id.",
+            description = "Can be used by Owner or Admin.",
+            security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkUser(#id, authentication) || hasAuthority('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable("id") @NotNull Long id) {
