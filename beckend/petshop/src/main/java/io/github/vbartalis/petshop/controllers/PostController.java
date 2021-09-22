@@ -74,7 +74,7 @@ public class PostController {
     }
 
     @Operation(summary = "Update a Post.",
-            description = "Can be used by Owner or Admin.",
+            description = "Can be used by Owner or Admin to update title, description, isPublic, tags properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkPost(#id, authentication) || hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
@@ -95,7 +95,8 @@ public class PostController {
         postService.deletePost(id);
     }
 
-    @Operation(summary = "Get Post by it's Id.",
+    //todo isPublic
+    @Operation(summary = "Get a Post by it's Id.",
             description = "Can be used by Public, Owner or Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping("/{id}")

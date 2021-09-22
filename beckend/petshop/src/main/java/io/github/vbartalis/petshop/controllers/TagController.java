@@ -44,8 +44,8 @@ public class TagController {
         return converter.convertToDto(responseTag, TagDto.class);
     }
 
-    @Operation(summary = "Update Tag.",
-            description = "Can be used by Admin.",
+    @Operation(summary = "Update a Tag.",
+            description = "Can be used by Admin to update name, description properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @PutMapping("/{id}")
@@ -58,7 +58,7 @@ public class TagController {
         return converter.convertToDto(responseTag, TagDto.class);
     }
 
-    @Operation(summary = "Delete Tag.",
+    @Operation(summary = "Delete a Tag.",
             description = "Can be used by Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
@@ -67,7 +67,7 @@ public class TagController {
         tagService.deleteTag(id);
     }
 
-    @Operation(summary = "Get Tag By Tag Id.")
+    @Operation(summary = "Get a Tag By Tag Id.")
     @GetMapping("/{id}")
     public TagDto getTag(@PathVariable("id") @NotNull Long id) {
         Tag responseTag = tagService.getTagById(id);

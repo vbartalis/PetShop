@@ -28,8 +28,8 @@ public class ProfileImageController {
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "Update ProfileImage.",
-            description = "Can be used by Owner or Admin.",
+    @Operation(summary = "Update a ProfileImage.",
+            description = "Can be used by Owner or Admin to update image property.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkProfileImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
     @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, value = "/{id}")
@@ -41,7 +41,7 @@ public class ProfileImageController {
         return converter.convertToDto(response, EmptyProfileImageDto.class);
     }
 
-    @Operation(summary = "Delete ProfileImage.",
+    @Operation(summary = "Delete a ProfileImage.",
             description = "Can be used by Owner or Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkProfileImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
@@ -50,7 +50,7 @@ public class ProfileImageController {
         profileImageService.deleteProfileImage(id);
     }
 
-    @Operation(summary = "Get ProfileImage by it's Id.")
+    @Operation(summary = "Get a ProfileImage by it's Id.")
     @GetMapping("/{id}")
     public String getProfileImageById(@PathVariable("id") @NotNull Long id) {
         ProfileImage response = profileImageService.getProfileImageById(id);

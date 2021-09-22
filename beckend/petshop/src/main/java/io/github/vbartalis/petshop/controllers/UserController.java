@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Update User.",
+            summary = "Update a User.",
             description = "Can be used by Admin to update password, isLocked, Expiration, roles properties. " +
                     "Can be used by Owner to update the password property.",
             security = @SecurityRequirement(name = "bearerAuth"))

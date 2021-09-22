@@ -25,8 +25,8 @@ public class ProfileController {
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "Update Profile.",
-            description = "Can be used by Owner or Admin.",
+    @Operation(summary = "Update a Profile.",
+            description = "Can be used by Owner or Admin to update name, email, address, description properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkProfile(#dto.id, authentication) || hasAuthority('ROLE_ADMIN')")
     @PatchMapping("/{id}")
@@ -39,7 +39,7 @@ public class ProfileController {
         return converter.convertToDto(responseProfile, ProfileDto.class);
     }
 
-    @Operation(summary = "Get Profile by it's Id.")
+    @Operation(summary = "Get a Profile by it's Id.")
     @GetMapping("/{id}")
     public ProfileDto getProfileById(@PathVariable("id") @NotNull Long id) {
         Profile responseProfile = profileService.getProfileById(id);
