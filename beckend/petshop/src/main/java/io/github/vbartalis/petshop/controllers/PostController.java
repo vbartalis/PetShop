@@ -17,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -101,7 +103,15 @@ public class PostController {
             security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping("/{id}")
     public PostDto getPostById(@PathVariable("id") @NotNull Long id) {
+
+        boolean isOwner = ownerChecker.checkPost(id, authenticationContext.getAuthentication());
+        boolean isAdmin = authenticationContext.isAdmin();
         Post responsePost = postService.getPostById(id);
+        if (responsePost.getIsPublic() || isAdmin || isOwner) {
         return converter.convertToDto(responsePost, PostDto.class);
+        } else {
+            throw new AccessDeniedException("Access denied to Post by id " + id);
+        }
+
     }
 }
