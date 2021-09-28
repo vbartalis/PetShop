@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class contains methods that handle conversion between DTOs and Entities.
+ */
 @Component
 public class DtoEntityConverter {
 

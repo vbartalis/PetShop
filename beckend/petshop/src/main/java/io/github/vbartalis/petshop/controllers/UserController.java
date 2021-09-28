@@ -4,6 +4,7 @@ import io.github.vbartalis.petshop.dto.request.UserPage;
 import io.github.vbartalis.petshop.dto.request.UserSearchCriteria;
 import io.github.vbartalis.petshop.dto.response.UserDto;
 import io.github.vbartalis.petshop.dto.user.PatchUserDto;
+import io.github.vbartalis.petshop.dto.user.PostUserDto;
 import io.github.vbartalis.petshop.entity.User;
 import io.github.vbartalis.petshop.security.methodlevel.IsAdmin;
 import io.github.vbartalis.petshop.service.impl.UserServiceImpl;
@@ -54,7 +55,7 @@ public class UserController {
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @PostMapping
-    public UserDto createUser(@Valid @RequestBody UserDto dto) {
+    public UserDto createUser(@Valid @RequestBody PostUserDto dto) {
         User user = converter.convertToEntity(dto, User.class);
         User responseUser = userService.createUser(user);
         return converter.convertToDto(responseUser, UserDto.class);
