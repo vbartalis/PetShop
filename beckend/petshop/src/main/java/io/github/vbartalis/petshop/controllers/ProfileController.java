@@ -28,7 +28,7 @@ public class ProfileController {
     @Operation(summary = "Update a Profile.",
             description = "Can be used by Owner or Admin to update name, email, address, description properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkProfile(#dto.id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkProfile(#id) || hasAuthority('ROLE_ADMIN')")
     @PatchMapping("/{id}")
     public ProfileDto updateProfile(
             @PathVariable("id") @NotNull Long id,

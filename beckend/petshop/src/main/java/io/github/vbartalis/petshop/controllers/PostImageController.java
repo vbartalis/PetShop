@@ -31,7 +31,7 @@ public class PostImageController {
     @Operation(summary = "Update a PostImage.",
             description = "Can be used by Owner or Admin to update image property.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkPostImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkPostImage(#id) || hasAuthority('ROLE_ADMIN')")
     @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, value = "/{id}")
     public PostImageDto updatePostImage(
             @PathVariable(value = "id") @NotNull Long id,
@@ -43,7 +43,7 @@ public class PostImageController {
     @Operation(summary = "Delete a PostImage.",
             description = "Can be used by Owner or Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkPostImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkPostImage(#id) || hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public void deletePostImage(@PathVariable("id") @NotNull Long id) {
         postImageService.deletePostImage(id);

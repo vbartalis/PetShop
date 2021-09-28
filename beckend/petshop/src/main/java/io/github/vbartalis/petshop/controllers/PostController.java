@@ -53,7 +53,7 @@ public class PostController {
         boolean isAdmin = authenticationContext.isAdmin();
         try {
             if (postSearchCriteria.getUserId() != null) {
-                isOwner = ownerChecker.checkUser(postSearchCriteria.getUserId(), authenticationContext.getAuthentication());
+                isOwner = ownerChecker.checkUser(postSearchCriteria.getUserId());
             }
         } catch (Exception ignored) {
         }
@@ -78,7 +78,7 @@ public class PostController {
     @Operation(summary = "Update a Post.",
             description = "Can be used by Owner or Admin to update title, description, isPublic, tags properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkPost(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkPost(#id) || hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public PostDto updatePost(
             @PathVariable(value = "id") @NotNull Long id,
@@ -91,7 +91,7 @@ public class PostController {
     @Operation(summary = "Delete a Post.",
             description = "Can be used by Owner or Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkPost(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkPost(#id) || hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable("id") @NotNull Long id) {
         postService.deletePost(id);
@@ -104,7 +104,7 @@ public class PostController {
     @GetMapping("/{id}")
     public PostDto getPostById(@PathVariable("id") @NotNull Long id) {
 
-        boolean isOwner = ownerChecker.checkPost(id, authenticationContext.getAuthentication());
+        boolean isOwner = ownerChecker.checkPost(id);
         boolean isAdmin = authenticationContext.isAdmin();
         Post responsePost = postService.getPostById(id);
         if (responsePost.getIsPublic() || isAdmin || isOwner) {

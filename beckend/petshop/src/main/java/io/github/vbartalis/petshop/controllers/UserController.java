@@ -65,7 +65,7 @@ public class UserController {
             description = "Can be used by Admin to update password, isLocked, Expiration, roles properties. " +
                     "Can be used by Owner to update the password property.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkUser(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkUser(#id) || hasAuthority('ROLE_ADMIN')")
     @PatchMapping("/{id}")
     public UserDto partialUpdateUser(
             @PathVariable("id") @NotNull Long id,
@@ -85,7 +85,7 @@ public class UserController {
     @Operation(summary = "Get User by it's Id.",
             description = "Can be used by Owner or Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkUser(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkUser(#id) || hasAuthority('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable("id") @NotNull Long id) {
         User user = userService.getUserById(id);

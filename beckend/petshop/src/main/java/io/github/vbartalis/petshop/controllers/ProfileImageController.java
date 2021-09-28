@@ -31,7 +31,7 @@ public class ProfileImageController {
     @Operation(summary = "Update a ProfileImage.",
             description = "Can be used by Owner or Admin to update image property.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkProfileImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkProfileImage(#id) || hasAuthority('ROLE_ADMIN')")
     @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, value = "/{id}")
     public EmptyProfileImageDto updateProfileImage(
             @PathVariable(value = "id") @NotNull Long id,
@@ -44,7 +44,7 @@ public class ProfileImageController {
     @Operation(summary = "Delete a ProfileImage.",
             description = "Can be used by Owner or Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkProfileImage(#id, authentication) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@ownerChecker.checkProfileImage(#id) || hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteProfileImage(@PathVariable("id") @NotNull Long id) {
         profileImageService.deleteProfileImage(id);
