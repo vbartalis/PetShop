@@ -3,26 +3,20 @@ package io.github.vbartalis.petshop.service.impl;
 import io.github.vbartalis.petshop.dto.request.UserPage;
 import io.github.vbartalis.petshop.dto.request.UserSearchCriteria;
 import io.github.vbartalis.petshop.entity.User;
-import io.github.vbartalis.petshop.exception.InvalidPasswordException;
-import io.github.vbartalis.petshop.exception.InvalidUsernameException;
-import io.github.vbartalis.petshop.exception.UsernameAlreadyInUseException;
+import io.github.vbartalis.petshop.exception.custom.InvalidPasswordException;
+import io.github.vbartalis.petshop.exception.custom.InvalidUsernameException;
+import io.github.vbartalis.petshop.exception.custom.UsernameAlreadyInUseException;
 import io.github.vbartalis.petshop.repository.criteriaRepository.UserCriteriaRepository;
-import io.github.vbartalis.petshop.repository.entityRepository.ProfileImageRepository;
-import io.github.vbartalis.petshop.repository.entityRepository.ProfileRepository;
-import io.github.vbartalis.petshop.repository.entityRepository.RoleRepository;
 import io.github.vbartalis.petshop.repository.entityRepository.UserRepository;
 import io.github.vbartalis.petshop.service.UserService;
 import io.github.vbartalis.petshop.util.InputValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 @Slf4j
 @Service

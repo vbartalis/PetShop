@@ -1,8 +1,8 @@
 package io.github.vbartalis.petshop.service.impl;
 
 import io.github.vbartalis.petshop.entity.PostImage;
-import io.github.vbartalis.petshop.exception.FileTypeNotSupportedException;
-import io.github.vbartalis.petshop.exception.ImageWriterException;
+import io.github.vbartalis.petshop.exception.custom.FileTypeNotSupportedException;
+import io.github.vbartalis.petshop.exception.custom.ImageWriterException;
 import io.github.vbartalis.petshop.repository.entityRepository.PostImageRepository;
 import io.github.vbartalis.petshop.service.PostImageService;
 import lombok.extern.slf4j.Slf4j;

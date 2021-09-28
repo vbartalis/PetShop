@@ -1,4 +1,4 @@
-package io.github.vbartalis.petshop.exception;
+package io.github.vbartalis.petshop.exception.custom;
 
 public class UsernameAlreadyInUseException extends RuntimeException {
     public UsernameAlreadyInUseException() {

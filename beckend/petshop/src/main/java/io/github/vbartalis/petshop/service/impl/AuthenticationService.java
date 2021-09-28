@@ -9,6 +9,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -27,7 +29,7 @@ public class AuthenticationService {
         String token = jwtTokenProvider.createToken(
                 username,
                 this.userRepository.findByUsername(username)
-                        .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"))
+                        .orElseThrow(() -> new NoSuchElementException("Username " + username + " not found"))
                         .getRoles()
                         .stream()
                         .map(Role::getName)

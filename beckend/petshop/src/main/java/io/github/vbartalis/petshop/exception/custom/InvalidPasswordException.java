@@ -1,4 +1,4 @@
-package io.github.vbartalis.petshop.exception;
+package io.github.vbartalis.petshop.exception.custom;
 
 public class InvalidPasswordException extends RuntimeException {
     public InvalidPasswordException() {
