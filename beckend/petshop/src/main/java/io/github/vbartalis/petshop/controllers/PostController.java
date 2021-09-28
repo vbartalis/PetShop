@@ -1,15 +1,15 @@
 package io.github.vbartalis.petshop.controllers;
 
+import io.github.vbartalis.petshop.dto.post.PostPutDto;
 import io.github.vbartalis.petshop.dto.request.PostPage;
 import io.github.vbartalis.petshop.dto.request.PostSearchCriteria;
-import io.github.vbartalis.petshop.dto.response.PostDto;
+import io.github.vbartalis.petshop.dto.post.PostDto;
 import io.github.vbartalis.petshop.entity.Post;
 import io.github.vbartalis.petshop.security.filters.OwnerChecker;
 import io.github.vbartalis.petshop.security.methodlevel.IsUser;
 import io.github.vbartalis.petshop.service.impl.PostServiceImpl;
 import io.github.vbartalis.petshop.util.AuthenticationContext;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
-import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -32,17 +31,15 @@ public class PostController {
 
     @Autowired
     PostServiceImpl postService;
-
     @Autowired
     DtoEntityConverter converter;
-
     @Autowired
     AuthenticationContext authenticationContext;
-
     @Autowired
     OwnerChecker ownerChecker;
 
-    @Operation(summary = "Get all Posts.",
+    @Operation(
+            summary = "Get all Posts.",
             description = "Can be filtered by id, title, description, userId properties. " +
                     "Property isPublic can only be filtered by owner of userId or admin." +
                     "Can be sorted by id, title, updateDate, creationDate properties.",
@@ -64,8 +61,9 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(summary = "Create a new Post.",
-            description = "Can be used by User.",
+    @Operation(
+            summary = "Create a new Post.",
+            description = "Can be used by User to create a new post.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsUser
     @PostMapping
@@ -75,21 +73,25 @@ public class PostController {
         return converter.convertToDto(responsePost, PostDto.class);
     }
 
-    @Operation(summary = "Update a Post.",
-            description = "Can be used by Owner or Admin to update title, description, isPublic, tags properties.",
+    @Operation(
+            summary = "Update a Post.",
+            description = "Can be used by Owner to update title, description, isPublic, tags properties of own post." +
+                    "Can be used by Owner to update title, description, isPublic, tags properties of a post.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkPost(#id) || hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public PostDto updatePost(
             @PathVariable(value = "id") @NotNull Long id,
-            @Valid @RequestBody PostDto dto) {
+            @Valid @RequestBody PostPutDto dto) {
         Post post = converter.convertToEntity(dto, Post.class);
         Post responsePost = postService.updatePost(id, post);
         return converter.convertToDto(responsePost, PostDto.class);
     }
 
-    @Operation(summary = "Delete a Post.",
-            description = "Can be used by Owner or Admin.",
+    @Operation(
+            summary = "Delete a Post.",
+            description = "Can be used by Owner to delete own post." +
+                    "Can be used by Admin to delete a post.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkPost(#id) || hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
@@ -97,21 +99,21 @@ public class PostController {
         postService.deletePost(id);
     }
 
-    //todo isPublic
-    @Operation(summary = "Get a Post by it's Id.",
-            description = "Can be used by Public, Owner or Admin.",
+    @Operation(
+            summary = "Get a Post by it's Id.",
+            description = "Can be used to get a public post. " +
+                    "Can be used by Owner to get a own private post." +
+                    "Can be used by Admin to get a private post.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping("/{id}")
     public PostDto getPostById(@PathVariable("id") @NotNull Long id) {
-
         boolean isOwner = ownerChecker.checkPost(id);
         boolean isAdmin = authenticationContext.isAdmin();
         Post responsePost = postService.getPostById(id);
         if (responsePost.getIsPublic() || isAdmin || isOwner) {
-        return converter.convertToDto(responsePost, PostDto.class);
+            return converter.convertToDto(responsePost, PostDto.class);
         } else {
             throw new AccessDeniedException("Access denied to Post by id " + id);
         }
-
     }
 }

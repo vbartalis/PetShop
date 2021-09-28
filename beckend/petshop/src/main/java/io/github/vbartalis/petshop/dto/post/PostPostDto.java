@@ -13,18 +13,13 @@ import java.util.List;
 @Setter
 public class PostPostDto {
 
-//    private Long id;
     @NotBlank
     @Size(max = 40)
     private String title;
     @NotBlank
     @Size(max = 255)
     private String description;
-//    private Date creationDate;
-//    private Date updateDate;
     @NotNull
     private Boolean isPublic;
-//    private User user;
-//    private PostImage postImage;
     private List<EmptyTagDto> tags;
 }

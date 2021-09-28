@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
         var tags = postRequest.getTags();
         Post newPost = new Post(title, description, user, creationDate, isPublic, tags);
 
-        postRepository.save(postRequest);
+        postRepository.save(newPost);
         return postRequest;
     }
 

@@ -1,4 +1,4 @@
-package io.github.vbartalis.petshop.dto.response;
+package io.github.vbartalis.petshop.dto.post;
 
 import io.github.vbartalis.petshop.dto.postimage.EmptyPostImageDto;
 import io.github.vbartalis.petshop.dto.response.TagDto;
