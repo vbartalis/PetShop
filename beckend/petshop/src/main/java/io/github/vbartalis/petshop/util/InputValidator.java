@@ -14,11 +14,8 @@ public class InputValidator {
     /**
      * This method validates weather a provided Sting is a valid password or not.
      *
-     * A valid password has to contain at least 6 characters and at most 15 characters,
-     * at least one digit,
-     * at least one upper case alphabet,
-     * at least one lower case alphabet,
-     * at least one special character which includes @#$%&-+=.
+     * A valid password has to contain at least 6 characters and at most 15 characters.
+     * It can contain digits, upper case alphabets, lower case alphabets and special characters which include @#$%&-+=.
      * It can't contain any white space
      *
      *  https://www.regexlib.com/Search.aspx?k=password&AspxAutoDetectCookieSupport=1
@@ -40,10 +37,8 @@ public class InputValidator {
     /**
      * This method validates weather a provided Sting is a valid username or not.
      *
-     * A valid username has to contain at least 5 characters and at most 15 characters,
-     * at least one digit,
-     * at least one upper case alphabet,
-     * at least one lower case alphabet.
+     * A valid username has to contain at least 5 characters and at most 15 characters.
+     * It can contain digits, upper case alphabets and lower case alphabets.
      *
      * @param username The provided String that has to be validated.
      * @return Returns true if the provided string is a valid username, otherwise false.
