@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.NoSuchElementException;
 
+/**
+ * This Class contains methods that can check weather the sender of the request is the owner of the requested resource.
+ */
 @Slf4j
 @Component
 public class OwnerChecker {
