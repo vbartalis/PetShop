@@ -1,13 +1,17 @@
-package io.github.vbartalis.petshop.dto.response;
+package io.github.vbartalis.petshop.dto.authentication;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+/**
+ * This class is used as a Data Transfer Object between the client and the server.
+ */
+@Getter
+@Setter
 @AllArgsConstructor
-//@Builder(access = AccessLevel.PUBLIC)
 public class AuthenticationResponseDto {
     private String username;
     private String jwt;

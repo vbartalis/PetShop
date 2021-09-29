@@ -1,6 +1,7 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.response.ProfileDto;
+import io.github.vbartalis.petshop.dto.profile.ProfileUpdateDto;
+import io.github.vbartalis.petshop.dto.profile.ProfileDto;
 import io.github.vbartalis.petshop.entity.Profile;
 import io.github.vbartalis.petshop.service.impl.ProfileServiceImpl;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
@@ -21,18 +22,18 @@ public class ProfileController {
 
     @Autowired
     ProfileServiceImpl profileService;
-
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "Update a Profile.",
+    @Operation(
+            summary = "Update a Profile.",
             description = "Can be used by Owner or Admin to update name, email, address, description properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkProfile(#id) || hasAuthority('ROLE_ADMIN')")
     @PatchMapping("/{id}")
     public ProfileDto updateProfile(
             @PathVariable("id") @NotNull Long id,
-            @Valid @RequestBody ProfileDto dto
+            @Valid @RequestBody ProfileUpdateDto dto
     ) {
         Profile profile = converter.convertToEntity(dto, Profile.class);
         Profile responseProfile = profileService.updateProfile(id, profile);

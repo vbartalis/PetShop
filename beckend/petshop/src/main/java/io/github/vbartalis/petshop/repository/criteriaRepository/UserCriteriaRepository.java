@@ -1,8 +1,8 @@
 package io.github.vbartalis.petshop.repository.criteriaRepository;
 
 
-import io.github.vbartalis.petshop.dto.request.UserPage;
-import io.github.vbartalis.petshop.dto.request.UserSearchCriteria;
+import io.github.vbartalis.petshop.dto.user.UserPage;
+import io.github.vbartalis.petshop.dto.user.UserSearchCriteria;
 import io.github.vbartalis.petshop.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;

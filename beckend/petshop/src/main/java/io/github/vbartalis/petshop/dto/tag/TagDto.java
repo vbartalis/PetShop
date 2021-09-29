@@ -3,15 +3,13 @@ package io.github.vbartalis.petshop.dto.tag;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-
+/**
+ * This class is used as a Data Transfer Object between the client and the server.
+ */
 @Getter
 @Setter
-public class PostTagDto {
-
-//    private Long id;
-    @NotBlank
+public class TagDto {
+    private Long id;
     private String name;
-    @NotBlank
     private String description;
 }

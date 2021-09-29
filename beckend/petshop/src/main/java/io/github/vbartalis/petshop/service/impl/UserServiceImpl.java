@@ -1,7 +1,7 @@
 package io.github.vbartalis.petshop.service.impl;
 
-import io.github.vbartalis.petshop.dto.request.UserPage;
-import io.github.vbartalis.petshop.dto.request.UserSearchCriteria;
+import io.github.vbartalis.petshop.dto.user.UserPage;
+import io.github.vbartalis.petshop.dto.user.UserSearchCriteria;
 import io.github.vbartalis.petshop.entity.User;
 import io.github.vbartalis.petshop.exception.custom.InvalidPasswordException;
 import io.github.vbartalis.petshop.exception.custom.InvalidUsernameException;

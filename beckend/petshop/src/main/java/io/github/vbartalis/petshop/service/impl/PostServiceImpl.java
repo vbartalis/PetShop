@@ -1,7 +1,7 @@
 package io.github.vbartalis.petshop.service.impl;
 
-import io.github.vbartalis.petshop.dto.request.PostPage;
-import io.github.vbartalis.petshop.dto.request.PostSearchCriteria;
+import io.github.vbartalis.petshop.dto.post.PostPage;
+import io.github.vbartalis.petshop.dto.post.PostSearchCriteria;
 import io.github.vbartalis.petshop.entity.Post;
 import io.github.vbartalis.petshop.entity.User;
 import io.github.vbartalis.petshop.repository.criteriaRepository.PostCriteriaRepository;

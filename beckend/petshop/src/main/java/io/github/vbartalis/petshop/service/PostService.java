@@ -1,7 +1,7 @@
 package io.github.vbartalis.petshop.service;
 
-import io.github.vbartalis.petshop.dto.request.PostPage;
-import io.github.vbartalis.petshop.dto.request.PostSearchCriteria;
+import io.github.vbartalis.petshop.dto.post.PostPage;
+import io.github.vbartalis.petshop.dto.post.PostSearchCriteria;
 import io.github.vbartalis.petshop.entity.Post;
 import org.springframework.data.domain.Page;
 

@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.profileimage.EmptyProfileImageDto;
+import io.github.vbartalis.petshop.dto.profileimage.ProfileImageEmptyDto;
 import io.github.vbartalis.petshop.entity.ProfileImage;
 import io.github.vbartalis.petshop.service.impl.ProfileImageServiceImpl;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
@@ -24,24 +24,25 @@ public class ProfileImageController {
 
     @Autowired
     ProfileImageServiceImpl profileImageService;
-
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "Update a ProfileImage.",
+    @Operation(
+            summary = "Update a ProfileImage.",
             description = "Can be used by Owner or Admin to update image property.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkProfileImage(#id) || hasAuthority('ROLE_ADMIN')")
-    @PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, value = "/{id}")
-    public EmptyProfileImageDto updateProfileImage(
+    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, value = "/{id}")
+    public ProfileImageEmptyDto updateProfileImage(
             @PathVariable(value = "id") @NotNull Long id,
             @RequestPart(value = "image") @NotNull MultipartFile multipartFile
     ) {
         ProfileImage response = profileImageService.updateProfileImage(id, multipartFile);
-        return converter.convertToDto(response, EmptyProfileImageDto.class);
+        return converter.convertToDto(response, ProfileImageEmptyDto.class);
     }
 
-    @Operation(summary = "Delete a ProfileImage.",
+    @Operation(
+            summary = "Delete a ProfileImage.",
             description = "Can be used by Owner or Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkProfileImage(#id) || hasAuthority('ROLE_ADMIN')")
@@ -54,11 +55,8 @@ public class ProfileImageController {
     @GetMapping("/{id}")
     public String getProfileImageById(@PathVariable("id") @NotNull Long id) {
         ProfileImage response = profileImageService.getProfileImageById(id);
-        byte[] img = response.getData();
-        if (img != null) {
-            return "data:image/jpeg;base64," +
-                    StringUtils.newStringUtf8(Base64.encodeBase64(response.getData()));
-        }
-        return null;
+        return "data:image/jpeg;base64," +
+                StringUtils.newStringUtf8(Base64.encodeBase64(response.getData()));
+
     }
 }

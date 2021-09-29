@@ -1,9 +1,6 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.post.PostPutDto;
-import io.github.vbartalis.petshop.dto.request.PostPage;
-import io.github.vbartalis.petshop.dto.request.PostSearchCriteria;
-import io.github.vbartalis.petshop.dto.post.PostDto;
+import io.github.vbartalis.petshop.dto.post.*;
 import io.github.vbartalis.petshop.entity.Post;
 import io.github.vbartalis.petshop.security.filters.OwnerChecker;
 import io.github.vbartalis.petshop.security.methodlevel.IsUser;
@@ -67,7 +64,7 @@ public class PostController {
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsUser
     @PostMapping
-    public PostDto createPost(@Valid @RequestBody PostDto dto) {
+    public PostDto createPost(@Valid @RequestBody PostCreateDto dto) {
         Post post = converter.convertToEntity(dto, Post.class);
         Post responsePost = postService.createPost(post);
         return converter.convertToDto(responsePost, PostDto.class);
@@ -82,7 +79,7 @@ public class PostController {
     @PutMapping("/{id}")
     public PostDto updatePost(
             @PathVariable(value = "id") @NotNull Long id,
-            @Valid @RequestBody PostPutDto dto) {
+            @Valid @RequestBody PostUpdateDto dto) {
         Post post = converter.convertToEntity(dto, Post.class);
         Post responsePost = postService.updatePost(id, post);
         return converter.convertToDto(responsePost, PostDto.class);

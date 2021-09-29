@@ -1,10 +1,14 @@
-package io.github.vbartalis.petshop.dto.request;
+package io.github.vbartalis.petshop.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Sort;
 
-@Getter @Setter
+/**
+ * This class is used as a Data Transfer Object between the client and the server.
+ */
+@Getter
+@Setter
 public class UserPage {
     private int pageNumber = 0;
     private int pageSize = 10;
@@ -13,9 +17,12 @@ public class UserPage {
 
     public String getSortBy() {
         switch (sortBy) {
-            case "id": return "id";
-            case "expiration": return "expiration";
-            default: return "username";
+            case "id":
+                return "id";
+            case "expiration":
+                return "expiration";
+            default:
+                return "username";
         }
     }
 }

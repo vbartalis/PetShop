@@ -1,10 +1,10 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.request.UserPage;
-import io.github.vbartalis.petshop.dto.request.UserSearchCriteria;
-import io.github.vbartalis.petshop.dto.response.UserDto;
-import io.github.vbartalis.petshop.dto.user.PatchUserDto;
-import io.github.vbartalis.petshop.dto.user.PostUserDto;
+import io.github.vbartalis.petshop.dto.user.UserPage;
+import io.github.vbartalis.petshop.dto.user.UserSearchCriteria;
+import io.github.vbartalis.petshop.dto.user.UserDto;
+import io.github.vbartalis.petshop.dto.user.UserUpdateDto;
+import io.github.vbartalis.petshop.dto.user.UserCreateDto;
 import io.github.vbartalis.petshop.entity.User;
 import io.github.vbartalis.petshop.security.methodlevel.IsAdmin;
 import io.github.vbartalis.petshop.service.impl.UserServiceImpl;
@@ -37,8 +37,9 @@ public class UserController {
     @Autowired
     AuthenticationContext authenticationContext;
 
-    @Operation(summary = "Get all Users. ",
-            description = "Can be used by Admin." +
+    @Operation(
+            summary = "Get all Users.",
+            description = "Can be used by Admin. " +
                     "Can be filtered by id, username, isLocked properties. " +
                     "Can be sorted by id, username, expiration properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
@@ -50,12 +51,13 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(summary = "Create a new User.",
+    @Operation(
+            summary = "Create a new User.",
             description = "Can be used by Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @PostMapping
-    public UserDto createUser(@Valid @RequestBody PostUserDto dto) {
+    public UserDto createUser(@Valid @RequestBody UserCreateDto dto) {
         User user = converter.convertToEntity(dto, User.class);
         User responseUser = userService.createUser(user);
         return converter.convertToDto(responseUser, UserDto.class);
@@ -70,7 +72,7 @@ public class UserController {
     @PatchMapping("/{id}")
     public UserDto partialUpdateUser(
             @PathVariable("id") @NotNull Long id,
-            @Valid @RequestBody PatchUserDto dto
+            @Valid @RequestBody UserUpdateDto dto
     ) {
         User user = new User();
         if (authenticationContext.isAdmin()) {
@@ -83,7 +85,8 @@ public class UserController {
         return converter.convertToDto(responseUser, UserDto.class);
     }
 
-    @Operation(summary = "Get User by it's Id.",
+    @Operation(
+            summary = "Get User by it's Id.",
             description = "Can be used by Owner or Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @PreAuthorize("@ownerChecker.checkUser(#id) || hasAuthority('ROLE_ADMIN')")

@@ -1,8 +1,8 @@
 package io.github.vbartalis.petshop.controllers;
 
 
-import io.github.vbartalis.petshop.dto.request.AuthenticationRequestDto;
-import io.github.vbartalis.petshop.dto.response.AuthenticationResponseDto;
+import io.github.vbartalis.petshop.dto.authentication.AuthenticationRequestDto;
+import io.github.vbartalis.petshop.dto.authentication.AuthenticationResponseDto;
 import io.github.vbartalis.petshop.entity.Role;
 import io.github.vbartalis.petshop.service.impl.AuthenticationService;
 import io.github.vbartalis.petshop.service.impl.UserServiceImpl;

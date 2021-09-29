@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.response.RoleDto;
+import io.github.vbartalis.petshop.dto.role.RoleDto;
 import io.github.vbartalis.petshop.entity.Role;
 import io.github.vbartalis.petshop.security.methodlevel.IsAdmin;
 import io.github.vbartalis.petshop.service.impl.RoleServiceImpl;
@@ -20,11 +20,11 @@ public class RoleController {
 
     @Autowired
     RoleServiceImpl roleService;
-
     @Autowired
     DtoEntityConverter converter;
 
-    @Operation(summary = "Get All Roles.",
+    @Operation(
+            summary = "Get All Roles.",
             description = "Can be used by Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin

@@ -1,6 +1,8 @@
 package io.github.vbartalis.petshop.controllers;
 
-import io.github.vbartalis.petshop.dto.response.TagDto;
+import io.github.vbartalis.petshop.dto.tag.TagDto;
+import io.github.vbartalis.petshop.dto.tag.TagUpdateDto;
+import io.github.vbartalis.petshop.dto.tag.TagCreateDto;
 import io.github.vbartalis.petshop.entity.Tag;
 import io.github.vbartalis.petshop.security.methodlevel.IsAdmin;
 import io.github.vbartalis.petshop.service.impl.TagServiceImpl;
@@ -33,32 +35,35 @@ public class TagController {
         return converter.convertToListDto(tags, TagDto.class);
     }
 
-    @Operation(summary = "Create a new Tag.",
+    @Operation(
+            summary = "Create a new Tag.",
             description = "Can be used by Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @PostMapping()
-    public TagDto createTag(@RequestBody TagDto dto) {
+    public TagDto createTag(@RequestBody TagCreateDto dto) {
         Tag tag = converter.convertToEntity(dto, Tag.class);
         Tag responseTag = tagService.createTag(tag);
         return converter.convertToDto(responseTag, TagDto.class);
     }
 
-    @Operation(summary = "Update a Tag.",
+    @Operation(
+            summary = "Update a Tag.",
             description = "Can be used by Admin to update name, description properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @PutMapping("/{id}")
     public TagDto updateTag(
             @PathVariable(value = "id") @NotNull Long id,
-            @Valid @RequestBody TagDto dto
+            @Valid @RequestBody TagUpdateDto dto
     ) {
         Tag tag = converter.convertToEntity(dto, Tag.class);
         Tag responseTag = tagService.updateTag(id, tag);
         return converter.convertToDto(responseTag, TagDto.class);
     }
 
-    @Operation(summary = "Delete a Tag.",
+    @Operation(
+            summary = "Delete a Tag.",
             description = "Can be used by Admin.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
