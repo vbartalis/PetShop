@@ -51,7 +51,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/post", "/post/**").permitAll()
                 .antMatchers("/postimage", "/postimage/**").permitAll()
                 .antMatchers("/tag", "/tag/**").permitAll()
-                //this is where the swagger can be accessed
+                //this is where the swagger and h2-console can be accessed
                 .antMatchers("/admin", "/admin/**").permitAll()
                 .anyRequest().authenticated();
         //Stateless session policy, jwt based authentication is stateless
