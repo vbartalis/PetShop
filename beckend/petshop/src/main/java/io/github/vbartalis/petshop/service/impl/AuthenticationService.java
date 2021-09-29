@@ -6,7 +6,6 @@ import io.github.vbartalis.petshop.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -28,6 +27,7 @@ public class AuthenticationService {
 
     /**
      * This method authenticates a user.
+     *
      * @param username The username of the user.
      * @param password The password of the user.
      * @return Returns a jwt token for the user if the user is authenticated.

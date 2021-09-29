@@ -1,15 +1,14 @@
 package io.github.vbartalis.petshop.controllers;
 
+import io.github.vbartalis.petshop.dto.tag.TagCreateDto;
 import io.github.vbartalis.petshop.dto.tag.TagDto;
 import io.github.vbartalis.petshop.dto.tag.TagUpdateDto;
-import io.github.vbartalis.petshop.dto.tag.TagCreateDto;
 import io.github.vbartalis.petshop.entity.Tag;
 import io.github.vbartalis.petshop.security.methodlevel.IsAdmin;
 import io.github.vbartalis.petshop.service.impl.TagServiceImpl;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +16,26 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Slf4j
+/**
+ * This class serves as RestController.
+ */
 @RestController
 @RequestMapping("/tag")
 public class TagController {
 
     @Autowired
     TagServiceImpl tagService;
-
     @Autowired
     DtoEntityConverter converter;
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a GET request.
+     * It returns a list of {@code Tag} entities in the form of a {@code TagDto} list.
+     *
+     * @return Returns a list of {@code Tag} entities in the form of a {@code TagDto} list.
+     */
     @Operation(summary = "Get All Tags.")
     @GetMapping
     public List<TagDto> getAllTags() {
@@ -35,6 +43,15 @@ public class TagController {
         return converter.convertToListDto(tags, TagDto.class);
     }
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a POST request.
+     * It creates a new {@code Tag} Entity.
+     *
+     * @param dto The Data Transfer Object that contains the properties of the new {@code Tag} Entity.
+     * @return Returns the created {@code Tag} Entity in the form of {@code TagDto}.
+     */
     @Operation(
             summary = "Create a new Tag.",
             description = "Can be used by Admin.",
@@ -47,6 +64,17 @@ public class TagController {
         return converter.convertToDto(responseTag, TagDto.class);
     }
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a PUT request.
+     * It updates the specified {@code Tag} entity.
+     *
+     * @param id  the id of the {@code Tag} entity.
+     * @param dto The Data Transfer Object that contains the properties of the {@code Tag}
+     *            Entity that needs to be updated.
+     * @return Returns the updated {@code Tag} Entity in the form of {@code TagDto}.
+     */
     @Operation(
             summary = "Update a Tag.",
             description = "Can be used by Admin to update name, description properties.",
@@ -62,6 +90,14 @@ public class TagController {
         return converter.convertToDto(responseTag, TagDto.class);
     }
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a DELETE request.
+     * It deletes the specified {@code Tag} entity.
+     *
+     * @param id The id of the {@code Tag} entity.
+     */
     @Operation(
             summary = "Delete a Tag.",
             description = "Can be used by Admin.",
@@ -72,6 +108,15 @@ public class TagController {
         tagService.deleteTag(id);
     }
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a GET request.
+     * It returns the specified {@code Tag} entity in the form of {@code TagDto}.
+     *
+     * @param id The id of the {@code Tag} entity.
+     * @return Returns the specified {@code Tag} Entity in the form of {@code TagDto}.
+     */
     @Operation(summary = "Get a Tag By Tag Id.")
     @GetMapping("/{id}")
     public TagDto getTag(@PathVariable("id") @NotNull Long id) {

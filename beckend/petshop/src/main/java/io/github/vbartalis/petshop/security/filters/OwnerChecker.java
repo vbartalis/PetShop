@@ -32,6 +32,7 @@ public class OwnerChecker {
 
     /**
      * This method checks weather the current user is the owner of the specified Post entity.
+     *
      * @param postId The Id of the Post entity.
      * @return Returns true if the current user is the owner, otherwise false.
      */
@@ -46,6 +47,7 @@ public class OwnerChecker {
 
     /**
      * This method checks weather the current user is the owner of the specified PostImage entity.
+     *
      * @param imageId The Id of the PostImage entity.
      * @return Returns true if the current user is the owner, otherwise false.
      */
@@ -61,6 +63,7 @@ public class OwnerChecker {
 
     /**
      * This method checks weather the current user is the owner of the specified User entity.
+     *
      * @param id The Id of the User entity.
      * @return Returns true if the current user is the owner, otherwise false.
      */
@@ -74,6 +77,7 @@ public class OwnerChecker {
 
     /**
      * This method checks weather the current user is the owner of the specified Profile entity.
+     *
      * @param profileId The Id of the Profile entity.
      * @return Returns true if the current user is the owner, otherwise false.
      */
@@ -88,6 +92,7 @@ public class OwnerChecker {
 
     /**
      * This method checks weather the current user is the owner of the specified ProfileImage entity.
+     *
      * @param profileImageId The Id of the ProfileImage entity.
      * @return Returns true if the current user is the owner, otherwise false.
      */
@@ -103,6 +108,7 @@ public class OwnerChecker {
 
     /**
      * This method checks weather the provided username is the username of the current user.
+     *
      * @param username The provided username.
      * @return Returns true if the provided username is the username of the current user, otherwise false.
      */

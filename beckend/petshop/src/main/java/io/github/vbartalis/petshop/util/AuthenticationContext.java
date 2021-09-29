@@ -12,6 +12,7 @@ public class AuthenticationContext {
 
     /**
      * This method gets the Authentication of the current user.
+     *
      * @return Returns the current users Authentication.
      */
     public Authentication getAuthentication() {
@@ -20,6 +21,7 @@ public class AuthenticationContext {
 
     /**
      * This method gets the username of the current user.
+     *
      * @return Returns the username of the current user.
      */
     public String getUsername() {
@@ -28,6 +30,7 @@ public class AuthenticationContext {
 
     /**
      * This method checks if the current user has the authority of ROLE_ADMIN.
+     *
      * @return Returns true if the current user has the authority of ROLE_ADMIN, otherwise false.
      */
     public Boolean isAdmin() {

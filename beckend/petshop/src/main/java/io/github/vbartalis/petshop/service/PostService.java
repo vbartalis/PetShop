@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
  */
 public interface PostService {
     /**
-     * This method gets a page of the specified {@code Post} entities.
+     * This method returns a page of {@code Post} Entities that is filtered by the provided criteria.
      *
      * @param postPage           The properties of the page returned.
      * @param postSearchCriteria The criteria by which the returned page of entities should be filtered.

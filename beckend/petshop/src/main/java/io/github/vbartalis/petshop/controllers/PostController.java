@@ -9,7 +9,6 @@ import io.github.vbartalis.petshop.util.AuthenticationContext;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-@Slf4j
+/**
+ * This class serves as RestController.
+ */
 @RestController
 @RequestMapping("/post")
 public class PostController {
@@ -35,10 +36,21 @@ public class PostController {
     @Autowired
     OwnerChecker ownerChecker;
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a GET request.
+     * It returns a page of {@code PostDto} that is filtered by the provided criteria.
+     *
+     * @param postPage           The properties of the page returned.
+     * @param postSearchCriteria The criteria by which the returned page of entities should be filtered.
+     * @return Returns a page of {@code PostDto}.
+     */
+
     @Operation(
             summary = "Get all Posts.",
             description = "Can be filtered by id, title, description, userId properties. " +
-                    "Property isPublic can only be filtered by owner of userId or admin." +
+                    "Property isPublic can only be filtered by owner of userId or admin. " +
                     "Can be sorted by id, title, updateDate, creationDate properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
@@ -58,6 +70,15 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a POST request.
+     * It creates a new {@code Post} Entity.
+     *
+     * @param dto The Data Transfer Object that contains the properties of the new {@code Post} Entity.
+     * @return Returns the created {@code Post} Entity in the form of {@code PostDto}.
+     */
     @Operation(
             summary = "Create a new Post.",
             description = "Can be used by User to create a new post.",
@@ -70,6 +91,17 @@ public class PostController {
         return converter.convertToDto(responsePost, PostDto.class);
     }
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a PUT request.
+     * It updates the specified {@code Post} entity.
+     *
+     * @param id  The id of the {@code Post} entity.
+     * @param dto The Data Transfer Object that contains the properties of the {@code Post}
+     *            Entity that needs to be updated.
+     * @return Returns the updated {@code Post} Entity in the form of {@code PostDto}.
+     */
     @Operation(
             summary = "Update a Post.",
             description = "Can be used by Owner to update title, description, isPublic, tags properties of own post." +
@@ -85,6 +117,14 @@ public class PostController {
         return converter.convertToDto(responsePost, PostDto.class);
     }
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a DELETE request.
+     * It deletes the specified {@code Post} entity.
+     *
+     * @param id The id of the {@code Post} entity.
+     */
     @Operation(
             summary = "Delete a Post.",
             description = "Can be used by Owner to delete own post." +
@@ -96,6 +136,15 @@ public class PostController {
         postService.deletePost(id);
     }
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a GET request.
+     * It returns the specified {@code Post} entity in the form of {@code PostDto}.
+     *
+     * @param id The id of the {@code Post} entity.
+     * @return Returns the specified {@code Post} Entity in the form of {@code PostDto}.
+     */
     @Operation(
             summary = "Get a Post by it's Id.",
             description = "Can be used to get a public post. " +

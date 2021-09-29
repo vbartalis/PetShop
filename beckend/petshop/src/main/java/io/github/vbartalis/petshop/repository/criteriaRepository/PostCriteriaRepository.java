@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This interface is a Repository for the {@code Post} Entity.
+ */
 @Repository
 public class PostCriteriaRepository {
 
@@ -27,6 +30,13 @@ public class PostCriteriaRepository {
         this.criteriaBuilder = entityManager.getCriteriaBuilder();
     }
 
+    /**
+     * This method finds all Posts that match the provided criteria.
+     *
+     * @param postPage           The properties of the page returned.
+     * @param postSearchCriteria The criteria by which the returned page of entities should be filtered.
+     * @return Returns a page of {@code Post} entities.
+     */
     public Page<Post> findAllWithFilters(PostPage postPage, PostSearchCriteria postSearchCriteria) {
         CriteriaQuery<Post> criteriaQuery = criteriaBuilder.createQuery(Post.class);
         Root<Post> postRoot = criteriaQuery.from(Post.class);
@@ -44,10 +54,17 @@ public class PostCriteriaRepository {
         return new PageImpl<>(typedQuery.getResultList(), pageable, postsCount);
     }
 
+    /**
+     * This method is used to create a {@code Predicate} object, that contains a filtering query.
+     *
+     * @param postSearchCriteria The {@code PostSearchCriteria} object that contains the filtering properties.
+     * @param postRoot           The {@code Root<Post>} object.
+     * @return Returns a {@code Predicate} object, that contains a filtering query.
+     */
     private Predicate getPredicate(PostSearchCriteria postSearchCriteria, Root<Post> postRoot) {
         List<Predicate> predicates = new ArrayList<>();
         if (Objects.nonNull(postSearchCriteria.getId())) {
-            predicates.add(criteriaBuilder.equal(postRoot.get("id"),  postSearchCriteria.getId()));
+            predicates.add(criteriaBuilder.equal(postRoot.get("id"), postSearchCriteria.getId()));
         }
         if (Objects.nonNull(postSearchCriteria.getTitle())) {
             predicates.add(criteriaBuilder.like(postRoot.get("title"), "%" + postSearchCriteria.getTitle() + "%"));
@@ -64,21 +81,40 @@ public class PostCriteriaRepository {
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 
+    /**
+     * This method sets how should the criteriaQuery be ordered by.
+     *
+     * @param postPage      The {@code PostPage} object, contains what should the criteriaQuery be ordered by.
+     * @param criteriaQuery The {@code CriteriaQuery<Post>} object.
+     * @param postRoot      The {@code Root<Post>} object.
+     */
     private void setOrder(PostPage postPage,
                           CriteriaQuery<Post> criteriaQuery,
                           Root<Post> postRoot) {
-        if(postPage.getSortDirection().equals(Sort.Direction.ASC)){
+        if (postPage.getSortDirection().equals(Sort.Direction.ASC)) {
             criteriaQuery.orderBy(criteriaBuilder.asc(postRoot.get(postPage.getSortBy())));
         } else {
             criteriaQuery.orderBy(criteriaBuilder.desc(postRoot.get(postPage.getSortBy())));
         }
     }
 
+    /**
+     * This method creates a {@code Pageable} object from the provided {@code PostPage} object.
+     *
+     * @param postPage The {@code PostPage} object.
+     * @return Returns a {@code Pageable} object.
+     */
     private Pageable getPageable(PostPage postPage) {
         Sort sort = Sort.by(postPage.getSortDirection(), postPage.getSortBy());
-        return PageRequest.of(postPage.getPageNumber(),postPage.getPageSize(), sort);
+        return PageRequest.of(postPage.getPageNumber(), postPage.getPageSize(), sort);
     }
 
+    /**
+     * This method returns the number of {@code Post} objects filtered by the predicate.
+     *
+     * @param predicate The {@code Predicate} object, that contains a filtering query.
+     * @return Returns the number of {@code Post} objects filtered by the predicate.
+     */
     private long getPostsCount(Predicate predicate) {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         Root<Post> countRoot = countQuery.from(Post.class);

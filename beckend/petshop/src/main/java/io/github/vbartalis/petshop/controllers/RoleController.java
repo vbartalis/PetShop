@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * This class serves as RestController.
+ */
 @RestController
 @RequestMapping("/role")
 public class RoleController {
@@ -23,6 +26,14 @@ public class RoleController {
     @Autowired
     DtoEntityConverter converter;
 
+    /**
+     * This method serves as a REST Service Endpoint.
+     * <p>
+     * This endpoint can be accessed by a GET request.
+     * It returns a list of {@code Role} entities in the form of a {@code RoleDto} list.
+     *
+     * @return Returns a list of {@code Role} entities in the form of a {@code RoleDto} list.
+     */
     @Operation(
             summary = "Get All Roles.",
             description = "Can be used by Admin.",

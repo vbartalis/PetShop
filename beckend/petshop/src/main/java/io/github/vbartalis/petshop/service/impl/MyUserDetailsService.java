@@ -20,6 +20,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     /**
      * This method is a {@code loadUserByUsername} implementation.
+     *
      * @param username The username of the user.
      * @return Returns the UserDetails of the specified user.
      */
