@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.security.Key;
 
+//todo might be better if these constants were not inside the code.
+/**
+ * This class contains constants that are used by jwt tokens.
+ */
 @Configuration
 @Data
 public class JwtConstants {

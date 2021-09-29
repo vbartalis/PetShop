@@ -31,11 +31,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the FileTypeNotSupportedException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
     @ExceptionHandler(FileTypeNotSupportedException.class)
-    public ResponseEntity<Object> handleFileTypeNotSupportedException () {
+    public ResponseEntity<Object> handleFileTypeNotSupportedException() {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDate.now());
         body.put("status", HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
@@ -46,6 +47,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the ImageWriterException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
@@ -61,6 +63,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the InvalidPasswordException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
@@ -76,6 +79,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the InvalidUsernameException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
@@ -91,6 +95,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the UsernameAlreadyInUseException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
@@ -108,6 +113,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the NoSuchElementException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
@@ -123,6 +129,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the AuthenticationException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
@@ -138,11 +145,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the IOException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<Object> handleIOException () {
+    public ResponseEntity<Object> handleIOException() {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDate.now());
         body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -153,11 +161,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the AccessDeniedException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Object> handleAccessDeniedException (
+    public ResponseEntity<Object> handleAccessDeniedException(
             AccessDeniedException e, WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDate.now());
@@ -169,6 +178,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     /**
      * This method handles responses when the MethodArgumentNotValidException is thrown.
+     *
      * @return The ResponseEntity to the exception containing the timestamp, status,
      * error and the message to the exception.
      */

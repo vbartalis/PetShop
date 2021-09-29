@@ -3,7 +3,6 @@ package io.github.vbartalis.petshop.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This is an entity class. It represents a table stored in the database.
+ */
 @Entity
 @Getter
 @Setter

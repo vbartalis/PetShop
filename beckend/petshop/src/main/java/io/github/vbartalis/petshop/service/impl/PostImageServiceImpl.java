@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+/**
+ * This is a service class that implements {@code PostImageService}. Its methods are used to service the {@code PostImageController}.
+ */
 @Slf4j
 @Service
 public class PostImageServiceImpl implements PostImageService {
@@ -21,6 +24,9 @@ public class PostImageServiceImpl implements PostImageService {
     @Autowired
     PostImageRepository postImageRepository;
 
+    /**
+     * This method is a {@code updatePostImage} implementation.
+     */
     @Override
     public PostImage updatePostImage(long id, MultipartFile multipartFile) {
         PostImage postImage = postImageRepository.findById(id)
@@ -36,6 +42,9 @@ public class PostImageServiceImpl implements PostImageService {
         return postImage;
     }
 
+    /**
+     * This method is a {@code deletePostImage} implementation.
+     */
     @Override
     public void deletePostImage(long id) {
         PostImage postImage = postImageRepository.findById(id)
@@ -44,6 +53,9 @@ public class PostImageServiceImpl implements PostImageService {
         postImageRepository.save(postImage);
     }
 
+    /**
+     * This method is a {@code getPostImageById} implementation.
+     */
     @Override
     public PostImage getPostImageById(long id) {
         PostImage postImage = postImageRepository.findById(id)

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 
+/**
+ * This is a service class that implements {@code ProfileService}. Its methods are used to service the {@code ProfileController}
+ */
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
@@ -17,6 +20,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * This method is a {@code updateProfile} implementation.
+     */
     @Override
     public Profile updateProfile(long id, Profile postRequest) {
         Profile profile = profileRepository.findById(id)
@@ -31,6 +37,9 @@ public class ProfileServiceImpl implements ProfileService {
         return profile;
     }
 
+    /**
+     * This method is a {@code getProfileById} implementation.
+     */
     @Override
     public Profile getProfileById(long id) {
         return userRepository.findById(id)

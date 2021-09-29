@@ -13,6 +13,9 @@ import java.util.NoSuchElementException;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * This is a service class, used to authenticate the user. Its methods are used to service the {@code UserController}
+ */
 @Service
 public class AuthenticationService {
 
@@ -23,10 +26,16 @@ public class AuthenticationService {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * This method authenticates a user.
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @return Returns a jwt token for the user if the user is authenticated.
+     */
     public String authenticate(String username, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-        String token = jwtTokenProvider.createToken(
+        return jwtTokenProvider.createToken(
                 username,
                 this.userRepository.findByUsername(username)
                         .orElseThrow(() -> new NoSuchElementException("Username " + username + " not found"))
@@ -35,7 +44,6 @@ public class AuthenticationService {
                         .map(Role::getName)
                         .collect(toList())
         );
-        return token;
 
     }
 }

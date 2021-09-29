@@ -6,8 +6,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * This is an entity class. It represents a table stored in the database.
+ */
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class PostImage {
 

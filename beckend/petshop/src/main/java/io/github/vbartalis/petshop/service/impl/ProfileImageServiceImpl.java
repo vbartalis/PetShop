@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+/**
+ * This is a service class that implements {@code ProfileImageService}. Its methods are used to service the {@code ProfileImageController}
+ */
 @Slf4j
 @Service
 public class ProfileImageServiceImpl implements ProfileImageService {
@@ -21,6 +24,9 @@ public class ProfileImageServiceImpl implements ProfileImageService {
     @Autowired
     ProfileImageRepository profileImageRepository;
 
+    /**
+     * This method is a {@code updateProfileImage} implementation.
+     */
     @Override
     public ProfileImage updateProfileImage(long id, MultipartFile multipartFile) {
         ProfileImage profileImage = profileImageRepository.findById(id)
@@ -39,6 +45,9 @@ public class ProfileImageServiceImpl implements ProfileImageService {
         return profileImage;
     }
 
+    /**
+     * This method is a {@code deleteProfileImage} implementation.
+     */
     @Override
     public void deleteProfileImage(long id) {
         ProfileImage profileImage = profileImageRepository.findById(id)
@@ -47,6 +56,9 @@ public class ProfileImageServiceImpl implements ProfileImageService {
         profileImageRepository.save(profileImage);
     }
 
+    /**
+     * This method is a {@code getProfileImageById} implementation.
+     */
     @Override
     public ProfileImage getProfileImageById(long id) {
         ProfileImage profileImage = profileImageRepository.findById(id)

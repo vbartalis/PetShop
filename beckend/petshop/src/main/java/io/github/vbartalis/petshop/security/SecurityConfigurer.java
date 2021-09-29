@@ -26,21 +26,24 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * This method is used to set up basic configuration and to modify it.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         JwtRequestFilter jwtRequestFilter = new JwtRequestFilter(jwtTokenProvider);
 
-        http.csrf().disable(); //Cross Site Request Forgery
-        http.cors(); //Cross Origin Requests
-        http.headers().frameOptions().sameOrigin(); //Clickjacking //todo do i need it in a rest api?
-
-
-        http
-                .authorizeRequests()
+        //Cross Site Request Forgery
+        http.csrf().disable();
+        //Cross Origin Requests
+        http.cors();
+        //Clickjacking - not needed for an api but doesn't hurt.
+        http.headers().frameOptions().sameOrigin();
+        http.authorizeRequests()
+                // For the following patterns, the required authorization will be set on the method level,
+                // otherwise it will default to the below specified ones.
                 .antMatchers("/auth/**").permitAll()
-//                .antMatchers( "/admin/**").hasAuthority("ROLE_ADMIN") //todo switch to hasAuthority() from permitAll()
-                .antMatchers( "/admin", "/admin/**").permitAll()
                 .antMatchers("/user", "/user/**").permitAll()
                 .antMatchers("/profile", "/profile/**").permitAll()
                 .antMatchers("/profileimage", "/profileimage/**").permitAll()
@@ -48,11 +51,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/post", "/post/**").permitAll()
                 .antMatchers("/postimage", "/postimage/**").permitAll()
                 .antMatchers("/tag", "/tag/**").permitAll()
-                .antMatchers("/test", "/test/**").permitAll()
+                //this is where the swagger can be accessed
+                .antMatchers("/admin", "/admin/**").permitAll()
                 .anyRequest().authenticated();
-
+        //Stateless session policy, jwt based authentication is stateless
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //configuring how to handle exceptions
         http.exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint());
+        //add the jwtRequestFilter before the position of the UsernamePasswordAuthenticationFilter class
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
@@ -63,13 +69,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * This method is used to set up the cors configuration.
+     *
+     * @return Returns the cors configuration.
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4210", "http://localhost:4200"));
 //        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PATCH","PUT"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PATCH", "PUT"));
 //        configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));

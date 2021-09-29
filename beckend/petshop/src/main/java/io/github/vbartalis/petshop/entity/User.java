@@ -18,15 +18,20 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * This is an entity class. It represents a table stored in the database.
+ */
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank @Column(unique = true)
+    @NotBlank
+    @Column(unique = true)
     private String username;
     @NotBlank
     private String password;

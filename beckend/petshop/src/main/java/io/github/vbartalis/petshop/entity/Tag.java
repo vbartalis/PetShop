@@ -9,6 +9,9 @@ import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is an entity class. It represents a table stored in the database.
+ */
 @Entity
 @Getter
 @Setter

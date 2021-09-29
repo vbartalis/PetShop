@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
+/**
+ * This is a service class that implements {@code PostService}. Its methods are used to service the {@code PostController}
+ */
 @Slf4j
 @Service
 public class PostServiceImpl implements PostService {
@@ -30,11 +33,17 @@ public class PostServiceImpl implements PostService {
     @Autowired
     AuthenticationContext authenticationContext;
 
+    /**
+     * This method is a {@code getAllPosts} implementation.
+     */
     @Override
     public Page<Post> getAllPosts(PostPage postPage, PostSearchCriteria postSearchCriteria) {
         return postCriteriaRepository.findAllWithFilters(postPage, postSearchCriteria);
     }
 
+    /**
+     * This method is a {@code createPost} implementation.
+     */
     @Override
     public Post createPost(Post postRequest) {
         var username = authenticationContext.getUsername();
@@ -51,6 +60,9 @@ public class PostServiceImpl implements PostService {
         return postRequest;
     }
 
+    /**
+     * This method is a {@code updatePost} implementation.
+     */
     @Override
     public Post updatePost(long id, Post postRequest) {
         Post post = postRepository.findById(id)
@@ -59,14 +71,14 @@ public class PostServiceImpl implements PostService {
         post.setTitle(postRequest.getTitle());
         post.setDescription(postRequest.getDescription());
         post.setUpdateDate(new Date());
-        post.setIsPublic(postRequest.getIsPublic());
-        //todo
-        //post.getTags().clear();
         post.setTags(postRequest.getTags());
         postRepository.save(post);
         return post;
     }
 
+    /**
+     * This method is a {@code deletePost} implementation.
+     */
     @Override
     public void deletePost(long id) {
         Post post = postRepository.findById(id)
@@ -74,6 +86,9 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(post);
     }
 
+    /**
+     * This method is a {@code getPostById} implementation.
+     */
     @Override
     public Post getPostById(long id) {
         return postRepository.findById(id)
