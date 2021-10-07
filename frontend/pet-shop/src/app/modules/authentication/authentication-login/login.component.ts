@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/service/authentication.service';
 import { GlobalService } from '@app/service/global.service';
 import { Credentials } from '@data/model/credentials.model';
-import { LoginContext } from '@data/model/login-context';
+import { Authentication } from '@data/model/authentication.model';
 
 @Component({
   selector: 'app-login',
@@ -52,9 +52,9 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    const loginContext = new LoginContext(this.f.username.value, this.f.password.value);
+    const authentication = new Authentication(this.f.username.value, this.f.password.value);
     this.authenticationService
-      .login(loginContext)
+      .login(authentication)
       // .pipe(first())
       .subscribe(
         (credentials: Credentials) => {
