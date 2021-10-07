@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.service.impl;
 
-import io.github.vbartalis.petshop.dto.post.PostPage;
+import io.github.vbartalis.petshop.dto.post.PostPageCriteria;
 import io.github.vbartalis.petshop.dto.post.PostSearchCriteria;
 import io.github.vbartalis.petshop.entity.Post;
 import io.github.vbartalis.petshop.entity.User;
@@ -37,8 +37,8 @@ public class PostServiceImpl implements PostService {
      * This method is a {@code getAllPosts} implementation.
      */
     @Override
-    public Page<Post> getAllPosts(PostPage postPage, PostSearchCriteria postSearchCriteria) {
-        return postCriteriaRepository.findAllWithFilters(postPage, postSearchCriteria);
+    public Page<Post> getAllPosts(PostPageCriteria postPageCriteria, PostSearchCriteria postSearchCriteria) {
+        return postCriteriaRepository.findAllWithFilters(postPageCriteria, postSearchCriteria);
     }
 
     /**

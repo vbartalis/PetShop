@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.repository.criteriaRepository;
 
-import io.github.vbartalis.petshop.dto.post.PostPage;
+import io.github.vbartalis.petshop.dto.post.PostPageCriteria;
 import io.github.vbartalis.petshop.dto.post.PostSearchCriteria;
 import io.github.vbartalis.petshop.entity.Post;
 import org.springframework.data.domain.*;
@@ -33,22 +33,22 @@ public class PostCriteriaRepository {
     /**
      * This method finds all Posts that match the provided criteria.
      *
-     * @param postPage           The properties of the page returned.
+     * @param postPageCriteria   The properties of the page returned.
      * @param postSearchCriteria The criteria by which the returned page of entities should be filtered.
      * @return Returns a page of {@code Post} entities.
      */
-    public Page<Post> findAllWithFilters(PostPage postPage, PostSearchCriteria postSearchCriteria) {
+    public Page<Post> findAllWithFilters(PostPageCriteria postPageCriteria, PostSearchCriteria postSearchCriteria) {
         CriteriaQuery<Post> criteriaQuery = criteriaBuilder.createQuery(Post.class);
         Root<Post> postRoot = criteriaQuery.from(Post.class);
         Predicate predicate = getPredicate(postSearchCriteria, postRoot);
         criteriaQuery.where(predicate);
-        setOrder(postPage, criteriaQuery, postRoot);
+        setOrder(postPageCriteria, criteriaQuery, postRoot);
 
         TypedQuery<Post> typedQuery = entityManager.createQuery(criteriaQuery);
-        typedQuery.setFirstResult(postPage.getPageNumber() * postPage.getPageSize());
-        typedQuery.setMaxResults(postPage.getPageSize());
+        typedQuery.setFirstResult(postPageCriteria.getPageNumber() * postPageCriteria.getPageSize());
+        typedQuery.setMaxResults(postPageCriteria.getPageSize());
 
-        Pageable pageable = getPageable(postPage);
+        Pageable pageable = getPageable(postPageCriteria);
 
         long postsCount = getPostsCount(predicate);
         return new PageImpl<>(typedQuery.getResultList(), pageable, postsCount);
@@ -84,29 +84,29 @@ public class PostCriteriaRepository {
     /**
      * This method sets how should the criteriaQuery be ordered by.
      *
-     * @param postPage      The {@code PostPage} object, contains what should the criteriaQuery be ordered by.
-     * @param criteriaQuery The {@code CriteriaQuery<Post>} object.
-     * @param postRoot      The {@code Root<Post>} object.
+     * @param postPageCriteria The {@code PostPage} object, contains what should the criteriaQuery be ordered by.
+     * @param criteriaQuery    The {@code CriteriaQuery<Post>} object.
+     * @param postRoot         The {@code Root<Post>} object.
      */
-    private void setOrder(PostPage postPage,
+    private void setOrder(PostPageCriteria postPageCriteria,
                           CriteriaQuery<Post> criteriaQuery,
                           Root<Post> postRoot) {
-        if (postPage.getSortDirection().equals(Sort.Direction.ASC)) {
-            criteriaQuery.orderBy(criteriaBuilder.asc(postRoot.get(postPage.getSortBy())));
+        if (postPageCriteria.getSortDirection().equals(Sort.Direction.ASC)) {
+            criteriaQuery.orderBy(criteriaBuilder.asc(postRoot.get(postPageCriteria.getSortBy())));
         } else {
-            criteriaQuery.orderBy(criteriaBuilder.desc(postRoot.get(postPage.getSortBy())));
+            criteriaQuery.orderBy(criteriaBuilder.desc(postRoot.get(postPageCriteria.getSortBy())));
         }
     }
 
     /**
      * This method creates a {@code Pageable} object from the provided {@code PostPage} object.
      *
-     * @param postPage The {@code PostPage} object.
+     * @param postPageCriteria The {@code PostPage} object.
      * @return Returns a {@code Pageable} object.
      */
-    private Pageable getPageable(PostPage postPage) {
-        Sort sort = Sort.by(postPage.getSortDirection(), postPage.getSortBy());
-        return PageRequest.of(postPage.getPageNumber(), postPage.getPageSize(), sort);
+    private Pageable getPageable(PostPageCriteria postPageCriteria) {
+        Sort sort = Sort.by(postPageCriteria.getSortDirection(), postPageCriteria.getSortBy());
+        return PageRequest.of(postPageCriteria.getPageNumber(), postPageCriteria.getPageSize(), sort);
     }
 
     /**

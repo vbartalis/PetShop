@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
  */
 @Getter
 @Setter
-public class PostPage {
+public class PostPageCriteria {
     private int pageNumber = 0;
     private int pageSize = 10;
     private Sort.Direction sortDirection = Sort.Direction.ASC;

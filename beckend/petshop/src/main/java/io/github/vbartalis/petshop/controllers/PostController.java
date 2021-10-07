@@ -42,7 +42,7 @@ public class PostController {
      * This endpoint can be accessed by a GET request.
      * It returns a page of {@code PostDto} that is filtered by the provided criteria.
      *
-     * @param postPage           The properties of the page returned.
+     * @param postPageCriteria   The properties of the page returned.
      * @param postSearchCriteria The criteria by which the returned page of entities should be filtered.
      * @return Returns a page of {@code PostDto}.
      */
@@ -54,7 +54,7 @@ public class PostController {
                     "Can be sorted by id, title, updateDate, creationDate properties.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
-    public ResponseEntity<Page<PostDto>> getAllPosts(PostPage postPage, PostSearchCriteria postSearchCriteria) {
+    public ResponseEntity<Page<PostDto>> getAllPosts(PostPageCriteria postPageCriteria, PostSearchCriteria postSearchCriteria) {
         boolean isOwner = false;
         boolean isAdmin = authenticationContext.isAdmin();
         try {
@@ -65,7 +65,7 @@ public class PostController {
         }
         if (!isOwner && !isAdmin) postSearchCriteria.setIsPublic(true);
 
-        Page<Post> responsePost = postService.getAllPosts(postPage, postSearchCriteria);
+        Page<Post> responsePost = postService.getAllPosts(postPageCriteria, postSearchCriteria);
         Page<PostDto> response = converter.convertToPageDto(responsePost, PostDto.class);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.service;
 
-import io.github.vbartalis.petshop.dto.post.PostPage;
+import io.github.vbartalis.petshop.dto.post.PostPageCriteria;
 import io.github.vbartalis.petshop.dto.post.PostSearchCriteria;
 import io.github.vbartalis.petshop.entity.Post;
 import org.springframework.data.domain.Page;
@@ -12,11 +12,11 @@ public interface PostService {
     /**
      * This method returns a page of {@code Post} Entities that is filtered by the provided criteria.
      *
-     * @param postPage           The properties of the page returned.
+     * @param postPageCriteria   The properties of the page returned.
      * @param postSearchCriteria The criteria by which the returned page of entities should be filtered.
      * @return Returns a page of {@code Post} entities.
      */
-    Page<Post> getAllPosts(PostPage postPage, PostSearchCriteria postSearchCriteria);
+    Page<Post> getAllPosts(PostPageCriteria postPageCriteria, PostSearchCriteria postSearchCriteria);
 
     /**
      * This method creates a {@code Post} entity.
