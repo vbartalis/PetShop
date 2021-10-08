@@ -132,6 +132,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.5.5</version>
                 <configuration>
+                    <executable>true</executable>
                     <mainClass>io.github.vbartalis.petshop.PetShopApplication</mainClass>
                     <excludes>
                         <exclude>
