@@ -4,7 +4,7 @@
 
 <div *ngFor="let post of postPage?.content">
   <!-- <div class="card mb-3" (click)="open(postModal)"> -->
-  <div class="card mb-3">
+  <div class="card mb-3" (click)="openPost(post)">
     <!-- <imgclass="card-img-top img-responsive" [src]="postFrontImage" alt="Card image cap" /> -->
     <div class="card-body">
       <h4 class="card-title">{{ post.title }}</h4>

@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostPageCriteria } from '@data/api/post-page-criteria';
 import { PostSearchCriteria } from '@data/api/post-search-criteria';
 import { PostPage } from '@data/model/post-page';
+import { Post } from '@data/model/post.model';
 import { PostDataService } from '@data/service/post-data.service';
 
 @Component({
@@ -16,7 +18,12 @@ export class MarketComponent implements OnInit {
   postPageCriteria: PostPageCriteria = new PostPageCriteria(0, 10);
   postSearchCriteria: PostSearchCriteria = new PostSearchCriteria();
 
-  constructor(private postDataService: PostDataService, private datePipe: DatePipe) {}
+  constructor(
+    private postDataService: PostDataService,
+    private datePipe: DatePipe,
+    private router: Router,
+    private activeRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getPostPageFromService();
@@ -35,5 +42,9 @@ export class MarketComponent implements OnInit {
     this.postDataService
       .getAll(this.postPageCriteria, this.postSearchCriteria)
       .subscribe((pageable) => (this.postPage = pageable));
+  }
+
+  openPost(post: Post) {
+    this.router.navigate([post.id], { relativeTo: this.activeRoute.parent });
   }
 }

@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title" id="card-title">{{ post.title }}</h4>
+
+    <p class="card-text">{{ post.description }}</p>
+    <!-- <p class="card-text">
+        <small class="text-muted">{{ getPostTags(post.tags) }}</small>
+      </p> -->
+    <!-- <a
+        class="badge badge-info"
+        (click)="open(profileModal); getProfileFromService(post.user)"
+      > -->
+    <a class="badge badge-info"> Owner Profile </a>
+  </div>
+
+  <div class="card-footer">
+    <!-- <div *ngIf="post.updateDate; then thenBlock; else elseBlock"></div> -->
+  </div>
+</div>

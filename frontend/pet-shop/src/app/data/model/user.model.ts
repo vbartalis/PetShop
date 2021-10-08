@@ -5,11 +5,11 @@ import { Role } from './role.model';
 export class User {
   constructor(
     public id: number,
-    public username: string,
-    public isLocked: boolean,
-    public expiration: Date,
-    public profile: Profile,
-    public roles: Role[],
+    public username?: string,
+    public isLocked?: boolean,
+    public expiration?: Date,
+    public profile?: Profile,
+    public roles?: Role[],
     public password?: string
   ) {}
 
@@ -19,8 +19,12 @@ export class User {
       value.username,
       value.isLocked,
       value.expiration,
-      Profile.adapt(value.profile),
+      Profile.adaptEmpty(value.profile),
       value.roles.map((i) => Role.adapt(i))
     );
+  }
+
+  static adaptEmpty(value: ApiUser): User {
+    return new User(value.id);
   }
 }

@@ -24,7 +24,7 @@ export class Post {
       value.creationDate,
       value.updateDate,
       value.isPublic,
-      User.adapt(value.user),
+      User.adaptEmpty(value.user),
       PostImage.adapt(value.postImage),
       value.tags.map((i) => Tag.adapt(i))
     );
