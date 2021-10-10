@@ -10,9 +10,9 @@ export class Profile {
     public address?: string,
     public description?: string,
     public joinDate?: Date,
-    public profileImage?: ProfileImage,
-    public user?: User
-  ) {}
+    public profileImage?: ProfileImage
+  ) // public user?: User
+  {}
 
   static adapt(value: ApiProfile): Profile {
     return new Profile(
@@ -22,8 +22,8 @@ export class Profile {
       value.address,
       value.description,
       value.joinDate,
-      ProfileImage.adapt(value.profileImage),
-      User.adaptEmpty(value.user)
+      ProfileImage.adapt(value.profileImage)
+      // User.adaptEmpty(value.user)
     );
   }
 

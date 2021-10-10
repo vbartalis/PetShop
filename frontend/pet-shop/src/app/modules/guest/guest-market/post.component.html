@@ -1,19 +1,37 @@
-<div class="card">
-  <div class="card-body">
-    <h4 class="card-title" id="card-title">{{ post.title }}</h4>
+<div class="card" *ngIf="post">
+  <!-- <div class="card-header"></div> -->
 
-    <p class="card-text">{{ post.description }}</p>
-    <!-- <p class="card-text">
-        <small class="text-muted">{{ getPostTags(post.tags) }}</small>
-      </p> -->
+  <div class="card-body">
+    <label class="card-title h4" id="modal-basic-title">{{ post.title }} </label>
+    <!-- <img *ngIf="postImageSrc" src="{{ postImageSrc }}" class="card-img-bottom" /> -->
+    <hr />
+    <label class="card-text">{{ post.description }} </label>
+    <hr />
+    <label>
+      <span class="align-middle h6 mr-1">Tags:</span>
+      <div class="badge badge-light mr-1" *ngFor="let tag of post.tags">
+        <span class="align-middle h6" ngbTooltip="{{ tag.description }}">
+          {{ tag.name }}
+        </span>
+      </div>
+    </label>
+
     <!-- <a
         class="badge badge-info"
         (click)="open(profileModal); getProfileFromService(post.user)"
       > -->
-    <a class="badge badge-info"> Owner Profile </a>
+    <br />
+    <label>
+      <a class="badge badge-secondary align-middle" (click)="openProfile()">
+        <span class="align-middle h6">Publisher</span>
+      </a>
+    </label>
   </div>
 
   <div class="card-footer">
-    <!-- <div *ngIf="post.updateDate; then thenBlock; else elseBlock"></div> -->
+    <small *ngIf="post.creationDate"> {{ 'Created: ' + convertDate(post.creationDate) }} </small>
+    <small *ngIf="post.creationDate !== post.updateDate" class="text-muted float-right">
+      {{ 'Last updated: ' + convertDate(post.updateDate) }}
+    </small>
   </div>
 </div>

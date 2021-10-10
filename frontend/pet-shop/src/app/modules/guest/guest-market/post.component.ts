@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Post } from '@data/model/post.model';
 import { PostDataService } from '@data/service/post-data.service';
-import { map } from 'lodash';
-import { concatMap } from 'rxjs/operators';
+import { ProfileDataService } from '@data/service/profile-data.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProfileModalComponent } from './components/profile-modal/profile-model.component';
 
 @Component({
   selector: 'app-post',
@@ -13,11 +14,13 @@ import { concatMap } from 'rxjs/operators';
 })
 export class PostComponent implements OnInit {
   post: Post;
+  postImageSrc: string;
 
   constructor(
     private postDataService: PostDataService,
+    private profileDataService: ProfileDataService,
     private datePipe: DatePipe,
-    private router: Router,
+    private modalService: NgbModal,
     private activeRoute: ActivatedRoute
   ) {}
 
@@ -27,7 +30,16 @@ export class PostComponent implements OnInit {
 
   getPost() {
     this.activeRoute.params.subscribe((params) => {
-      this.postDataService.getPostById(params.get('id')).subscribe((post) => (this.post = post));
+      this.postDataService.getPostById(params['id']).subscribe((post) => (this.post = post));
     });
+  }
+
+  convertDate(date: Date): string {
+    return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '??';
+  }
+
+  openProfile(): void {
+    const modalref = this.modalService.open(ProfileModalComponent);
+    modalref.componentInstance.profile = this.post.user.profile;
   }
 }

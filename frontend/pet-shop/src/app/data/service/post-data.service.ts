@@ -27,11 +27,8 @@ export class PostDataService {
   }
 
   getPostById(id: number): Observable<Post> {
-    const url = `${environment.apiUrl}/post`;
-    let params = new HttpParams();
-    params = params.append('id', JSON.stringify(id));
-
-    return this.http.get<ApiPost>(url, { params }).pipe(
+    const url = `${environment.apiUrl}/post/`;
+    return this.http.get<ApiPost>(url + id).pipe(
       map((response) => {
         return Post.adapt(response);
       })
