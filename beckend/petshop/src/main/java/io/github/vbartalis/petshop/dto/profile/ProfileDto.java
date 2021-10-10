@@ -21,5 +21,5 @@ public class ProfileDto {
     private Date joinDate;
 
     private ProfileImageEmptyDto profileImage;
-    private UserEmptyDto user;
+//    private UserEmptyDto user;
 }
