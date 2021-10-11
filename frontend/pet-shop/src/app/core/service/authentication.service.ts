@@ -4,16 +4,27 @@ import { Router } from '@angular/router';
 import { ApiCredentials } from '@data/api/api-credentials';
 import { Credentials } from '@data/model/credentials.model';
 import { Authentication } from '@data/model/authentication.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { GlobalService } from './global.service';
+import { User } from '@data/model/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private router: Router, private globalService: GlobalService, private http: HttpClient) {}
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
+
+  constructor(private router: Router, private globalService: GlobalService, private http: HttpClient) {
+    const credentialsKey = environment.credentialsKey;
+    const currentUser = localStorage.getItem(credentialsKey);
+    if (currentUser) {
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(currentUser));
+    }
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
   login(authentication: Authentication): Observable<any> {
     const url = `${environment.apiUrl}/auth/signin`;

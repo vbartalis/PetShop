@@ -1,1 +1,48 @@
-<p>profile works!</p>
+<div class="card mb-3">
+  <!-- <imgclass="card-img-top img-responsive" [src]="postFrontImage" alt="Card image cap" /> -->
+  <div class="card-body">
+    <h4 class="card-title">Profile Image</h4>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <form [formGroup]="profileForm" (ngSubmit)="submit($event)">
+      <h4 class="card-title">Profile</h4>
+      <div class="form-group">
+        <label for="inputName" class="card-text">Name</label>
+        <input type="text" class="form-control" id="inputName" formControlName="nameControl" />
+      </div>
+      <div class="form-group">
+        <label for="inputEmail" class="card-text">Email</label>
+        <input type="text" class="form-control" formControlName="emailControl" id="inputEmail" />
+      </div>
+      <div class="form-group">
+        <label for="inputAddress" class="card-text">Address</label>
+        <input type="text" class="form-control" formControlName="addressControl" id="inputAddress" />
+      </div>
+      <div class="form-group">
+        <label for="inputDescription" class="card-text">Description</label>
+        <input type="text" class="form-control" formControlName="descriptionControl" id="inputDescription" />
+      </div>
+
+      <button type="submit" class="btn btn-info m-3">Save changes</button>
+      <button type="button" class="btn btn-secondary m-3" (click)="resetInput()">Reset changes</button>
+    </form>
+  </div>
+  <div *ngIf="profile && profile.joinDate" class="card-footer">
+    <small>{{ 'Joined: ' + convertDate(profile.joinDate) }}</small>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <h4 class="card-title">Account Details</h4>
+    <div *ngIf="user && user.username">
+      <label class="card-text">{{ 'Username: ' + user.username }}</label>
+    </div>
+    <div *ngIf="user && user.expiration">
+      <label class="card-text">{{ 'Expiration Date: ' + convertDate(user.expiration) }}</label>
+    </div>
+  </div>
+</div>

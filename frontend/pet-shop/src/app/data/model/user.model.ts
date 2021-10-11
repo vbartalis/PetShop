@@ -16,7 +16,7 @@ export class User {
   static adapt(value: ApiUser): User {
     return new User(
       value.id,
-      Profile.adaptEmpty(value.profile),
+      Profile.adapt(value.profile),
       value.username,
       value.isLocked,
       value.expiration,

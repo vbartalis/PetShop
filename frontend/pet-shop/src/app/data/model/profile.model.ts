@@ -5,14 +5,13 @@ import { User } from './user.model';
 export class Profile {
   constructor(
     public id: number,
-    public name?: string,
-    public email?: string,
-    public address?: string,
-    public description?: string,
-    public joinDate?: Date,
-    public profileImage?: ProfileImage
-  ) // public user?: User
-  {}
+    public name: string,
+    public email: string,
+    public address: string,
+    public description: string,
+    public joinDate: Date,
+    public profileImage?: ProfileImage // public user?: User
+  ) {}
 
   static adapt(value: ApiProfile): Profile {
     return new Profile(
@@ -22,12 +21,27 @@ export class Profile {
       value.address,
       value.description,
       value.joinDate,
-      ProfileImage.adapt(value.profileImage)
+      value.profileImage ? ProfileImage.adapt(value.profileImage) : new ProfileImage()
       // User.adaptEmpty(value.user)
     );
   }
 
-  static adaptEmpty(value: ApiProfile): Profile {
-    return new Profile(value.id);
+  // static adaptEmpty(value: ApiProfile): Profile {
+  //   return new Profile(
+  //     value.id
+  //     );
+  // }
+
+  static adaptForApi(value: Profile): ApiProfile {
+    return new ApiProfile(
+      value.id,
+      value.name,
+      value.email,
+      value.address,
+      value.description,
+      value.joinDate,
+      null,
+      null
+    );
   }
 }

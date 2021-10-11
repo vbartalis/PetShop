@@ -12,9 +12,21 @@ import { environment } from 'src/environments/environment';
 export class ProfileDataService {
   constructor(private http: HttpClient) {}
 
-  getProfileById(id: number): Observable<Profile> {
+  updateProfile(id: number, profile: Profile): Observable<Profile> {
     const url = `${environment.apiUrl}/profile/`;
     return this.http.get<ApiProfile>(url + id).pipe(
+      map((response) => {
+        return Profile.adapt(response);
+      })
+    );
+  }
+
+  getProfileById(id: number): Observable<Profile> {
+    const url = `${environment.apiUrl}/profile/`;
+
+    const body = Profile.adapt;
+
+    return this.http.patch<ApiProfile>(url + id).pipe(
       map((response) => {
         return Profile.adapt(response);
       })
