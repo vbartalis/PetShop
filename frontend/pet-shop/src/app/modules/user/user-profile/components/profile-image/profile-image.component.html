@@ -1,1 +1,20 @@
-<p>profile-image works!</p>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">New Profile Image</h4>
+    <div class="custom-file">
+      <input
+        class="custom-file-input {{ !validType ? 'is-invalid' : '' }}"
+        type="file"
+        accept="image/jpeg"
+        (change)="onFileSelected($event)"
+      />
+      <label class="custom-file-label" for="customFile">{{ file ? file.name : 'Choose file' }}</label>
+      <div class="invalid-feedback {{ !validType ? 'd-block' : '' }}">
+        Please upload only <b>{{ allowedExtensions }}</b> files!
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button (click)="onSave()" class="btn btn-success" [disabled]="disableSave()">Save changes</button>
+  </div>
+</div>

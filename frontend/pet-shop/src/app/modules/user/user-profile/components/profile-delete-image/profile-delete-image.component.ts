@@ -1,16 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProfileImageDataService } from '@data/service/profile-image-data.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile-delete-image',
   templateUrl: './profile-delete-image.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class ProfileDeleteImageComponent implements OnInit {
+  submitted: boolean;
+  errorMessage: string;
 
-  constructor() { }
+  @Input() profileImageId: number;
 
-  ngOnInit(): void {
+  constructor(public activeModal: NgbActiveModal, private profileImageDataService: ProfileImageDataService) {
+    this.submitted = false;
   }
 
+  ngOnInit(): void {
+    this.errorMessage = '';
+  }
+
+  onDelete(): void {
+    this.profileImageDataService.deleteProfileImage(this.profileImageId).subscribe(() => {
+      this.activeModal.close('success');
+    });
+  }
 }
