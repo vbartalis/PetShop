@@ -6,10 +6,14 @@ import io.github.vbartalis.petshop.exception.custom.ImageWriterException;
 import io.github.vbartalis.petshop.repository.entityRepository.PostImageRepository;
 import io.github.vbartalis.petshop.service.PostImageService;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -34,7 +38,16 @@ public class PostImageServiceImpl implements PostImageService {
         if (!Objects.equals(multipartFile.getContentType(), "image/jpeg"))
             throw new FileTypeNotSupportedException();
         try {
-            postImage.setData(multipartFile.getBytes());
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            BufferedImage image = ImageIO.read(multipartFile.getInputStream());
+
+            if (image.getHeight()>1024 || image.getWidth()>1024){
+                Thumbnails.of(multipartFile.getInputStream()).size(1024, 1024).toOutputStream(outputStream);
+            } else {
+                multipartFile.getInputStream().transferTo(outputStream);
+            }
+
+            postImage.setData(outputStream.toByteArray());
             postImageRepository.save(postImage);
         } catch (IOException e) {
             throw new ImageWriterException();

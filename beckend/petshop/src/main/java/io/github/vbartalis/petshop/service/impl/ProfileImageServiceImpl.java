@@ -6,10 +6,13 @@ import io.github.vbartalis.petshop.exception.custom.ImageWriterException;
 import io.github.vbartalis.petshop.repository.entityRepository.ProfileImageRepository;
 import io.github.vbartalis.petshop.service.ProfileImageService;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -37,7 +40,9 @@ public class ProfileImageServiceImpl implements ProfileImageService {
         }
 
         try {
-            profileImage.setData(multipartFile.getBytes());
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            Thumbnails.of(multipartFile.getInputStream()).crop(Positions.CENTER).size(200,200).toOutputStream(outputStream);
+            profileImage.setData(outputStream.toByteArray());
             profileImageRepository.save(profileImage);
         } catch (IOException e) {
             throw new ImageWriterException();
