@@ -13,9 +13,9 @@ import { PostDataService } from '@data/service/post-data.service';
   styles: [],
 })
 export class MarketComponent implements OnInit {
-  postPage: PostPage | undefined;
+  postPage: PostPage;
 
-  postPageCriteria: PostPageCriteria = new PostPageCriteria(0, 10);
+  postPageCriteria: PostPageCriteria = new PostPageCriteria(1, 10);
   postSearchCriteria: PostSearchCriteria = new PostSearchCriteria();
 
   constructor(

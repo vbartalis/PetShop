@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-posts',
-  templateUrl: './posts.component.html',
+  selector: 'app-post-form',
+  templateUrl: './post-form.component.html',
   styles: [
   ]
 })
-export class PostsComponent implements OnInit {
+export class PostFormComponent implements OnInit {
 
   constructor() { }
 
