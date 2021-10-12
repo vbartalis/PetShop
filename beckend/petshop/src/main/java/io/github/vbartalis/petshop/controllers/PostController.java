@@ -7,8 +7,10 @@ import io.github.vbartalis.petshop.security.methodlevel.IsUser;
 import io.github.vbartalis.petshop.service.impl.PostServiceImpl;
 import io.github.vbartalis.petshop.util.AuthenticationContext;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
+import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import javax.validation.constraints.NotNull;
 /**
  * This class serves as RestController.
  */
+@Slf4j
 @RestController
 @RequestMapping("/post")
 public class PostController {
@@ -55,6 +58,7 @@ public class PostController {
             security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
     public ResponseEntity<Page<PostDto>> getAllPosts(PostPageCriteria postPageCriteria, PostSearchCriteria postSearchCriteria) {
+        log.warn(Json.pretty(postPageCriteria));
         boolean isOwner = false;
         boolean isAdmin = authenticationContext.isAdmin();
         try {

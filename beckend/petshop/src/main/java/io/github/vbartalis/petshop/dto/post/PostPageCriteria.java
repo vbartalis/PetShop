@@ -10,10 +10,15 @@ import org.springframework.data.domain.Sort;
 @Getter
 @Setter
 public class PostPageCriteria {
-    private int pageNumber = 0;
-    private int pageSize = 10;
-    private Sort.Direction sortDirection = Sort.Direction.ASC;
+    private Integer pageNumber = 0;
+    private Integer pageSize = 10;
+    private String sortDirection = "ASC";
     private String sortBy = "creationDate";
+
+    public Sort.Direction getSortDirection() {
+        if (sortDirection.equals("ASC")) return Sort.Direction.ASC;
+        else return Sort.Direction.DESC;
+    }
 
     public String getSortBy() {
         switch (sortBy) {

@@ -1,7 +1,7 @@
 package io.github.vbartalis.petshop.repository.criteriaRepository;
 
 
-import io.github.vbartalis.petshop.dto.user.UserPage;
+import io.github.vbartalis.petshop.dto.user.UserPageCriteria;
 import io.github.vbartalis.petshop.dto.user.UserSearchCriteria;
 import io.github.vbartalis.petshop.entity.User;
 import org.springframework.data.domain.*;
@@ -37,7 +37,7 @@ public class UserCriteriaRepository {
      * @param userSearchCriteria The criteria by which the returned page of entities should be filtered.
      * @return Returns a page of {@code User} entities.
      */
-    public Page<User> findAllWithFilters(UserPage userPage, UserSearchCriteria userSearchCriteria) {
+    public Page<User> findAllWithFilters(UserPageCriteria userPage, UserSearchCriteria userSearchCriteria) {
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
         Root<User> userRoot = criteriaQuery.from(User.class);
         Predicate predicate = getPredicate(userSearchCriteria, userRoot);
@@ -81,7 +81,7 @@ public class UserCriteriaRepository {
      * @param criteriaQuery The {@code CriteriaQuery<User>} object.
      * @param userRoot      The {@code Root<User>} object.
      */
-    private void setOrder(UserPage userPage,
+    private void setOrder(UserPageCriteria userPage,
                           CriteriaQuery<User> criteriaQuery,
                           Root<User> userRoot) {
         if (userPage.getSortDirection().equals(Sort.Direction.ASC)) {
@@ -97,7 +97,7 @@ public class UserCriteriaRepository {
      * @param userPage The {@code UserPage} object.
      * @return Returns a {@code Pageable} object.
      */
-    private Pageable getPageable(UserPage userPage) {
+    private Pageable getPageable(UserPageCriteria userPage) {
         Sort sort = Sort.by(userPage.getSortDirection(), userPage.getSortBy());
         return PageRequest.of(userPage.getPageNumber(), userPage.getPageSize(), sort);
     }

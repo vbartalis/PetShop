@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.service;
 
-import io.github.vbartalis.petshop.dto.user.UserPage;
+import io.github.vbartalis.petshop.dto.user.UserPageCriteria;
 import io.github.vbartalis.petshop.dto.user.UserSearchCriteria;
 import io.github.vbartalis.petshop.entity.User;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,7 @@ public interface UserService {
      * @param userSearchCriteria The criteria by which the returned page of entities should be filtered.
      * @return Returns a page of {@code User} entities.
      */
-    Page<User> getAllUsers(UserPage userPage, UserSearchCriteria userSearchCriteria);
+    Page<User> getAllUsers(UserPageCriteria userPage, UserSearchCriteria userSearchCriteria);
 
     /**
      * This method creates a {@code User} entity.

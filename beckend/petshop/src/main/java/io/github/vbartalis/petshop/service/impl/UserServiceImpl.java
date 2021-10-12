@@ -1,6 +1,6 @@
 package io.github.vbartalis.petshop.service.impl;
 
-import io.github.vbartalis.petshop.dto.user.UserPage;
+import io.github.vbartalis.petshop.dto.user.UserPageCriteria;
 import io.github.vbartalis.petshop.dto.user.UserSearchCriteria;
 import io.github.vbartalis.petshop.entity.User;
 import io.github.vbartalis.petshop.exception.custom.InvalidPasswordException;
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
      * This method is a {@code getAllUsers} implementation.
      */
     @Override
-    public Page<User> getAllUsers(UserPage userPage, UserSearchCriteria userSearchCriteria) {
+    public Page<User> getAllUsers(UserPageCriteria userPage, UserSearchCriteria userSearchCriteria) {
         return userCriteriaRepository.findAllWithFilters(userPage, userSearchCriteria);
     }
 

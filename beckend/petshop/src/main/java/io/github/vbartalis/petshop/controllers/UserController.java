@@ -50,7 +50,7 @@ public class UserController {
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsAdmin
     @GetMapping
-    public ResponseEntity<Page<UserDto>> getAllUsers(UserPage userPage, UserSearchCriteria userSearchCriteria) {
+    public ResponseEntity<Page<UserDto>> getAllUsers(UserPageCriteria userPage, UserSearchCriteria userSearchCriteria) {
         Page<User> responsePost = userService.getAllUsers(userPage, userSearchCriteria);
         Page<UserDto> response = converter.convertToPageDto(responsePost, UserDto.class);
         return new ResponseEntity<>(response, HttpStatus.OK);
