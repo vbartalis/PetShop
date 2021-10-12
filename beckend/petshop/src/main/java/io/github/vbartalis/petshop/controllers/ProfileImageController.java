@@ -6,6 +6,7 @@ import io.github.vbartalis.petshop.service.impl.ProfileImageServiceImpl;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * This class serves as RestController.
  */
+@Slf4j
 @RestController
 @RequestMapping("/profileimage")
 public class ProfileImageController {
@@ -83,8 +86,12 @@ public class ProfileImageController {
     @GetMapping("/{id}")
     public String getProfileImageById(@PathVariable("id") @NotNull Long id) {
         ProfileImage response = profileImageService.getProfileImageById(id);
-        return "data:image/jpeg;base64," +
-                StringUtils.newStringUtf8(Base64.encodeBase64(response.getData()));
+        if (Objects.nonNull(response.getData())) {
+            return "data:image/jpeg;base64," +
+                    StringUtils.newStringUtf8(Base64.encodeBase64(response.getData()));
+        } else {
+            return null;
+        }
 
     }
 }

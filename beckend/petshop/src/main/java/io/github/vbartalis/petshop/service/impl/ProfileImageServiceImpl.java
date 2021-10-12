@@ -63,7 +63,8 @@ public class ProfileImageServiceImpl implements ProfileImageService {
     public ProfileImage getProfileImageById(long id) {
         ProfileImage profileImage = profileImageRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("ProfileImage by id " + id + " not found"));
-        if (profileImage.getData() == null) throw new NoSuchElementException("ProfileImage by id " + id + " not found");
-        else return profileImage;
+//        if (profileImage.getData() == null) throw new NoSuchElementException("ProfileImage by id " + id + " not found");
+//        else
+            return profileImage;
     }
 }

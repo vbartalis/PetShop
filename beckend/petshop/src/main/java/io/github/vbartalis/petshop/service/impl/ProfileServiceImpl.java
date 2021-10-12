@@ -42,8 +42,7 @@ public class ProfileServiceImpl implements ProfileService {
      */
     @Override
     public Profile getProfileById(long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Profile by userId " + id + " not found"))
-                .getProfile();
+        return profileRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Profile by id " + id + " not found"));
     }
 }

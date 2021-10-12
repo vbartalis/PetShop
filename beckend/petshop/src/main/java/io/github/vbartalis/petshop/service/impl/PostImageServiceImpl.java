@@ -60,7 +60,8 @@ public class PostImageServiceImpl implements PostImageService {
     public PostImage getPostImageById(long id) {
         PostImage postImage = postImageRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("PostImage by id " + id + " not found"));
-        if (postImage.getData() == null) throw new NoSuchElementException("PostImage by id " + id + " not found");
-        else return postImage;
+//        if (postImage.getData() == null) throw new NoSuchElementException("PostImage by id " + id + " not found");
+//        else
+            return postImage;
     }
 }

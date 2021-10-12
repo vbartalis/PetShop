@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * This class serves as RestController.
@@ -92,8 +93,12 @@ public class PostImageController {
         boolean isAdmin = authenticationContext.isAdmin();
         PostImage response = postImageService.getPostImageById(id);
         if (response.getPost().getIsPublic() || isAdmin || isOwner) {
-            return "data:image/jpeg;base64,"
-                    + StringUtils.newStringUtf8(Base64.encodeBase64(response.getData()));
+            if (Objects.nonNull(response.getData())) {
+                return "data:image/jpeg;base64," +
+                        StringUtils.newStringUtf8(Base64.encodeBase64(response.getData()));
+            } else {
+                return null;
+            }
         } else {
             throw new AccessDeniedException("Access denied to Post by id " + id);
         }
