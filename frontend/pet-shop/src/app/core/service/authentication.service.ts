@@ -22,8 +22,8 @@ export class AuthenticationService {
     const currentUser = localStorage.getItem(credentialsKey);
     if (currentUser) {
       this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(currentUser));
+      this.currentUser = this.currentUserSubject.asObservable();
     }
-    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   login(authentication: Authentication): Observable<any> {
@@ -44,6 +44,6 @@ export class AuthenticationService {
   unauthorizedAccess(): void {
     // console.log('unauthorizedAccess');
     this.logout();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/authentication/login']);
   }
 }

@@ -20,4 +20,15 @@ export class UserDataService {
       })
     );
   }
+
+  // todo
+  updateUserPassword(user: User): Observable<User> {
+    const url = `${environment.apiUrl}/user/`;
+    const body = { password: user.password };
+    return this.http.patch<ApiUser>(url + user.id, body).pipe(
+      map((response) => {
+        return User.adapt(response);
+      })
+    );
+  }
 }
