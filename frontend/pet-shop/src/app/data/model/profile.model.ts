@@ -10,7 +10,7 @@ export class Profile {
     public address: string,
     public description: string,
     public joinDate: Date,
-    public profileImage?: ProfileImage // public user?: User
+    public profileImageId?: number // public user?: User
   ) {}
 
   static adapt(value: ApiProfile): Profile {
@@ -21,27 +21,11 @@ export class Profile {
       value.address,
       value.description,
       value.joinDate,
-      value.profileImage ? ProfileImage.adapt(value.profileImage) : new ProfileImage()
-      // User.adaptEmpty(value.user)
+      value.profileImage?.id
     );
   }
 
-  // static adaptEmpty(value: ApiProfile): Profile {
-  //   return new Profile(
-  //     value.id
-  //     );
-  // }
-
   static adaptForApi(value: Profile): ApiProfile {
-    return new ApiProfile(
-      value.id,
-      value.name,
-      value.email,
-      value.address,
-      value.description,
-      value.joinDate,
-      null,
-      null
-    );
+    return new ApiProfile(value.id, value.name, value.email, value.address, value.description, value.joinDate);
   }
 }

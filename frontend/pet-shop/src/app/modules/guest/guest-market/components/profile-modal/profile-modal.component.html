@@ -6,16 +6,16 @@
     <!-- <div class="col-md-auto">
         <img #profileImage class="rounded-circle" src="{{ profileImageSrc }}" />
       </div> -->
-    <div class="col-md text-center text-md-left">
+    <div class="col-md text-center text-md-left" *ngIf="profile">
       <p class="h5">
         {{ profile.name }}
       </p>
-      <p *ngIf="profile.description">{{ profile.description }}</p>
-      <div *ngIf="profile.email">{{ 'Email: ' + profile.email }}<br /></div>
-      <div *ngIf="profile.address">{{ 'Address: ' + profile.address }}<br /></div>
+      <p>{{ profile.description }}</p>
+      <div>{{ 'Email: ' + profile.email }}<br /></div>
+      <div>{{ 'Address: ' + profile.address }}<br /></div>
     </div>
   </div>
 </div>
 <div class="card-footer">
-  <div *ngIf="profile.joinDate">{{ 'Joined: ' + convertDate(profile.joinDate) }}<br /></div>
+  <div *ngIf="profile">{{ 'Joined: ' + convertDate(profile.joinDate) }}<br /></div>
 </div>

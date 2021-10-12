@@ -9,7 +9,7 @@ export interface ApiPost {
   creationDate: Date;
   updateDate: Date;
   isPublic: boolean;
+  tags: ApiTag[];
   user: ApiUser;
   postImage: ApiPostImage;
-  tags: ApiTag[];
 }

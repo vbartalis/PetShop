@@ -11,9 +11,10 @@ export class Post {
     public creationDate: Date,
     public updateDate: Date,
     public isPublic: boolean,
-    public user: User,
-    public postImage: PostImage,
-    public tags: Tag[]
+    public tags: Tag[],
+    public postImageId?: number,
+    public userId?: number,
+    public profileId?: number
   ) {}
 
   static adapt(value: ApiPost): Post {
@@ -24,9 +25,10 @@ export class Post {
       value.creationDate,
       value.updateDate,
       value.isPublic,
-      User.adaptEmpty(value.user),
-      PostImage.adapt(value.postImage),
-      value.tags.map((i) => Tag.adapt(i))
+      value.tags.map((i) => Tag.adapt(i)),
+      value.postImage.id,
+      value.user.id,
+      value.user.profile.id
     );
   }
 }

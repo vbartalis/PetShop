@@ -12,6 +12,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProfileModalComponent implements OnInit {
   @Input()
+  profileId: number;
   profile: Profile;
   profileImageSrc: string;
 
@@ -26,7 +27,7 @@ export class ProfileModalComponent implements OnInit {
   }
 
   public getProfile() {
-    this.profileDataService.getProfileById(this.profile.id).subscribe((profile) => (this.profile = profile));
+    this.profileDataService.getProfileById(this.profileId).subscribe((profile) => (this.profile = profile));
   }
 
   convertDate(date: Date): string {

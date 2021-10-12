@@ -9,7 +9,6 @@ export class ApiProfile {
     public address: string,
     public description: string,
     public joinDate: Date,
-    public profileImage?: ApiProfileImage,
-    public user?: ApiUser
+    public profileImage?: ApiProfileImage // public user?: ApiUser
   ) {}
 }

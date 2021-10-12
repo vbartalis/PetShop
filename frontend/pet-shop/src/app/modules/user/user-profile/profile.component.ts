@@ -39,9 +39,9 @@ export class ProfileComponent implements OnInit {
     this.userService
       .getCurrentUser()
       .pipe(
-        concatMap((result) => {
+        concatMap((result: User) => {
           this.user = result;
-          return this.profileService.getProfileById(this.user.profile.id);
+          return this.profileService.getProfileById(this.user.profileId!);
         })
       )
       .subscribe((result) => {
@@ -54,11 +54,16 @@ export class ProfileComponent implements OnInit {
     return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '??';
   }
 
-  resetInput(): void {}
+  resetInput(): void {
+    this.setUserAndProfileToForm();
+  }
 
-  submit(event: any): void {
+  submit(): void {
     this.setFormToProfile();
-    this.profileService;
+    this.profileService.updateProfile(this.profile).subscribe((result) => {
+      this.profile = result;
+      this.setUserAndProfileToForm();
+    });
   }
 
   setUserAndProfileToForm(): void {

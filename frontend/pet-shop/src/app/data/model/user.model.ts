@@ -5,26 +5,22 @@ import { Role } from './role.model';
 export class User {
   constructor(
     public id: number,
-    public profile: Profile,
-    public username?: string,
-    public isLocked?: boolean,
-    public expiration?: Date,
-    public roles?: Role[],
+    public username: string,
+    public isLocked: boolean,
+    public expiration: Date,
+    public roles: Role[],
+    public profileId?: number,
     public password?: string
   ) {}
 
   static adapt(value: ApiUser): User {
     return new User(
       value.id,
-      Profile.adapt(value.profile),
       value.username,
       value.isLocked,
       value.expiration,
-      value.roles.map((i) => Role.adapt(i))
+      value.roles.map((i) => Role.adapt(i)),
+      value.profile.id
     );
-  }
-
-  static adaptEmpty(value: ApiUser): User {
-    return new User(value.id, value.profile);
   }
 }

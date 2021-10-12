@@ -40,6 +40,6 @@ export class PostComponent implements OnInit {
 
   openProfile(): void {
     const modalref = this.modalService.open(ProfileModalComponent);
-    modalref.componentInstance.profile = this.post.user.profile;
+    modalref.componentInstance.profileId = this.post.profileId;
   }
 }

@@ -7,6 +7,6 @@ export interface ApiUser {
   password: string;
   isLocked: boolean;
   expiration: Date;
-  profile: ApiProfile;
   roles: ApiRole[];
+  profile: ApiProfile;
 }
