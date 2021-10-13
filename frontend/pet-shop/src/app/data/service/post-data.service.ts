@@ -47,4 +47,29 @@ export class PostDataService {
       })
     );
   }
+
+  deletePost(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/post/`;
+    return this.http.delete(url + id);
+  }
+
+  createPost(post: Post): Observable<Post> {
+    const url = `${environment.apiUrl}/post`;
+    const body = Post.adaptForApi(post);
+    return this.http.post<ApiPost>(url, body).pipe(
+      map((response) => {
+        return Post.adapt(response);
+      })
+    );
+  }
+
+  updatePost(post: Post): Observable<Post> {
+    const url = `${environment.apiUrl}/post/`;
+    const body = Post.adaptForApi(post);
+    return this.http.put<ApiPost>(url + post.id, body).pipe(
+      map((response) => {
+        return Post.adapt(response);
+      })
+    );
+  }
 }

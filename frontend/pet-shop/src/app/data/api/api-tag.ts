@@ -1,5 +1,3 @@
-export interface ApiTag {
-  id: number;
-  name: string;
-  description: string;
+export class ApiTag {
+  constructor(public id: number, public name: string, public description: string) {}
 }
