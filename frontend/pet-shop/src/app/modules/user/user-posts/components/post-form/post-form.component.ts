@@ -7,8 +7,10 @@ import { PostDataService } from '@data/service/post-data.service';
 import { TagDataService } from '@data/service/tag-data.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { clone, isEqual } from 'lodash';
 import { Observable, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { BlankValidator } from '../../validator/blank.validator';
 
 @Component({
   selector: 'app-post-form',
@@ -20,8 +22,9 @@ export class PostFormComponent implements OnInit {
 
   form: FormGroup;
   id: number;
-  post: Post;
   tags: Tag[];
+  post: Post = new Post(null!, null!, null!, null!, null!, null!, null!);
+  postTags: Tag[] = [];
   mode: string;
   submitted: boolean;
 
@@ -35,8 +38,8 @@ export class PostFormComponent implements OnInit {
     this.submitted = false;
     this.mode = '';
     this.form = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', Validators.maxLength(500)],
+      title: ['', [Validators.required, Validators.maxLength(50), BlankValidator.noBlank]],
+      description: ['', [Validators.required, Validators.maxLength(255), BlankValidator.noBlank]],
       isPublic: [false, Validators.required],
       tagsArray: new FormArray([]),
       tag: '',
@@ -72,7 +75,10 @@ export class PostFormComponent implements OnInit {
     if (this.post.description) this.form.controls['description'].setValue(this.post.description);
     if (this.post.isPublic) this.form.controls['isPublic'].setValue(this.post.isPublic);
 
-    this.post.tags.forEach((tag: Tag, i: number) => {
+    this.postTags = clone(this.post.tags);
+
+    this.tagsArray.clear();
+    this.postTags.forEach((tag: Tag, i: number) => {
       this.tagsArray.push(
         this.formBuilder.group({
           id: '',
@@ -91,14 +97,23 @@ export class PostFormComponent implements OnInit {
     this.post.title = this.form.controls['title'].value;
     this.post.description = this.form.controls['description'].value;
     this.post.isPublic = this.form.controls['isPublic'].value;
+    this, (this.post.tags = this.postTags);
   }
 
   disableSubmit(): boolean {
-    return this.form.invalid || this.submitted === true || this.form.pristine;
+    return this.form.invalid || this.submitted === true || (this.form.pristine && this.isClean());
   }
 
   disableReset(): boolean {
-    return this.form.pristine || this.submitted === true;
+    return this.submitted === true || (this.form.pristine && this.isClean());
+  }
+
+  isClean(): boolean {
+    if (isEqual(this.post.tags, this.postTags)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   onSubmit(): void {
@@ -155,13 +170,34 @@ export class PostFormComponent implements OnInit {
     const tag = $event.item;
 
     // if tag is not already in post then push it
-    if (!this.post.tags.some((t) => t.id === tag.id)) {
-      this.post.tags.push(tag);
+    if (!this.postTags.some((t) => t.id === tag.id)) {
+      this.postTags.push(tag);
     }
+    // // if tag is not already in post then push it
+    // if (!this.post.tags.some((t) => t.id === tag.id)) {
+    //   this.post.tags.push(tag);
+    // }
     input.value = '';
   }
 
   removeTag(tag: Tag): void {
-    this.post.tags = this.post.tags.filter((t) => t.id !== tag.id);
+    this.postTags = this.postTags.filter((t) => t.id !== tag.id);
+  }
+
+  isValid(field: string): boolean {
+    let isValid = false;
+
+    // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
+    if (this.form.controls[field].touched === false) {
+      isValid = true;
+    } else if (
+      (this.form.controls[field].touched === true && this.form.controls[field].valid === true) ||
+      this.form.controls[field].pending
+    ) {
+      // If the field is touched and valid value, then it is considered as valid.
+      isValid = true;
+    }
+
+    return isValid;
   }
 }

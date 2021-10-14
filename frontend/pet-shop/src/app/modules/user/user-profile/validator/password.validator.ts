@@ -7,6 +7,7 @@ export class PasswordValidator {
     // compare is the password math
     if (password !== confirmPassword) {
       // if they don't match, set an error in our confirmPassword form control
+      //todo is this line really needed?
       (control as FormGroup).controls['confirmPassword'].setErrors({ NoPassswordMatch: true });
       return { NoPassswordMatch: true };
     }

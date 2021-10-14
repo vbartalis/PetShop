@@ -4,7 +4,18 @@
       <h4 class="card-title">Post</h4>
       <div class="form-group">
         <label for="inputTitle" class="card-text">Title</label>
-        <input type="text" class="form-control" formControlName="title" id="inputTitle" maxlength="40" value="{}" />
+        <input
+          type="text"
+          class="form-control"
+          formControlName="title"
+          id="inputTitle"
+          maxlength="40"
+          placeholder="Title"
+          [ngClass]="{ 'is-invalid': !isValid('title') }"
+        />
+        <div *ngIf="form.controls.title.errors?.noBlank" class="invalid-feedback">Cannot contain only blanks</div>
+        <div *ngIf="form.controls.title.errors?.required" class="invalid-feedback">Name is required</div>
+        <div *ngIf="form.controls.title.errors?.maxLength" class="invalid-feedback">Enter max. 50 characters</div>
       </div>
       <div class="form-group">
         <label for="inputDescription" class="card-text">Description</label>
@@ -14,9 +25,15 @@
           formControlName="description"
           id="inputDescription"
           maxlength="255"
-          value="{}"
+          placeholder="Description"
           rows="5"
+          [ngClass]="{ 'is-invalid': !isValid('description') }"
         ></textarea>
+        <div *ngIf="form.controls.description.errors?.noBlank" class="invalid-feedback">Cannot contain only blanks</div>
+        <div *ngIf="form.controls.description.errors?.required" class="invalid-feedback">Description is required</div>
+        <div *ngIf="form.controls.description.errors?.maxLength" class="invalid-feedback">
+          Enter max. 255 characters
+        </div>
       </div>
 
       <div class="form-group">
@@ -24,7 +41,7 @@
           <div class="row">
             <label class="mr-1">Tags: </label>
 
-            <label class="badge badge-secondary mr-1" *ngFor="let tag of post?.tags">
+            <label class="badge badge-secondary mr-1" *ngFor="let tag of postTags">
               <span class="align-middle h6" ngbTooltip="{{ tag.description }}">
                 {{ tag.name }}
               </span>
