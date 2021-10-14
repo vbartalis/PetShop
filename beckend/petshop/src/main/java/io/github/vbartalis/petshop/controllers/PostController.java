@@ -58,7 +58,6 @@ public class PostController {
             security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
     public ResponseEntity<Page<PostDto>> getAllPosts(PostPageCriteria postPageCriteria, PostSearchCriteria postSearchCriteria) {
-        log.warn(Json.pretty(postPageCriteria));
         boolean isOwner = false;
         boolean isAdmin = authenticationContext.isAdmin();
         try {

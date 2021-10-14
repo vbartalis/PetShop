@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService {
         Post newPost = new Post(title, description, user, creationDate, isPublic, tags);
 
         postRepository.save(newPost);
-        return postRequest;
+        return newPost;
     }
 
     /**
