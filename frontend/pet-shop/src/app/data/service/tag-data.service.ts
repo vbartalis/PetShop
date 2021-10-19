@@ -13,7 +13,22 @@ export class TagDataService {
   constructor(private http: HttpClient) {}
 
   getTags(): Observable<any> {
-    const url = `${environment.apiUrl}/tag/`;
+    const url = `${environment.apiUrl}/tag`;
     return this.http.get<ApiTag[]>(url).pipe(map((response) => response.map((t) => Tag.adapt(t))));
+  }
+
+  getTagById(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/tag/`;
+    return this.http.get<ApiTag>(url + id).pipe(map((response) => Tag.adapt(response)));
+  }
+
+  createTag(tag: Tag): Observable<any> {
+    const url = `${environment.apiUrl}/tag`;
+    return this.http.post<ApiTag>(url, Tag.adaptForApi(tag)).pipe(map((response) => Tag.adapt(response)));
+  }
+
+  updateTag(tag: Tag): Observable<any> {
+    const url = `${environment.apiUrl}/tag/`;
+    return this.http.put<ApiTag>(url + tag.id, Tag.adaptForApi(tag)).pipe(map((response) => Tag.adapt(response)));
   }
 }

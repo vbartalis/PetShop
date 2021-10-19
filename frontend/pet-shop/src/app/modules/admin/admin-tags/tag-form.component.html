@@ -1,0 +1,36 @@
+<div class="card mb-3">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card-body">
+      <h4 class="card-title">Tag</h4>
+      <div class="form-group">
+        <label for="inputName" class="card-text">Name</label>
+        <input type="text" class="form-control" formControlName="name" id="inputName" maxlength="40" value="{}" />
+      </div>
+      <div class="form-group">
+        <label for="inputDescription" class="card-text">Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          formControlName="description"
+          id="inputDescription"
+          maxlength="255"
+          value="{}"
+          rows="5"
+        ></textarea>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button
+        type="submit"
+        class="btn btn-success"
+        [ngClass]="{ 'btn-success': form.valid, 'btn-danger': !form.valid }"
+        [disabled]="disableSubmit()"
+      >
+        Save changes
+      </button>
+      <button type="button" class="btn btn-secondary m-3" (click)="resetForm()" [disabled]="disableReset()">
+        Reset changes
+      </button>
+    </div>
+  </form>
+</div>

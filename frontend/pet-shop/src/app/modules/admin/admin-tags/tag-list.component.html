@@ -1,0 +1,36 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">
+        <a
+          class="btn btn-secondary"
+          title="Create Profile"
+          [routerLink]="['/admin/tags', 'add']"
+          routerLinkActive="active"
+        >
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </a>
+      </th>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tag of tagsList">
+      <td>
+        <a
+          class="btn btn-secondary"
+          title="Edit Tag"
+          [routerLink]="['/admin/tags/edit', tag.id]"
+          routerLinkActive="active"
+        >
+          <fa-icon [icon]="faPen"></fa-icon>
+        </a>
+      </td>
+      <th>{{ tag.id }}</th>
+      <td>{{ tag.name }}</td>
+      <td>{{ tag.description }}</td>
+    </tr>
+  </tbody>
+</table>
