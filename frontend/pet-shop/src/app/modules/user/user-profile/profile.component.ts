@@ -11,7 +11,7 @@ import { UserDataService } from '@data/service/user-data.service';
 import { faKey, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { concatMap } from 'rxjs/operators';
-import { ProfileDeleteImageComponent } from './components/profile-delete-image/profile-delete-image.component';
+import { ProfileImageDeleteComponent } from './components/profile-delete-image/profile-image-delete.component';
 
 @Component({
   selector: 'app-profile',
@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
   }
 
   openDeleteProfileImageModal(profile: Profile): void {
-    const modalRef = this.modalService.open(ProfileDeleteImageComponent);
+    const modalRef = this.modalService.open(ProfileImageDeleteComponent);
     modalRef.componentInstance.profileImageId = profile.profileImageId;
     modalRef.closed.subscribe((result) => {
       if (result === 'success') {

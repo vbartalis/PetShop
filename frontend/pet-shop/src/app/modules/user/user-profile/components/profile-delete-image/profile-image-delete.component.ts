@@ -4,10 +4,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile-delete-image',
-  templateUrl: './profile-delete-image.component.html',
+  templateUrl: './profile-image-delete.component.html',
   styles: [],
 })
-export class ProfileDeleteImageComponent implements OnInit {
+export class ProfileImageDeleteComponent implements OnInit {
   submitted: boolean;
   errorMessage: string;
 

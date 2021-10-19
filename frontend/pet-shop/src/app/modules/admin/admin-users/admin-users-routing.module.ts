@@ -1,8 +1,72 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UsersComponent } from './users.component';
+import { AdminAuthGuard } from '@app/guard/admin-auth.guard';
+import { AccountComponent } from './components/account/account.component';
+import { PostFormComponent } from './components/post-form/post-form.component';
+import { PostImageComponent } from './components/post-image/post-image.component';
+import { PostListComponent } from './components/post-list/post-list.component';
+import { PostViewComponent } from './components/post-view/post-view.component';
+import { UserListComponent } from './user-list.component';
 
-const routes: Routes = [{ path: '', component: UsersComponent, data: { title: 'Users' } }];
+const routes: Routes = [
+  {
+    path: '',
+    canActivateChild: [AdminAuthGuard],
+    data: { title: 'Users', breadcrumb: 'Users' },
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'list' },
+      {
+        path: 'list',
+        component: UserListComponent,
+      },
+      {
+        path: 'account/:userId',
+        component: AccountComponent,
+        data: {
+          title: 'User Account',
+          breadcrumb: 'User Account',
+        },
+      },
+      {
+        path: 'posts/:userId',
+        data: {
+          Title: 'User Posts',
+          breadcrumb: 'User Posts',
+        },
+        children: [
+          {
+            path: '',
+            component: PostListComponent,
+          },
+          {
+            path: 'view/:postId',
+            component: PostViewComponent,
+            data: {
+              title: 'View Post',
+              breadcrumb: 'View Posts',
+            },
+          },
+          {
+            path: 'edit/:postId',
+            component: PostFormComponent,
+            data: {
+              title: 'Edit Post',
+              breadcrumb: 'Edit Posts',
+            },
+          },
+          {
+            path: 'image/:postId',
+            component: PostImageComponent,
+            data: {
+              title: 'Edit PostImage',
+              breadcrumb: 'Edit PostImage',
+            },
+          },
+        ],
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
