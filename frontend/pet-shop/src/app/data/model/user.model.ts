@@ -20,7 +20,18 @@ export class User {
       value.isLocked,
       value.expiration,
       value.roles.map((i) => Role.adapt(i)),
-      value.profile.id
+      value.profile?.id
+    );
+  }
+
+  static adaptForApi(value: User): ApiUser {
+    return new ApiUser(
+      value.id,
+      value.username,
+      value.isLocked,
+      value.expiration,
+      value.roles.map((i) => Role.adaptForApi(i)),
+      value.password
     );
   }
 }

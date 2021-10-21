@@ -1,1 +1,59 @@
-<p>users works!</p>
+<div class="text-nowrap table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">
+          <a class="btn btn-secondary" title="Edit Profile" (click)="openNewAccountModal()" routerLinkActive="active">
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </a>
+        </th>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Locked</th>
+        <th scope="col">Expiration</th>
+        <th scope="col">Roles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of userPage?.content">
+        <td>
+          <a
+            class="btn btn-secondary"
+            title="User Profile"
+            [routerLink]="['/admin/users/account', user.id]"
+            routerLinkActive="active"
+          >
+            <fa-icon [icon]="faUser"></fa-icon>
+          </a>
+          <a
+            class="btn btn-secondary mx-1"
+            title="User Posts"
+            [routerLink]="['/admin/users/posts', user.id]"
+            routerLinkActive="active"
+          >
+            <fa-icon [icon]="faSearch"></fa-icon>
+          </a>
+        </td>
+        <th scope="row">{{ user.id }}</th>
+        <td>{{ user.username }}</td>
+        <td>{{ user.isLocked }}</td>
+        <td>{{ convertDate(user.expiration) }}</td>
+        <td>
+          <label *ngFor="let role of user.roles">
+            {{ role.name + '&nbsp;' }}
+          </label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ngb-pagination
+  class="d-flex justify-content-center"
+  [pageSize]="userPageCriteria.pageSize ?? 10"
+  [collectionSize]="userPage?.totalElements ?? 0"
+  [(page)]="userPageCriteria.pageNumber"
+  (pageChange)="getUserPage()"
+  *ngIf="userPage?.totalElements ?? 0 / userPageCriteria.pageSize > 1"
+>
+</ngb-pagination>

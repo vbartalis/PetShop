@@ -1,4 +1,3 @@
-export interface ApiRole {
-  id: number;
-  name: string;
+export class ApiRole {
+  constructor(public id: number, public name: string) {}
 }

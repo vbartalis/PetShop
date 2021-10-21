@@ -15,6 +15,7 @@ import { PostListComponent } from './components/post-list/post-list.component';
 import { PostImageComponent } from './components/post-image/post-image.component';
 import { PostViewComponent } from './components/post-view/post-view.component';
 import { UserListComponent } from './user-list.component';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { UserListComponent } from './user-list.component';
     PostImageComponent,
     PostViewComponent,
   ],
-  imports: [CommonModule, AdminUsersRoutingModule],
+  imports: [CommonModule, AdminUsersRoutingModule, SharedModule],
   providers: [DatePipe],
 })
 export class AdminUsersModule {}

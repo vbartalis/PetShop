@@ -1,11 +1,11 @@
 import { ApiSort, ApiPageable } from './api-pageable';
-import { ApiPost } from './api-post';
+import { ApiUser } from './api-user';
 
-export interface ApiPostPage {
+export interface ApiUserPage {
   totalPages: number;
   totalElements: number;
   size: number;
-  content: ApiPost[];
+  content: ApiUser[];
   number: number;
   sort: ApiSort;
   first: boolean;

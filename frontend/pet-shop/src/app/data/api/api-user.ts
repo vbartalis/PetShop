@@ -1,12 +1,14 @@
 import { ApiProfile } from './api-profile';
 import { ApiRole } from './api-role';
 
-export interface ApiUser {
-  id: number;
-  username: string;
-  password: string;
-  isLocked: boolean;
-  expiration: Date;
-  roles: ApiRole[];
-  profile: ApiProfile;
+export class ApiUser {
+  constructor(
+    public id: number,
+    public username: string,
+    public isLocked: boolean,
+    public expiration: Date,
+    public roles: ApiRole[],
+    public password?: string,
+    public profile?: ApiProfile
+  ) {}
 }

@@ -1,1 +1,65 @@
-<p>post-list works!</p>
+<div class="text-nowrap table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" class="fit"></th>
+        <th scope="col" class="fit">#</th>
+        <th scope="col" class="fit">Title</th>
+        <th scope="col" class="fit">Public</th>
+        <th scope="col" class="fit">Creation Date</th>
+        <th scope="col" class="fit">Update Date</th>
+        <th scope="col">Tags</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of postPage?.content">
+        <td>
+          <a
+            class="btn btn-secondary"
+            title="View Post"
+            [routerLink]="['/admin/users/posts', post.userId, 'view', post.id]"
+            routerLinkActive="active"
+          >
+            <fa-icon [icon]="faEye"></fa-icon>
+          </a>
+          <a
+            class="btn btn-secondary mx-1"
+            title="Edit Post"
+            [routerLink]="['/admin/users/posts', post.userId, 'edit', post.id]"
+            routerLinkActive="active"
+          >
+            <fa-icon [icon]="faPen"></fa-icon>
+          </a>
+          <a
+            class="btn btn-secondary"
+            title="Edit Post Image"
+            [routerLink]="['/admin/users/posts', post.userId, 'image', post.id]"
+            routerLinkActive="active"
+          >
+            <fa-icon [icon]="faImage"></fa-icon>
+          </a>
+        </td>
+        <th scope="row">{{ post.id }}</th>
+        <td>{{ post.title }}</td>
+        <td>{{ post.isPublic }}</td>
+        <td>{{ convertDate(post.creationDate) }}</td>
+        <td>{{ convertDate(post.updateDate) }}</td>
+        <td>
+          <label *ngFor="let tag of post.tags" ngbTooltip="{{ tag.description }}">
+            {{ tag.name + '&nbsp;' }}
+          </label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ngb-pagination
+  class="d-flex justify-content-center"
+  [(page)]="postPageCriteria.pageNumber"
+  [pageSize]="postPageCriteria.pageSize ?? 10"
+  [collectionSize]="postPage?.totalElements ?? 0"
+  (pageChange)="getPostPage()"
+  *ngIf="postPage?.totalElements ?? 0 / postPageCriteria.pageSize > 1"
+>
+</ngb-pagination>

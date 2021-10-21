@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '@app/service/global.service';
-import { PostPageCriteria } from '@data/api/post-page-criteria';
-import { PostSearchCriteria } from '@data/api/post-search-criteria';
+import { PostPageCriteria } from '@data/api/page-criteria';
+import { PostSearchCriteria } from '@data/api/search-criteria';
 import { PostPage } from '@data/model/post-page';
 import { Post } from '@data/model/post.model';
 import { User } from '@data/model/user.model';

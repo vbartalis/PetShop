@@ -1,4 +1,5 @@
-import { ApiPageable, ApiPostPage, ApiSort } from '@data/api/api-post-page';
+import { ApiPostPage } from '@data/api/api-post-page';
+import { Sort, Pageable } from './pageable';
 import { Post } from './post.model';
 
 export class PostPage {
@@ -30,28 +31,5 @@ export class PostPage {
       Pageable.adapt(value.pageable),
       value.empty
     );
-  }
-}
-
-class Sort {
-  constructor(public sorted: boolean, public unsorted: boolean, public empty: boolean) {}
-
-  static adapt(value: ApiSort): Sort {
-    return new Sort(value.sorted, value.unsorted, value.empty);
-  }
-}
-
-class Pageable {
-  constructor(
-    public offset: boolean,
-    public sort: Sort,
-    public pageSize: number,
-    public pageNumber: number,
-    public unpaged: boolean,
-    public paged: boolean
-  ) {}
-
-  static adapt(value: ApiPageable): Pageable {
-    return new Pageable(value.offset, value.sort, value.pageSize, value.pageNumber, value.unpaged, value.paged);
   }
 }

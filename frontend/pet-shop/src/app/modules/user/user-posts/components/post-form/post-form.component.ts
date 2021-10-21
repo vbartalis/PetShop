@@ -97,7 +97,7 @@ export class PostFormComponent implements OnInit {
     this.post.title = this.form.controls['title'].value;
     this.post.description = this.form.controls['description'].value;
     this.post.isPublic = this.form.controls['isPublic'].value;
-    this, (this.post.tags = this.postTags);
+    this.post.tags = this.postTags;
   }
 
   disableSubmit(): boolean {
@@ -173,10 +173,6 @@ export class PostFormComponent implements OnInit {
     if (!this.postTags.some((t) => t.id === tag.id)) {
       this.postTags.push(tag);
     }
-    // // if tag is not already in post then push it
-    // if (!this.post.tags.some((t) => t.id === tag.id)) {
-    //   this.post.tags.push(tag);
-    // }
     input.value = '';
   }
 

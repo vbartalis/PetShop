@@ -2,11 +2,9 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '@app/service/authentication.service';
 import { Profile } from '@data/model/profile.model';
 import { User } from '@data/model/user.model';
 import { ProfileDataService } from '@data/service/profile-data.service';
-import { ProfileImageDataService } from '@data/service/profile-image-data.service';
 import { UserDataService } from '@data/service/user-data.service';
 import { concatMap } from 'rxjs/operators';
 
@@ -24,12 +22,10 @@ export class ProfileFormComponent implements OnInit {
   constructor(
     private userService: UserDataService,
     private profileService: ProfileDataService,
-    private profileImageService: ProfileImageDataService,
-    private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
     private datePipe: DatePipe,
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {
     this.loading = false;
     this.form = this.formBuilder.group({
@@ -67,7 +63,7 @@ export class ProfileFormComponent implements OnInit {
       if (result.id) {
         this.profile = result;
         this.resetForm();
-        this.router.navigate(['.'], { relativeTo: this.activeRoute.parent });
+        this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
       }
       this.loading = false;
     });

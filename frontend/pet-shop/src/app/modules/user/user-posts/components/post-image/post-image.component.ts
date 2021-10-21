@@ -18,7 +18,7 @@ export class PostImageComponent implements OnInit {
 
   onChange: any;
   file: File | null = null;
-  validType: boolean;
+  validType: boolean = true;
 
   allowedExtensions: string[];
   accept: string;
@@ -27,8 +27,7 @@ export class PostImageComponent implements OnInit {
     private postDataService: PostDataService,
     private postImageDataService: PostImageDataService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private activeRoute: ActivatedRoute
+    private router: Router
   ) {
     this.submitted = false;
     this.allowedExtensions = ['jpg', 'jpeg'];
@@ -52,7 +51,7 @@ export class PostImageComponent implements OnInit {
     if (this.file) {
       this.postImageDataService.updatePostImage(this.postImage.id, this.file).subscribe((postImage) => {
         if (postImage.id) {
-          this.router.navigate(['.'], { relativeTo: this.activeRoute.parent });
+          this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
         } else {
           this.submitted = false;
         }

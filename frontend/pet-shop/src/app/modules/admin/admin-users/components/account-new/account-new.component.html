@@ -1,1 +1,98 @@
-<p>account-new works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h4 class="modal-title">Account Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="inputPassword">Username</label>
+      <input type="text" class="form-control" formControlName="username" id="inputUsername" placeholder="username" />
+    </div>
+
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input type="text" class="form-control" formControlName="password" id="inputPassword" placeholder="password" />
+    </div>
+    <div class="form-group">
+      <label for="inputConfirmPassword">Confirm Password</label>
+      <input
+        type="text"
+        class="form-control mb-3"
+        formControlName="confirmPassword"
+        id="inputConfirmPassword"
+        placeholder="confirm password"
+      />
+      <div *ngIf="form.controls.confirmPassword.errors?.NoPassswordMatch && form.controls.confirmPassword.value !== ''">
+        <p class="alert alert-danger">Passwords don't match!</p>
+      </div>
+      <div *ngIf="error == 'Invalid Password Exception'">
+        <p class="alert alert-danger">
+          <small>
+            A valid password has to contain at least 6 characters and at most 15 characters.<br />
+            It can contain digits, upper case alphabets, lower case alphabets and special characters which include
+            @#$%&-+=.<br />
+            It can't contain any white space<br />
+          </small>
+        </p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col">
+        <div class="row">
+          <label class="mr-1">Roles: </label>
+
+          <label class="badge badge-secondary mr-1" *ngFor="let role of user?.roles">
+            <span class="align-middle h6">
+              {{ role.name }}
+            </span>
+            <fa-icon class="align-middle" (click)="removeRole(role)" [icon]="faTimes">close</fa-icon>
+          </label>
+        </div>
+        <div class="row">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="role"
+            #typeaheadRole
+            [ngbTypeahead]="search"
+            [inputFormatter]="formatter"
+            [resultFormatter]="formatter"
+            [editable]="false"
+            (selectItem)="selectTypeaheadRole($event, typeaheadRole)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="inputDate">Expiration Date</label>
+      <div class="input-group">
+        <input
+          class="form-control"
+          formControlName="date"
+          placeholder="yyyy-mm-dd"
+          id="inputDate"
+          ngbDatepicker
+          #d="ngbDatepicker"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-secondary" (click)="d.toggle()" type="button">
+            <fa-icon [icon]="faCalendar"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group mt-3 mb-0">
+      <div class="custom-control custom-switch custom-switch-adaptive h4 mb-0">
+        <input class="custom-control-input" type="checkbox" id="inputIsLocked" formControlName="isLocked" />
+        <label class="custom-control-label" for="inputIsLocked"> Is Locked </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="disableSubmit()">Save changes</button>
+  </div>
+</form>
