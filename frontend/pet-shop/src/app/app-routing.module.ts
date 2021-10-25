@@ -62,10 +62,10 @@ const routes: Routes = [
         path: 'home',
         loadChildren: () => import('@modules/admin/admin-home/admin-home.module').then((m) => m.AdminHomeModule),
       },
-      {
-        path: 'posts',
-        loadChildren: () => import('@modules/admin/admin-posts/admin-posts.module').then((m) => m.AdminPostsModule),
-      },
+      // {
+      //   path: 'posts',
+      //   loadChildren: () => import('@modules/admin/admin-posts/admin-posts.module').then((m) => m.AdminPostsModule),
+      // },
       {
         path: 'users',
         loadChildren: () => import('@modules/admin/admin-users/admin-users.module').then((m) => m.AdminUsersModule),

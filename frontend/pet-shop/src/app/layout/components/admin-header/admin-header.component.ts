@@ -14,7 +14,7 @@ export class AdminHeaderComponent implements OnInit {
   isUser = false;
 
   faHome = faHome;
-  faNewspaper = faNewspaper;
+  // faNewspaper = faNewspaper;
   faUsers = faUsers;
   faTags = faTags;
   faAtom = faAtom;

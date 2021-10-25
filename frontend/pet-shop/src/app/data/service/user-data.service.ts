@@ -64,6 +64,12 @@ export class UserDataService {
     return this.http.post<ApiUser>(url, User.adaptForApi(user)).pipe(map((response) => User.adapt(response)));
   }
 
+  updateUser(user: User): Observable<any> {
+    const url = `${environment.apiUrl}/user/`;
+    const body = User.adaptForApi(user);
+    return this.http.post<ApiUser>(url + user.id, body).pipe(map((response) => User.adapt(response)));
+  }
+
   // todo
   updateUserPassword(user: User): Observable<User> {
     const url = `${environment.apiUrl}/user/`;
