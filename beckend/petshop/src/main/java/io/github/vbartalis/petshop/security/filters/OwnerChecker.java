@@ -116,4 +116,6 @@ public class OwnerChecker {
         Authentication authentication = authenticationContext.getAuthentication();
         return username.equals(authentication.getPrincipal()) && !username.equals("anonymousUser");
     }
+
+
 }

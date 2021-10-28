@@ -7,7 +7,6 @@ import io.github.vbartalis.petshop.security.methodlevel.IsUser;
 import io.github.vbartalis.petshop.service.impl.PostServiceImpl;
 import io.github.vbartalis.petshop.util.AuthenticationContext;
 import io.github.vbartalis.petshop.util.DtoEntityConverter;
-import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
@@ -84,7 +83,8 @@ public class PostController {
      */
     @Operation(
             summary = "Create a new Post.",
-            description = "Can be used by User to create a new post.",
+            description = "Can be used by User to create a new post." +
+                    "Expired or locked users an not use it.",
             security = @SecurityRequirement(name = "bearerAuth"))
     @IsUser
     @PostMapping
@@ -108,9 +108,10 @@ public class PostController {
     @Operation(
             summary = "Update a Post.",
             description = "Can be used by Owner to update title, description, isPublic, tags properties of own post." +
-                    "Can be used by Owner to update title, description, isPublic, tags properties of a post.",
+                    "Expired or locked users an not use it." +
+                    "Can be used by Admin to update title, description, isPublic, tags properties of a post.",
             security = @SecurityRequirement(name = "bearerAuth"))
-    @PreAuthorize("@ownerChecker.checkPost(#id) || hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize(" @ownerChecker.checkPost(#id) || hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public PostDto updatePost(
             @PathVariable(value = "id") @NotNull Long id,
