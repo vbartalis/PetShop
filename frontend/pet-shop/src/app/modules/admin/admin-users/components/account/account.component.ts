@@ -33,7 +33,6 @@ export class AccountComponent implements OnInit {
     private profileDataService: ProfileDataService,
     private profileImageDataService: ProfileImageDataService,
     private activatedRoute: ActivatedRoute,
-
     private modalService: NgbModal,
     private datePipe: DatePipe
   ) {}

@@ -57,15 +57,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminLayoutComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      {
-        path: 'home',
-        loadChildren: () => import('@modules/admin/admin-home/admin-home.module').then((m) => m.AdminHomeModule),
-      },
-      // {
-      //   path: 'posts',
-      //   loadChildren: () => import('@modules/admin/admin-posts/admin-posts.module').then((m) => m.AdminPostsModule),
-      // },
+      { path: '', redirectTo: 'users', pathMatch: 'full' },
       {
         path: 'users',
         loadChildren: () => import('@modules/admin/admin-users/admin-users.module').then((m) => m.AdminUsersModule),

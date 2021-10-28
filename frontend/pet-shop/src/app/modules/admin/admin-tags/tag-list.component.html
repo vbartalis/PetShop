@@ -27,6 +27,9 @@
         >
           <fa-icon [icon]="faPen"></fa-icon>
         </a>
+        <a class="btn btn-danger mx-1" title="Delete Tag" (click)="openDeleteTagModal(tag)">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </a>
       </td>
       <th>{{ tag.id }}</th>
       <td>{{ tag.name }}</td>

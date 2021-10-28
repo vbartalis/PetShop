@@ -31,4 +31,8 @@ export class TagDataService {
     const url = `${environment.apiUrl}/tag/`;
     return this.http.put<ApiTag>(url + tag.id, Tag.adaptForApi(tag)).pipe(map((response) => Tag.adapt(response)));
   }
+  deleteTag(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/tag/`;
+    return this.http.delete<ApiTag>(url + id);
+  }
 }
