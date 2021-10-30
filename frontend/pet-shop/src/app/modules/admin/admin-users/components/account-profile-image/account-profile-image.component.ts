@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GlobalService } from '@app/service/global.service';
 import { ProfileImage } from '@data/model/profile-image.model';
@@ -15,9 +16,9 @@ import { concatMap } from 'rxjs/operators';
   styles: [],
 })
 export class AccountProfileImageComponent implements OnInit {
+  form: FormGroup;
+
   userId: number;
-  user: User;
-  profile: Profile;
   profileImage: ProfileImage;
   submitted: boolean;
   errorMessage: string;
@@ -30,6 +31,7 @@ export class AccountProfileImageComponent implements OnInit {
   accept: string;
 
   constructor(
+    private formBuilder: FormBuilder,
     private userDataService: UserDataService,
     private profileDataService: ProfileDataService,
     private profileImageDataService: ProfileImageDataService,
@@ -39,6 +41,9 @@ export class AccountProfileImageComponent implements OnInit {
     this.submitted = false;
     this.allowedExtensions = ['jpg', 'jpeg'];
     this.accept = 'image/jpeg';
+    this.form = this.formBuilder.group({
+      fileControl: '',
+    });
   }
 
   ngOnInit(): void {
@@ -48,19 +53,17 @@ export class AccountProfileImageComponent implements OnInit {
         .getUserById(this.userId)
         .pipe(
           concatMap((user: User) => {
-            this.user = user;
             return this.profileDataService.getProfileById(user.profileId!);
           })
         )
         .subscribe((profile: Profile) => {
-          this.profile = profile;
           this.profileImage = new ProfileImage(profile.profileImageId!);
         });
     });
     this.errorMessage = '';
   }
 
-  onSave(): void {
+  onSubmit(): void {
     if (this.file) {
       this.profileImageDataService.updateProfileImage(this.profileImage.id, this.file).subscribe((profileImage) => {
         if (profileImage.id) {
@@ -72,11 +75,10 @@ export class AccountProfileImageComponent implements OnInit {
     }
   }
 
-  disableSave(): boolean {
-    return false;
+  disableSubmit(): boolean {
+    return !this.validType || this.submitted === true || this.form.pristine;
   }
 
-  // todo
   onFileSelected(event: any): void {
     this.file = event.target.files[0];
     this.validType = this.isFileTypeAllowed();

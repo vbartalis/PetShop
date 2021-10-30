@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostImage } from '@data/model/post-image.model';
 import { Post } from '@data/model/post.model';
@@ -12,6 +13,8 @@ import { concatMap } from 'rxjs/operators';
   styles: [],
 })
 export class PostImageComponent implements OnInit {
+  form: FormGroup;
+
   postImage: PostImage;
   submitted: boolean;
   errorMessage: string;
@@ -24,6 +27,7 @@ export class PostImageComponent implements OnInit {
   accept: string;
 
   constructor(
+    private formBuilder: FormBuilder,
     private postDataService: PostDataService,
     private postImageDataService: PostImageDataService,
     private activatedRoute: ActivatedRoute,
@@ -32,6 +36,9 @@ export class PostImageComponent implements OnInit {
     this.submitted = false;
     this.allowedExtensions = ['jpg', 'jpeg'];
     this.accept = 'image/jpeg';
+    this.form = this.formBuilder.group({
+      fileControl: '',
+    });
   }
 
   ngOnInit(): void {
@@ -47,7 +54,7 @@ export class PostImageComponent implements OnInit {
     this.errorMessage = '';
   }
 
-  onSave(): void {
+  onSubmit(): void {
     if (this.file) {
       this.postImageDataService.updatePostImage(this.postImage.id, this.file).subscribe((postImage) => {
         if (postImage.id) {
@@ -59,9 +66,8 @@ export class PostImageComponent implements OnInit {
     }
   }
 
-  // todo
-  disableSave(): boolean {
-    return false;
+  disableSubmit(): boolean {
+    return !this.validType || this.submitted === true || this.form.pristine;
   }
 
   onFileSelected(event: any): void {

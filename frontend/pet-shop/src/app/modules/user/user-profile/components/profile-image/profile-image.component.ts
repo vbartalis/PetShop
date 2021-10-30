@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GlobalService } from '@app/service/global.service';
 import { ProfileImage } from '@data/model/profile-image.model';
 import { Profile } from '@data/model/profile.model';
 import { User } from '@data/model/user.model';
@@ -15,28 +15,33 @@ import { concatMap } from 'rxjs/operators';
   styles: [],
 })
 export class ProfileImageComponent implements OnInit {
+  form: FormGroup;
+
   profileImage: ProfileImage;
   submitted: boolean;
   errorMessage: string;
 
   onChange: any;
   file: File | null = null;
-  validType: boolean;
+  validType: boolean = true;
 
   allowedExtensions: string[];
   accept: string;
 
   constructor(
-    private globalService: GlobalService,
+    private formBuilder: FormBuilder,
     private userDataService: UserDataService,
     private profileDataService: ProfileDataService,
     private profileImageDataService: ProfileImageDataService,
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {
     this.submitted = false;
     this.allowedExtensions = ['jpg', 'jpeg'];
     this.accept = 'image/jpeg';
+    this.form = this.formBuilder.group({
+      fileControl: '',
+    });
   }
 
   ngOnInit(): void {
@@ -44,22 +49,20 @@ export class ProfileImageComponent implements OnInit {
       .getCurrentUser()
       .pipe(
         concatMap((user: User) => {
-          // console.log('user: ', user);
           return this.profileDataService.getProfileById(user.profileId!);
         })
       )
       .subscribe((profile: Profile) => {
-        // console.log('profile: ', profile);
         this.profileImage = new ProfileImage(profile.profileImageId!);
       });
     this.errorMessage = '';
   }
 
-  onSave(): void {
+  onSubmit(): void {
     if (this.file) {
       this.profileImageDataService.updateProfileImage(this.profileImage.id, this.file).subscribe((profileImage) => {
         if (profileImage.id) {
-          this.router.navigate(['.'], { relativeTo: this.activeRoute.parent });
+          this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
         } else {
           this.submitted = false;
         }
@@ -67,11 +70,10 @@ export class ProfileImageComponent implements OnInit {
     }
   }
 
-  disableSave(): boolean {
-    return false;
+  disableSubmit(): boolean {
+    return !this.validType || this.submitted === true || this.form.pristine;
   }
 
-  // todo
   onFileSelected(event: any): void {
     this.file = event.target.files[0];
     this.validType = this.isFileTypeAllowed();
