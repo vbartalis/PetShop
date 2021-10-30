@@ -2,78 +2,34 @@
   Search
 </button> -->
 
-<div *ngFor="let post of postPage?.content">
-  <!-- <div class="card mb-3" (click)="open(postModal)"> -->
-  <div class="card mb-3" (click)="openPost(post)">
-    <!-- <imgclass="card-img-top img-responsive" [src]="postFrontImage" alt="Card image cap" /> -->
-    <div class="card-body">
-      <h4 class="card-title">{{ post.title }}</h4>
-      <p class="card-text">
-        {{ post.description }}
-      </p>
-    </div>
-    <div class="card-footer">
-      <div *ngIf="post.updateDate; then thenBlock; else elseBlock"></div>
-      <ng-template #thenBlock
-        ><small>{{ convertDate(post.updateDate) }}</small></ng-template
-      >
-      <ng-template #elseBlock
-        ><small>{{ convertDate(post.creationDate) }}</small></ng-template
-      >
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let post of postPage?.content">
+      <div class="card mb-3" (click)="openPost(post)">
+        <img
+          class="card-img-top img-responsive"
+          *ngIf="post.postImageSrc"
+          [src]="post.postImageSrc"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h4 class="card-title">{{ post.title }}</h4>
+          <p class="card-text">
+            {{ post.description }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <div *ngIf="post.updateDate; then thenBlock; else elseBlock"></div>
+          <ng-template #thenBlock
+            ><small>{{ convertDate(post.updateDate) }}</small></ng-template
+          >
+          <ng-template #elseBlock
+            ><small>{{ convertDate(post.creationDate) }}</small></ng-template
+          >
+        </div>
+      </div>
     </div>
   </div>
-  <!-- <ng-template #postModal let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">{{ post.title }}</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="d('Cross click')"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>{{ post.description }}</p>
-      <p>
-        <small class="text-muted">{{ getPostTags(post.tags) }}</small>
-      </p>
-      <a
-        class="badge badge-info"
-        (click)="open(profileModal); getProfileFromService(post.user)"
-      >
-        Owner Profile
-      </a>
-    </div>
-
-    <div class="modal-footer">
-      <div *ngIf="post.updateDate; then thenBlock; else elseBlock"></div>
-    </div>
-  </ng-template>
-  <ng-template #profileModal let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="d('Cross click')"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" *ngIf="postProfile">
-      <p *ngIf="postProfile.name">{{ "Name: " + postProfile.name }}</p>
-      <p *ngIf="postProfile.email">{{ "Email: " + postProfile.email }}</p>
-      <p *ngIf="postProfile.address">{{ "Address: " + postProfile.address }}</p>
-      <hr />
-      <p *ngIf="postProfile.description">{{ postProfile.description }}</p>
-    </div>
-    <div class="modal-footer" *ngIf="postProfile">
-      <small>{{ "Joined: " + convertDate(postProfile.joinDate) }}</small>
-    </div>
-  </ng-template> -->
 </div>
 
 <!-- <ng-template #searchModal let-c="close" let-d="dismiss">
@@ -125,9 +81,7 @@
         </button>
         <button type="submit" class="btn btn-info col ml-3">Search</button>
       </div>
-    </form>
-  </div>
-</ng-template> -->
+    -->
 
 <ngb-pagination
   class="d-flex justify-content-center"

@@ -12,7 +12,8 @@ export class Post {
     public tags: Tag[],
     public postImageId?: number,
     public userId?: number,
-    public profileId?: number
+    public profileId?: number,
+    public postImageSrc?: string
   ) {}
 
   static adapt(value: ApiPost): Post {

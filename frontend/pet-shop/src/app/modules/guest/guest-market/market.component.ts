@@ -6,6 +6,8 @@ import { PostSearchCriteria } from '@data/api/search-criteria';
 import { PostPage } from '@data/model/post-page';
 import { Post } from '@data/model/post.model';
 import { PostDataService } from '@data/service/post-data.service';
+import { PostImageDataService } from '@data/service/post-image-data.service';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-market',
@@ -15,11 +17,12 @@ import { PostDataService } from '@data/service/post-data.service';
 export class MarketComponent implements OnInit {
   postPage: PostPage;
 
-  postPageCriteria: PostPageCriteria = new PostPageCriteria(1, 10);
+  postPageCriteria: PostPageCriteria = new PostPageCriteria(1, 12);
   postSearchCriteria: PostSearchCriteria = new PostSearchCriteria();
 
   constructor(
     private postDataService: PostDataService,
+    private postImageDataService: PostImageDataService,
     private datePipe: DatePipe,
     private router: Router,
     private activeRoute: ActivatedRoute
@@ -39,9 +42,19 @@ export class MarketComponent implements OnInit {
   }
 
   getPostPageFromService(): void {
-    this.postDataService
-      .getAll(this.postPageCriteria, this.postSearchCriteria)
-      .subscribe((pageable) => (this.postPage = pageable));
+    this.postDataService.getAll(this.postPageCriteria, this.postSearchCriteria).subscribe((pageable: PostPage) => {
+      this.postPage = pageable;
+
+      this.postPage.content.forEach((post) => {
+        this.getPostImage(post);
+      });
+    });
+  }
+
+  getPostImage(post: Post): void {
+    this.postImageDataService.getPostImageById(post.postImageId!).subscribe((postImageSrc: string) => {
+      post.postImageSrc = postImageSrc;
+    });
   }
 
   openPost(post: Post) {
