@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from '@data/model/post.model';
 import { PostDataService } from '@data/service/post-data.service';
-import { ProfileDataService } from '@data/service/profile-data.service';
+import { PostImageDataService } from '@data/service/post-image-data.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { concatMap } from 'rxjs/operators';
 import { ProfileModalComponent } from './components/profile-modal/profile-model.component';
 
 @Component({
@@ -18,20 +19,27 @@ export class PostComponent implements OnInit {
 
   constructor(
     private postDataService: PostDataService,
-    private profileDataService: ProfileDataService,
+    private postImageDataService: PostImageDataService,
     private datePipe: DatePipe,
     private modalService: NgbModal,
-    private activeRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getPost();
-  }
-
-  getPost() {
-    this.activeRoute.params.subscribe((params) => {
-      this.postDataService.getPostById(params['id']).subscribe((post) => (this.post = post));
-    });
+    this.activatedRoute.paramMap
+      .pipe(
+        concatMap((params) => {
+          const id = Number(params.get('id'));
+          return this.postDataService.getPostById(id);
+        }),
+        concatMap((post: Post) => {
+          this.post = post;
+          return this.postImageDataService.getPostImageById(this.post.postImageId!);
+        })
+      )
+      .subscribe((postImage: string) => {
+        this.postImageSrc = postImage;
+      });
   }
 
   convertDate(date: Date): string {

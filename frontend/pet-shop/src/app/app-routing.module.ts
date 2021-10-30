@@ -33,18 +33,14 @@ const routes: Routes = [
     path: 'user',
     component: UserLayoutComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'profile', pathMatch: 'full' },
       {
-        path: 'home',
-        loadChildren: () => import('@modules/user/user-home/user-home.module').then((m) => m.UserHomeModule),
+        path: 'profile',
+        loadChildren: () => import('@modules/user/user-profile/user-profile.module').then((m) => m.UserProfileModule),
       },
       {
         path: 'posts',
         loadChildren: () => import('@modules/user/user-posts/user-posts.module').then((m) => m.UserPostsModule),
-      },
-      {
-        path: 'profile',
-        loadChildren: () => import('@modules/user/user-profile/user-profile.module').then((m) => m.UserProfileModule),
       },
       {
         path: 'help',

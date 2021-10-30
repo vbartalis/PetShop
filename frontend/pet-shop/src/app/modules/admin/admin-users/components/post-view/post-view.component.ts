@@ -6,10 +6,9 @@ import { Profile } from '@data/model/profile.model';
 import { User } from '@data/model/user.model';
 import { PostDataService } from '@data/service/post-data.service';
 import { PostImageDataService } from '@data/service/post-image-data.service';
-import { ProfileDataService } from '@data/service/profile-data.service';
-import { ProfileImageDataService } from '@data/service/profile-image-data.service';
-import { UserDataService } from '@data/service/user-data.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { concatMap } from 'rxjs/operators';
+import { ProfileModalComponent } from '../profile-modal/profile-model.component';
 
 @Component({
   selector: 'app-post-view',
@@ -25,11 +24,9 @@ export class PostViewComponent implements OnInit {
   profileImageSrc: string;
 
   constructor(
-    public postDataService: PostDataService,
-    public postImageDataService: PostImageDataService,
-    public userDataService: UserDataService,
-    public profileDataService: ProfileDataService,
-    private profileImageDataService: ProfileImageDataService,
+    private postDataService: PostDataService,
+    private postImageDataService: PostImageDataService,
+    private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private datePipe: DatePipe
   ) {}
@@ -45,25 +42,18 @@ export class PostViewComponent implements OnInit {
           this.post = post;
           return this.postImageDataService.getPostImageById(this.post.postImageId!);
         })
-        // concatMap((post: Post) => {
-        //   this.post = post;
-        //   return this.profileDataService.getProfileByUserId(this.post.userId);
-        // }),
-        // concatMap((profile: Profile) => {
-        //   this.profile = profile;
-        //   return this.postImageDataService.getPostImageById(this.post.postImageId);
-        // }),
-        // concatMap((postImage: string) => {
-        //   this.postImageSrc = postImage;
-        //   return this.profileImageDataService.getProfileImageById(this.profile.profileImageId);
-        // })
       )
-      .subscribe((postImage: string) => {
-        this.postImageSrc = postImage;
+      .subscribe((postImageSrc: string) => {
+        this.postImageSrc = postImageSrc;
       });
   }
 
   convertDate(date: Date): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '??';
+  }
+
+  openProfile(): void {
+    const modalref = this.modalService.open(ProfileModalComponent);
+    modalref.componentInstance.profileId = this.post.profileId;
   }
 }

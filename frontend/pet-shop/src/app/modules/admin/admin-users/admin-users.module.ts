@@ -16,6 +16,7 @@ import { PostImageComponent } from './components/post-image/post-image.component
 import { PostViewComponent } from './components/post-view/post-view.component';
 import { UserListComponent } from './user-list.component';
 import { SharedModule } from '@shared/shared.module';
+import { ProfileModalComponent } from './components/profile-modal/profile-model.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SharedModule } from '@shared/shared.module';
     PostListComponent,
     PostImageComponent,
     PostViewComponent,
+    ProfileModalComponent,
   ],
   imports: [CommonModule, AdminUsersRoutingModule, SharedModule],
   providers: [DatePipe],
