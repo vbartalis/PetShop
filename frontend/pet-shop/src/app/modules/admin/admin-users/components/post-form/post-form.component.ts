@@ -40,7 +40,7 @@ export class PostFormComponent implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(255), BlankValidator.noBlank]],
       isPublic: [false, Validators.required],
       tagsArray: new FormArray([]),
-      tag: '',
+      typeaheadTag: '',
     });
   }
 
@@ -63,9 +63,10 @@ export class PostFormComponent implements OnInit {
   }
 
   setPostToForm(): void {
-    if (this.post.title) this.form.controls['title'].setValue(this.post.title);
-    if (this.post.description) this.form.controls['description'].setValue(this.post.description);
-    if (this.post.isPublic) this.form.controls['isPublic'].setValue(this.post.isPublic);
+    this.form.controls['title'].setValue(this.post.title);
+    this.form.controls['description'].setValue(this.post.description);
+    this.form.controls['isPublic'].setValue(this.post.isPublic);
+    this.form.controls['typeaheadTag'].setValue('');
 
     this.postTags = clone(this.post.tags);
 

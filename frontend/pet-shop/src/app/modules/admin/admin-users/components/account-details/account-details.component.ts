@@ -46,7 +46,7 @@ export class AccountDetailsComponent implements OnInit {
       isLocked: [false],
       date: ['', [Validators.required]],
       rolesArray: new FormArray([]),
-      role: [''],
+      typeaheadRole: [''],
     });
   }
 
@@ -75,6 +75,7 @@ export class AccountDetailsComponent implements OnInit {
     this.form.controls['isLocked'].setValue(this.user.isLocked);
     const date = new Date(this.user.expiration);
     this.form.controls['date'].setValue({ year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() });
+    this.form.controls['typeaheadRole'].setValue('');
 
     this.userRoles = clone(this.user.roles);
 

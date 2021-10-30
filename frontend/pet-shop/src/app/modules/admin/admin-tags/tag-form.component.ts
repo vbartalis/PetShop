@@ -41,14 +41,14 @@ export class TagFormComponent implements OnInit {
         });
       } else {
         this.mode = 'create';
-        this.tag = new Tag(null!, null!, null!);
+        this.tag = new Tag(null!, '', '');
       }
     });
   }
 
   setTagToForm(): void {
-    if (this.tag.name) this.form.controls['name'].setValue(this.tag.name);
-    if (this.tag.description) this.form.controls['description'].setValue(this.tag.description);
+    this.form.controls['name'].setValue(this.tag.name);
+    this.form.controls['description'].setValue(this.tag.description);
   }
 
   setFormToTag(): void {

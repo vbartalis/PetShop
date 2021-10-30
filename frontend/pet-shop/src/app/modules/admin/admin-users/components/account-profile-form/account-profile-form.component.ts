@@ -80,10 +80,10 @@ export class AccountProfileFormComponent implements OnInit {
   }
 
   setProfileToForm(): void {
-    if (this.profile.name) this.form.controls['name'].setValue(this.profile.name);
-    if (this.profile.email) this.form.controls['email'].setValue(this.profile.email);
-    if (this.profile.address) this.form.controls['address'].setValue(this.profile.address);
-    if (this.profile.description) this.form.controls['description'].setValue(this.profile.description);
+    this.form.controls['name'].setValue(this.profile.name);
+    this.form.controls['email'].setValue(this.profile.email);
+    this.form.controls['address'].setValue(this.profile.address);
+    this.form.controls['description'].setValue(this.profile.description);
   }
 
   setFormToProfile(): void {
