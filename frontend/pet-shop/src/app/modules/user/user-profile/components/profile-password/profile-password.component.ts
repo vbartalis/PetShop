@@ -54,6 +54,7 @@ export class ProfilePasswordComponent implements OnInit {
     this.user.password = this.form.controls['password'].value;
   }
 
+  // todo isClear
   disableSubmit(): boolean {
     return this.form.invalid || this.form.pristine || this.submitted === true;
   }
