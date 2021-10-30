@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminAuthGuard } from '@app/guard/admin-auth.guard';
 import { TagFormComponent } from './tag-form.component';
 import { TagListComponent } from './tag-list.component';
-import { TagsComponent } from './tags.component';
 
 const routes: Routes = [
   {

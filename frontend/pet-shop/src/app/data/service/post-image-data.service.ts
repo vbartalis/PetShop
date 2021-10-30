@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
 export class PostImageDataService {
   constructor(private http: HttpClient) {}
 
-  //todo
   getPostImageById(id: number): Observable<any> {
     const url = `${environment.apiUrl}/postimage/`;
     return this.http.get(url + id, { responseType: 'text' });

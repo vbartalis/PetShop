@@ -1,5 +1,4 @@
 import { ApiUser } from '@data/api/api-user';
-import { Profile } from './profile.model';
 import { Role } from './role.model';
 
 export class User {

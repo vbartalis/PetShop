@@ -7,8 +7,8 @@ import { RoleDataService } from '@data/service/role-data.service';
 import { UserDataService } from '@data/service/user-data.service';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { PasswordValidator } from '@modules/user/user-profile/validator/password.validator';
 import { NgbActiveModal, NgbDateStruct, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { PasswordValidator } from '@shared/validator/password.validator';
 import { Observable, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
@@ -77,15 +77,13 @@ export class AccountNewComponent implements OnInit {
     date.setFullYear(this.date.year);
     date.setMonth(this.date.month - 1);
     date.setDate(this.date.day);
-    // this.user.expiration = this.convertDate(date.toString());
     this.user.expiration = date;
 
     this.user.password = this.form.controls['password'].value;
   }
 
-  //todo
   disableSubmit(): boolean {
-    return false;
+    return this.form.invalid || this.submitted === true || this.form.pristine;
   }
 
   initForm(): void {
@@ -123,7 +121,6 @@ export class AccountNewComponent implements OnInit {
       debounceTime(200),
       distinctUntilChanged(),
       map((term) => this.roles.filter((role) => new RegExp(term, 'mi').test(role.name)).slice(0, 10))
-      // tslint:disable-next-line: semicolon
     );
 
   selectTypeaheadRole($event: NgbTypeaheadSelectItemEvent<any>, input: HTMLInputElement): void {

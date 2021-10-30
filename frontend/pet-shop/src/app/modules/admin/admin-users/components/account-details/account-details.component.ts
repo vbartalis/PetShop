@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@data/model/role.model';
@@ -7,7 +7,7 @@ import { User } from '@data/model/user.model';
 import { RoleDataService } from '@data/service/role-data.service';
 import { UserDataService } from '@data/service/user-data.service';
 import { faCalendar, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { NgbDateStruct, NgbActiveModal, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { clone, isEqual } from 'lodash';
 import { OperatorFunction, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -63,7 +63,6 @@ export class AccountDetailsComponent implements OnInit {
     });
   }
 
-  // todo
   convertDate(date: Date): string {
     return this.datePipe.transform(date, "yyyy-MM-dd'T'HH:mm:ss.SSSZ") ?? '??';
   }
@@ -103,12 +102,10 @@ export class AccountDetailsComponent implements OnInit {
     this.user.expiration = date;
   }
 
-  //todo
   disableSubmit(): boolean {
     return this.form.invalid || this.submitted === true || (this.form.pristine && this.isClean());
   }
 
-  // todo
   disableReset(): boolean {
     return this.submitted === true || (this.form.pristine && this.isClean());
   }

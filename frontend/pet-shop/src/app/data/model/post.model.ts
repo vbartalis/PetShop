@@ -1,7 +1,5 @@
 import { ApiPost } from '@data/api/api-post';
-import { PostImage } from './post-image.model';
 import { Tag } from './tag.model';
-import { User } from './user.model';
 
 export class Post {
   constructor(

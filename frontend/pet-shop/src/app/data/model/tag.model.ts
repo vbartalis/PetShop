@@ -1,4 +1,3 @@
-import { ApiPost } from '@data/api/api-post';
 import { ApiTag } from '@data/api/api-tag';
 
 export class Tag {

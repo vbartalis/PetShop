@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 export class PostDataService {
   constructor(private http: HttpClient) {}
 
-  // todo environment api url, should also search by tags
+  // todo should also search by tags
   getAll(postPageCriteria: PostPageCriteria, postSearchCriteria: PostSearchCriteria): Observable<PostPage> {
     const url = `${environment.apiUrl}/post`;
     let params = new HttpParams();

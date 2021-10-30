@@ -6,7 +6,7 @@ import { Tag } from '@data/model/tag.model';
 import { PostDataService } from '@data/service/post-data.service';
 import { TagDataService } from '@data/service/tag-data.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { BlankValidator } from '@modules/user/user-posts/validator/blank.validator';
+import { BlankValidator } from '@shared/validator/blank.validator';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { clone, isEqual } from 'lodash';
 import { Observable, OperatorFunction } from 'rxjs';

@@ -14,9 +14,7 @@ export class ProfileDataService {
 
   updateProfile(profile: Profile): Observable<Profile> {
     const url = `${environment.apiUrl}/profile/`;
-
     const body = Profile.adaptForApi(profile);
-
     return this.http.patch<ApiProfile>(url + profile.id, body).pipe(
       map((response) => {
         return Profile.adapt(response);

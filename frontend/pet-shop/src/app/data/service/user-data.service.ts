@@ -17,7 +17,6 @@ import { environment } from 'src/environments/environment';
 export class UserDataService {
   constructor(private http: HttpClient) {}
 
-  // todo environment api url, should also search by tags
   getAll(userPageCriteria: UserPageCriteria, userSearchCriteria: UserSearchCriteria): Observable<UserPage> {
     const url = `${environment.apiUrl}/user`;
     let params = new HttpParams();
@@ -70,7 +69,6 @@ export class UserDataService {
     return this.http.patch<ApiUser>(url + user.id, body).pipe(map((response) => User.adapt(response)));
   }
 
-  // todo
   updateUserPassword(user: User): Observable<User> {
     const url = `${environment.apiUrl}/user/`;
     const body = { password: user.password };

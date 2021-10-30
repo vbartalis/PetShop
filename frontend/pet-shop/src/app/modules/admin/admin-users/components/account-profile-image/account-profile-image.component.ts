@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GlobalService } from '@app/service/global.service';
 import { ProfileImage } from '@data/model/profile-image.model';
 import { Profile } from '@data/model/profile.model';
 import { User } from '@data/model/user.model';

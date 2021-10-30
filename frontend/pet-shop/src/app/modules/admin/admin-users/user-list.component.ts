@@ -25,13 +25,7 @@ export class UserListComponent implements OnInit {
   userPageCriteria: UserPageCriteria = new UserPageCriteria(1, 10);
   userSearchCriteria: UserSearchCriteria = new UserSearchCriteria();
 
-  constructor(
-    private userDataService: UserDataService,
-    private datePipe: DatePipe,
-    private router: Router,
-    private activeRoute: ActivatedRoute,
-    private modalService: NgbModal
-  ) {}
+  constructor(private userDataService: UserDataService, private datePipe: DatePipe, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.getUserPageFromService();
@@ -52,7 +46,6 @@ export class UserListComponent implements OnInit {
       .subscribe((pageable) => (this.userPage = pageable));
   }
 
-  // todo
   openNewAccountModal(): void {
     const modalRef = this.modalService.open(AccountNewComponent);
     modalRef.closed.subscribe((result) => {

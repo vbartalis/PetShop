@@ -7,10 +7,10 @@ import { PostDataService } from '@data/service/post-data.service';
 import { TagDataService } from '@data/service/tag-data.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { BlankValidator } from '@shared/validator/blank.validator';
 import { clone, isEqual } from 'lodash';
 import { Observable, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { BlankValidator } from '../../validator/blank.validator';
 
 @Component({
   selector: 'app-post-form',

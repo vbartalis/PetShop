@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
 export class ProfileImageDataService {
   constructor(private http: HttpClient) {}
 
-  //todo
   getProfileImageById(id: number): Observable<any> {
     const url = `${environment.apiUrl}/profileimage/`;
     return this.http.get(url + id, { responseType: 'text' });

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from '@app/service/global.service';
-import { PasswordValidator } from '@modules/user/user-profile/validator/password.validator';
 import { User } from '@data/model/user.model';
 import { UserDataService } from '@data/service/user-data.service';
+import { PasswordValidator } from '@shared/validator/password.validator';
 
 @Component({
   selector: 'app-profile-password',
@@ -32,7 +32,6 @@ export class ProfilePasswordComponent implements OnInit {
         confirmPassword: ['', [Validators.required, Validators.maxLength(30)]],
       },
       {
-        // todo
         validator: PasswordValidator.passwordMatchValidator,
       } as AbstractControlOptions
     );
@@ -55,7 +54,6 @@ export class ProfilePasswordComponent implements OnInit {
     this.user.password = this.form.controls['password'].value;
   }
 
-  // todo
   disableSubmit(): boolean {
     return this.form.invalid || this.form.pristine || this.submitted === true;
   }

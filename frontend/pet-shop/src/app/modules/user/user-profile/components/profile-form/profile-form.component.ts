@@ -88,7 +88,6 @@ export class ProfileFormComponent implements OnInit {
     this.profile.description = this.form.controls['description'].value;
   }
 
-  // todo
   disableSubmit(): boolean {
     return this.form.invalid || this.form.pristine || this.loading === true;
   }
