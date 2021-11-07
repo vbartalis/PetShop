@@ -92,7 +92,6 @@ export class MarketComponent implements OnInit {
         this.postSearchCriteria.tagIds?.push(tag.id);
       });
     }
-    console.log(this.postSearchCriteria);
     this.getPostPageFromService();
   }
 

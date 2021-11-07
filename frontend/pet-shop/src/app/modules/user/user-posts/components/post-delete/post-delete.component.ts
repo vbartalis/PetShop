@@ -8,13 +8,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styles: [],
 })
 export class PostDeleteComponent implements OnInit {
-  submitted: boolean;
+  isLoading: boolean;
   errorMessage: string;
 
   @Input() postId: number;
 
   constructor(public activeModal: NgbActiveModal, private postDataService: PostDataService) {
-    this.submitted = false;
+    this.isLoading = false;
   }
 
   ngOnInit(): void {
@@ -22,8 +22,13 @@ export class PostDeleteComponent implements OnInit {
   }
 
   onDelete(): void {
+    this.isLoading = true;
     this.postDataService.deletePost(this.postId).subscribe(() => {
       this.activeModal.close('success');
     });
+  }
+
+  disableDeleteButton(): boolean {
+    return this.isLoading === true;
   }
 }

@@ -14,7 +14,7 @@ export class TagFormComponent implements OnInit {
   id: number;
   tag: Tag = new Tag(null!, null!, null!);
   mode: string;
-  submitted: boolean;
+  isLoading: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +22,7 @@ export class TagFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    this.submitted = false;
+    this.isLoading = false;
     this.mode = '';
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(20)]],
@@ -57,15 +57,15 @@ export class TagFormComponent implements OnInit {
   }
 
   disableSubmit(): boolean {
-    return this.form.invalid || this.submitted === true || this.form.pristine;
+    return this.form.invalid || this.isLoading === true || this.form.pristine;
   }
 
   disableReset(): boolean {
-    return this.submitted === true || this.form.pristine;
+    return this.isLoading === true || this.form.pristine;
   }
 
   onSubmit(): void {
-    this.submitted = true;
+    this.isLoading = true;
     this.setFormToTag();
 
     if (this.mode === 'create') {
@@ -74,11 +74,11 @@ export class TagFormComponent implements OnInit {
           if (tag.id) {
             this.router.navigate(['/admin/tags']);
           } else {
-            this.submitted = false;
+            this.isLoading = false;
           }
         },
         () => {
-          this.submitted = false;
+          this.isLoading = false;
         }
       );
     } else if (this.mode === 'update') {
@@ -87,15 +87,15 @@ export class TagFormComponent implements OnInit {
           if (tag.id) {
             this.router.navigate(['/admin/tags']);
           } else {
-            this.submitted = false;
+            this.isLoading = false;
           }
         },
         () => {
-          this.submitted = false;
+          this.isLoading = false;
         }
       );
     } else {
-      this.submitted = false;
+      this.isLoading = false;
     }
   }
 

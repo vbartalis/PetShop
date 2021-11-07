@@ -37,12 +37,10 @@ export class AuthenticationService {
   }
 
   logout(): void {
-    // console.log('logout');
     this.globalService.setCredentials();
   }
 
   unauthorizedAccess(): void {
-    // console.log('unauthorizedAccess');
     this.logout();
     this.router.navigate(['/authentication/login']);
   }

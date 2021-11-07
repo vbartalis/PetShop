@@ -16,7 +16,7 @@ export class PostImageComponent implements OnInit {
   form: FormGroup;
 
   postImage: PostImage;
-  submitted: boolean;
+  isLoading: boolean;
   errorMessage: string;
 
   onChange: any;
@@ -33,7 +33,7 @@ export class PostImageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    this.submitted = false;
+    this.isLoading = false;
     this.allowedExtensions = ['jpg', 'jpeg'];
     this.accept = 'image/jpeg';
     this.form = this.formBuilder.group({
@@ -56,18 +56,19 @@ export class PostImageComponent implements OnInit {
 
   onSubmit(): void {
     if (this.file) {
+      this.isLoading = true;
       this.postImageDataService.updatePostImage(this.postImage.id, this.file).subscribe((postImage) => {
         if (postImage.id) {
           this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
         } else {
-          this.submitted = false;
+          this.isLoading = false;
         }
       });
     }
   }
 
   disableSubmit(): boolean {
-    return !this.validType || this.submitted === true || this.form.pristine;
+    return !this.validType || this.isLoading === true || this.form.pristine;
   }
 
   onFileSelected(event: any): void {
@@ -86,7 +87,6 @@ export class PostImageComponent implements OnInit {
         this.allowedExtensions.forEach((crtExt) => {
           if (crtExt.trim().toLowerCase() === fileExt.trim().toLowerCase()) {
             isAllowed = true;
-            console.log('isAllowed: ' + isAllowed);
           }
         });
       }

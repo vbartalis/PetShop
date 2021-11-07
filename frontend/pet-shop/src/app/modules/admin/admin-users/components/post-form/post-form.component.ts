@@ -25,7 +25,7 @@ export class PostFormComponent implements OnInit {
   tags: Tag[];
   post: Post = new Post(null!, null!, null!, null!, null!, null!, null!);
   postTags: Tag[] = [];
-  submitted: boolean;
+  isLoading: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +34,7 @@ export class PostFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    this.submitted = false;
+    this.isLoading = false;
     this.form = this.formBuilder.group({
       title: ['', [Validators.required, Validators.maxLength(50), BlankValidator.noBlank]],
       description: ['', [Validators.required, Validators.maxLength(255), BlankValidator.noBlank]],
@@ -94,11 +94,11 @@ export class PostFormComponent implements OnInit {
   }
 
   disableSubmit(): boolean {
-    return this.form.invalid || this.submitted === true || (this.form.pristine && this.isClean());
+    return this.form.invalid || this.isLoading === true || (this.form.pristine && this.isClean());
   }
 
   disableReset(): boolean {
-    return this.submitted === true || (this.form.pristine && this.isClean());
+    return this.isLoading === true || (this.form.pristine && this.isClean());
   }
 
   isClean(): boolean {
@@ -110,7 +110,7 @@ export class PostFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitted = true;
+    this.isLoading = true;
     this.setFormToPost();
 
     this.postDataService.updatePost(this.post).subscribe(
@@ -118,11 +118,11 @@ export class PostFormComponent implements OnInit {
         if (result.id) {
           this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
         } else {
-          this.submitted = false;
+          this.isLoading = false;
         }
       },
       () => {
-        this.submitted = false;
+        this.isLoading = false;
       }
     );
   }

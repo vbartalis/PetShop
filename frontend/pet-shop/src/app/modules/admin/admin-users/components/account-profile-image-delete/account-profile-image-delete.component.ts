@@ -8,13 +8,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styles: [],
 })
 export class AccountProfileImageDeleteComponent implements OnInit {
-  submitted: boolean;
+  isLoading: boolean;
   errorMessage: string;
 
   @Input() profileImageId: number;
 
   constructor(public activeModal: NgbActiveModal, private profileImageDataService: ProfileImageDataService) {
-    this.submitted = false;
+    this.isLoading = false;
   }
 
   ngOnInit(): void {
@@ -22,8 +22,13 @@ export class AccountProfileImageDeleteComponent implements OnInit {
   }
 
   onDelete(): void {
+    this.isLoading = true;
     this.profileImageDataService.deleteProfileImage(this.profileImageId).subscribe(() => {
       this.activeModal.close('success');
     });
+  }
+
+  disableDeleteButton(): boolean {
+    return this.isLoading === true;
   }
 }

@@ -19,7 +19,7 @@ export class AccountProfileFormComponent implements OnInit {
   userId: number;
   user: User;
   profile: Profile;
-  loading: boolean;
+  isLoading: boolean;
 
   constructor(
     private userService: UserDataService,
@@ -29,7 +29,7 @@ export class AccountProfileFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.loading = false;
+    this.isLoading = false;
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.maxLength(50), Validators.email]],
@@ -61,7 +61,7 @@ export class AccountProfileFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.loading = true;
+    this.isLoading = true;
     this.setFormToProfile();
 
     this.profileService.updateProfile(this.profile).subscribe((result: Profile) => {
@@ -70,7 +70,7 @@ export class AccountProfileFormComponent implements OnInit {
         this.resetForm();
         this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
       }
-      this.loading = false;
+      this.isLoading = false;
     });
   }
 
@@ -94,10 +94,10 @@ export class AccountProfileFormComponent implements OnInit {
   }
 
   disableSubmit(): boolean {
-    return this.form.invalid || this.form.pristine || this.loading === true;
+    return this.form.invalid || this.form.pristine || this.isLoading === true;
   }
 
   disableReset(): boolean {
-    return this.form.pristine || this.loading === true;
+    return this.form.pristine || this.isLoading === true;
   }
 }

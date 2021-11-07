@@ -17,7 +17,7 @@ export class ProfileFormComponent implements OnInit {
   user: User;
   profile: Profile;
   form: FormGroup;
-  loading: boolean;
+  isLoading: boolean;
 
   constructor(
     private userService: UserDataService,
@@ -27,7 +27,7 @@ export class ProfileFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.loading = false;
+    this.isLoading = false;
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.maxLength(50), Validators.email]],
@@ -56,7 +56,7 @@ export class ProfileFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.loading = true;
+    this.isLoading = true;
     this.setFormToProfile();
 
     this.profileService.updateProfile(this.profile).subscribe((result: Profile) => {
@@ -65,7 +65,7 @@ export class ProfileFormComponent implements OnInit {
         this.resetForm();
         this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
       }
-      this.loading = false;
+      this.isLoading = false;
     });
   }
 
@@ -89,10 +89,10 @@ export class ProfileFormComponent implements OnInit {
   }
 
   disableSubmit(): boolean {
-    return this.form.invalid || this.form.pristine || this.loading === true;
+    return this.form.invalid || this.form.pristine || this.isLoading === true;
   }
 
   disableReset(): boolean {
-    return this.form.pristine || this.loading === true;
+    return this.form.pristine || this.isLoading === true;
   }
 }

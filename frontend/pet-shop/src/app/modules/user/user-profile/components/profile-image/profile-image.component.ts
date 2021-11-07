@@ -18,7 +18,7 @@ export class ProfileImageComponent implements OnInit {
   form: FormGroup;
 
   profileImage: ProfileImage;
-  submitted: boolean;
+  isLoading: boolean;
   errorMessage: string;
 
   onChange: any;
@@ -36,7 +36,7 @@ export class ProfileImageComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.submitted = false;
+    this.isLoading = false;
     this.allowedExtensions = ['jpg', 'jpeg'];
     this.accept = 'image/jpeg';
     this.form = this.formBuilder.group({
@@ -60,18 +60,19 @@ export class ProfileImageComponent implements OnInit {
 
   onSubmit(): void {
     if (this.file) {
+      this.isLoading = true;
       this.profileImageDataService.updateProfileImage(this.profileImage.id, this.file).subscribe((profileImage) => {
         if (profileImage.id) {
           this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
         } else {
-          this.submitted = false;
+          this.isLoading = false;
         }
       });
     }
   }
 
   disableSubmit(): boolean {
-    return !this.validType || this.submitted === true || this.form.pristine;
+    return !this.validType || this.isLoading === true || this.form.pristine;
   }
 
   onFileSelected(event: any): void {
@@ -90,7 +91,6 @@ export class ProfileImageComponent implements OnInit {
         this.allowedExtensions.forEach((crtExt) => {
           if (crtExt.trim().toLowerCase() === fileExt.trim().toLowerCase()) {
             isAllowed = true;
-            console.log('isAllowed: ' + isAllowed);
           }
         });
       }

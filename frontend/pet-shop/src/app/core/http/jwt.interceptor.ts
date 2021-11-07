@@ -16,23 +16,16 @@ export class JwtInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // console.log('intercept request');
     // add auth header with jwt if user is logged in and request is to the api url
     const jwt = this.globalService.credentials?.jwt;
     const isApiUrl = request.url.startsWith(environment.apiUrl);
 
     if (jwt && isApiUrl) {
-      // request = request.clone({
-      //   setHeaders: {
-      //     Authorization: `Bearer ${jwt}`,
-      //   },
-      // });
       request = request.clone({
         headers: request.headers.set('Authorization', 'Bearer ' + jwt),
       });
     }
 
-    // console.log(JSON.stringify(request));
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
