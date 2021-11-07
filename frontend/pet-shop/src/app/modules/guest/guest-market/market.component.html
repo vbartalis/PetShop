@@ -1,11 +1,35 @@
-<!-- <button type="button" class="btn btn-info mb-3" (click)="open(searchModal)">
-  Search
-</button> -->
-
 <div class="container">
+  <div class="text-right">
+    <form [formGroup]="form" class="m-3" (ngSubmit)="onSubmit()">
+      <div class="row" *ngIf="searchTags.length > 0">
+        <label class="mr-1">Tags: </label>
+
+        <label class="badge badge-secondary mr-1" *ngFor="let tag of searchTags">
+          <span class="align-middle h6" ngbTooltip="{{ tag.description }}">
+            {{ tag.name }}
+          </span>
+          <fa-icon class="align-middle" (click)="removeTag(tag)" [icon]="faTimes">close</fa-icon>
+        </label>
+      </div>
+      <div class="row mb-3 justify-content-end">
+        <input
+          type="text"
+          class="form-control col"
+          formControlName="typeaheadTag"
+          #typeaheadTag
+          [ngbTypeahead]="search"
+          [inputFormatter]="formatter"
+          [resultFormatter]="formatter"
+          [editable]="false"
+          (selectItem)="selectTypeaheadTag($event, typeaheadTag)"
+        />
+        <button type="submit" class="btn btn-info ml-3 col-lg-1 col-sm-2 col-3">Search</button>
+      </div>
+    </form>
+  </div>
   <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let post of postPage?.content">
-      <div class="card mb-3" (click)="openPost(post)">
+      <div class="card mb-3">
         <img
           class="card-img-top img-responsive"
           *ngIf="post.postImageSrc"
@@ -13,7 +37,10 @@
           alt="Card image cap"
         />
         <div class="card-body">
-          <h4 class="card-title">{{ post.title }}</h4>
+          <a href="{{ getPostLink(post) }}" class="stretched-link"></a>
+          <h4 class="card-title">
+            {{ post.title }}
+          </h4>
           <p class="card-text">
             {{ post.description }}
           </p>
@@ -31,57 +58,6 @@
     </div>
   </div>
 </div>
-
-<!-- <ng-template #searchModal let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Search</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="d('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="searchForm" class="m-3" (ngSubmit)="search()">
-      <div class="row mb-3">
-        <label>Tags:</label>
-
-        <label
-          *ngFor="let tag of searchTags"
-          ngbTooltip="{{ tag.description }}"
-          [openDelay]="500"
-        >
-          {{ tag.name }},
-        </label>
-      </div>
-      <div class="row mb-3">
-        <select class="form-control col" formControlName="tagControl">
-          <option *ngFor="let tag of tags; index as i" [value]="i">
-            {{ tag.name }}
-          </option>
-        </select>
-        <button
-          type="button"
-          class="btn btn-info col-auto ml-3"
-          (click)="addSearchTag()"
-        >
-          Add
-        </button>
-      </div>
-      <div class="row">
-        <button
-          type="button"
-          class="btn btn-info col"
-          (click)="clearSearchTag()"
-        >
-          Clear
-        </button>
-        <button type="submit" class="btn btn-info col ml-3">Search</button>
-      </div>
-    -->
 
 <ngb-pagination
   class="d-flex justify-content-center"

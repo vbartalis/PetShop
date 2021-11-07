@@ -5,7 +5,8 @@ export class PostSearchCriteria {
     public description?: string,
     //todo boolean
     public isPublic?: string,
-    public userId?: number
+    public userId?: number,
+    public tagIds?: number[]
   ) {}
 }
 

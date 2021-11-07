@@ -32,7 +32,13 @@ export class PostDataService {
     });
     forIn(postSearchCriteria, (value, key) => {
       if (value != null) {
-        params = params.append(key, JSON.stringify(value));
+        if (key === 'tagIds') {
+          (value as number[]).forEach((element) => {
+            params = params.append(key, JSON.stringify(element));
+          });
+        } else {
+          params = params.append(key, JSON.stringify(value));
+        }
       }
     });
 
