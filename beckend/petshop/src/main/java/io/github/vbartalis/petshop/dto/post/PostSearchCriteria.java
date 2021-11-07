@@ -18,4 +18,5 @@ public class PostSearchCriteria {
     private String description;
     private Boolean isPublic;
     private Long userId;
+    private Long[] tagIds;
 }

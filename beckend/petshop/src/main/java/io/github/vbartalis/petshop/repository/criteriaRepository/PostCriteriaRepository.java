@@ -3,15 +3,16 @@ package io.github.vbartalis.petshop.repository.criteriaRepository;
 import io.github.vbartalis.petshop.dto.post.PostPageCriteria;
 import io.github.vbartalis.petshop.dto.post.PostSearchCriteria;
 import io.github.vbartalis.petshop.entity.Post;
+import io.github.vbartalis.petshop.entity.Post_;
+import io.github.vbartalis.petshop.entity.Tag;
+import io.github.vbartalis.petshop.entity.Tag_;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +21,7 @@ import java.util.Objects;
  * This interface is a Repository for the {@code Post} Entity.
  */
 @Repository
+@Slf4j
 public class PostCriteriaRepository {
 
     private final EntityManager entityManager;
@@ -38,20 +40,10 @@ public class PostCriteriaRepository {
      * @return Returns a page of {@code Post} entities.
      */
     public Page<Post> findAllWithFilters(PostPageCriteria postPageCriteria, PostSearchCriteria postSearchCriteria) {
-        CriteriaQuery<Post> criteriaQuery = criteriaBuilder.createQuery(Post.class);
-        Root<Post> postRoot = criteriaQuery.from(Post.class);
-        Predicate predicate = getPredicate(postSearchCriteria, postRoot);
-        criteriaQuery.where(predicate);
-        setOrder(postPageCriteria, criteriaQuery, postRoot);
-
-        TypedQuery<Post> typedQuery = entityManager.createQuery(criteriaQuery);
-        typedQuery.setFirstResult(postPageCriteria.getPageNumber() * postPageCriteria.getPageSize());
-        typedQuery.setMaxResults(postPageCriteria.getPageSize());
-
         Pageable pageable = getPageable(postPageCriteria);
-
-        long postsCount = getPostsCount(predicate);
-        return new PageImpl<>(typedQuery.getResultList(), pageable, postsCount);
+        List<Post> posts = getPosts(postPageCriteria,postSearchCriteria);
+        long postsCount = getPostsCount(postSearchCriteria);
+        return new PageImpl<>(posts, pageable, postsCount);
     }
 
     /**
@@ -63,6 +55,10 @@ public class PostCriteriaRepository {
      */
     private Predicate getPredicate(PostSearchCriteria postSearchCriteria, Root<Post> postRoot) {
         List<Predicate> predicates = new ArrayList<>();
+
+        if (Objects.nonNull(postSearchCriteria.getTagIds())) {
+            predicates.add(postRoot.join(Post_.TAGS).get(Tag_.ID).in((Object[]) postSearchCriteria.getTagIds()));
+        }
         if (Objects.nonNull(postSearchCriteria.getId())) {
             predicates.add(criteriaBuilder.equal(postRoot.get("id"), postSearchCriteria.getId()));
         }
@@ -78,13 +74,37 @@ public class PostCriteriaRepository {
         if (Objects.nonNull(postSearchCriteria.getUserId())) {
             predicates.add(criteriaBuilder.equal(postRoot.get("user").get("id"), postSearchCriteria.getUserId()));
         }
+
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+    }
+
+    /**
+     * This method returns the List of {@code Post} objects filtered by the predicate and ordered by the given criteria.
+     *
+     * @param postPageCriteria The {@code PostPage} object that contains what should the criteriaQuery be ordered by.
+     * @param postSearchCriteria The {@code PostSearchCriteria} object that contains the filtering properties.
+     * @return Returns the List of {@code Post} objects filtered by the predicate and ordered by the given criteria.
+     */
+    private List<Post> getPosts(PostPageCriteria postPageCriteria, PostSearchCriteria postSearchCriteria) {
+        CriteriaQuery<Post> criteriaQuery = criteriaBuilder.createQuery(Post.class);
+        Root<Post> postRoot = criteriaQuery.from(Post.class);
+
+        Predicate predicate = getPredicate(postSearchCriteria, postRoot);
+
+        criteriaQuery.select(postRoot).where(predicate);
+
+        setOrder(postPageCriteria, criteriaQuery, postRoot);
+
+        TypedQuery<Post> typedQuery = entityManager.createQuery(criteriaQuery);
+        typedQuery.setFirstResult(postPageCriteria.getPageNumber() * postPageCriteria.getPageSize());
+        typedQuery.setMaxResults(postPageCriteria.getPageSize());
+        return typedQuery.getResultList();
     }
 
     /**
      * This method sets how should the criteriaQuery be ordered by.
      *
-     * @param postPageCriteria The {@code PostPage} object, contains what should the criteriaQuery be ordered by.
+     * @param postPageCriteria The {@code PostPage} object that contains what should the criteriaQuery be ordered by.
      * @param criteriaQuery    The {@code CriteriaQuery<Post>} object.
      * @param postRoot         The {@code Root<Post>} object.
      */
@@ -112,12 +132,15 @@ public class PostCriteriaRepository {
     /**
      * This method returns the number of {@code Post} objects filtered by the predicate.
      *
-     * @param predicate The {@code Predicate} object, that contains a filtering query.
+     * @param postSearchCriteria The {@code PostSearchCriteria} object that contains the filtering properties.
      * @return Returns the number of {@code Post} objects filtered by the predicate.
      */
-    private long getPostsCount(Predicate predicate) {
+    private long getPostsCount(PostSearchCriteria postSearchCriteria) {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         Root<Post> countRoot = countQuery.from(Post.class);
+
+        Predicate predicate = getPredicate(postSearchCriteria, countRoot);
+
         countQuery.select(criteriaBuilder.count(countRoot)).where(predicate);
         return entityManager.createQuery(countQuery).getSingleResult();
     }
