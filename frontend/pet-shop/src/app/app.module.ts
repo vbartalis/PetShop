@@ -13,6 +13,7 @@ import { UserHeaderComponent } from './layout/components/user-header/user-header
 import { AdminHeaderComponent } from './layout/components/admin-header/admin-header.component';
 import { GuestHeaderComponent } from './layout/components/guest-header/guest-header.component';
 import { FooterComponent } from './layout/components/footer/footer.component';
+import { JwtInterceptor } from '@app/http/jwt.interceptor';
 
 @NgModule({
   declarations: [

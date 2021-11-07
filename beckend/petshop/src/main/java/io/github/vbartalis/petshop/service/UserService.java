@@ -1,105 +1,53 @@
 package io.github.vbartalis.petshop.service;
 
+import io.github.vbartalis.petshop.dto.user.UserPageCriteria;
+import io.github.vbartalis.petshop.dto.user.UserSearchCriteria;
 import io.github.vbartalis.petshop.entity.User;
-import io.github.vbartalis.petshop.exception.InvalidPasswordException;
-import io.github.vbartalis.petshop.exception.InvalidUsernameException;
-import io.github.vbartalis.petshop.exception.UsernameAlreadyInUseException;
-import io.github.vbartalis.petshop.repository.ProfileImageRepository;
-import io.github.vbartalis.petshop.repository.ProfileRepository;
-import io.github.vbartalis.petshop.repository.RoleRepository;
-import io.github.vbartalis.petshop.repository.UserRepository;
-import io.github.vbartalis.petshop.util.InputValidator;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
+/**
+ * This interface defines how a service should look. The implementation should service a controller class.
+ */
+public interface UserService {
+    /**
+     * This method gets a page of the specified {@code User} entities.
+     *
+     * @param userPage           The properties of the page returned.
+     * @param userSearchCriteria The criteria by which the returned page of entities should be filtered.
+     * @return Returns a page of {@code User} entities.
+     */
+    Page<User> getAllUsers(UserPageCriteria userPage, UserSearchCriteria userSearchCriteria);
 
-@Slf4j
-@Service
-public class UserService {
+    /**
+     * This method creates a {@code User} entity.
+     *
+     * @param userRequest The properties of the new {@code User} entity.
+     * @return Returns the created {@code User} entity.
+     */
+    User createUser(User userRequest);
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private ProfileRepository profileRepository;
-    @Autowired
-    private ProfileImageRepository profileImageRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    /**
+     * This method updates the specified {@code User} entity.
+     *
+     * @param id          The id of the {@code User} entity.
+     * @param userRequest The properties by which the {@code User} entity should be updated.
+     * @return Returns the updated {@code User} entity.
+     */
+    User partialUpdateUser(long id, User userRequest);
 
-    public User save(User user) {
-        if (!InputValidator.isUsernameValid(user.getUsername())) throw new InvalidUsernameException();
-        if (!InputValidator.isPasswordValid(user.getPassword())) throw new InvalidPasswordException();
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) throw new UsernameAlreadyInUseException();
-        User newUser = new User(
-                user.getUsername(),
-                this.passwordEncoder.encode(user.getPassword()),
-                user.getIsLocked(),
-                user.getExpiration(),
-                user.getRoles()
-        );
-        this.userRepository.save(newUser);
-        return newUser;
-    }
+    /**
+     * This method gets the specified {@code User} entity.
+     *
+     * @param id The id of the {@code User} entity.
+     * @return Returns the specified {@code User} entity.
+     */
+    User getUserById(long id);
 
-    public User findById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User by id " + id + " not found"));
-    }
-
-    public Page<User> findAll(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page-1, pageSize);
-        return userRepository.findAll(pageable);
-    }
-
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new NoSuchElementException("User by username " + username + " not found"));
-    }
-
-    public User patch(User request) {
-        User user = userRepository.findById(request.getId())
-                .orElseThrow(() -> new NoSuchElementException("User by id " + request.getId() + " not found"));
-
-        //isLocked is not null
-        if (request.getIsLocked() != null) {
-            user.setIsLocked(request.getIsLocked());
-        }
-
-        //expiration is not null
-        if (request.getExpiration() != null) {
-            user.setExpiration(request.getExpiration());
-        }
-
-        //roles is not null
-        if (request.getRoles() != null) {
-            user.setRoles(request.getRoles());
-        }
-
-        userRepository.save(user);
-        return user;
-    }
-
-    public User patchPassword(User request) {
-        User user = userRepository.findById(request.getId())
-                .orElseThrow(() -> new NoSuchElementException("User by id " + request.getId() + " not found"));
-
-        //password is not null and not blank
-        if (request.getPassword() != null && !request.getPassword().isBlank()) {
-            //password is valid
-            if (!InputValidator.isPasswordValid(request.getPassword())) throw new InvalidPasswordException();
-            user.setPassword(this.passwordEncoder.encode(request.getPassword()));
-        }
-
-        userRepository.save(user);
-
-        return user;
-    }
+    /**
+     * This method gets the specified {@code User} entity.
+     *
+     * @param username The username of the {@code User} entity.
+     * @return Returns the specified {@code User} entity.
+     */
+    User getUserByUsername(String username);
 }

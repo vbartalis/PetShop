@@ -1,0 +1,27 @@
+// --------------------
+// ---- breadcrumb ----
+// --------------------
+.xng-breadcrumb-trail {
+  margin: 0;
+}
+
+// --------------------
+// ------- card -------
+// --------------------
+
+.card--title--link {
+  color: #000000 !important;
+}
+.card--title--link:hover,
+.card--title--link:visited {
+  color: #808080 !important;
+}
+
+// --------------------
+// ------ Table -------
+// --------------------
+
+.table td.fit,
+.table th.fit {
+  width: 1%;
+}

@@ -1,1 +1,70 @@
-<p>market works!</p>
+<div class="container">
+  <div class="text-right">
+    <form [formGroup]="form" class="m-3" (ngSubmit)="onSubmit()">
+      <div class="row" *ngIf="searchTags.length > 0">
+        <label class="mr-1">Tags: </label>
+
+        <label class="badge badge-secondary mr-1" *ngFor="let tag of searchTags">
+          <span class="align-middle h6" ngbTooltip="{{ tag.description }}">
+            {{ tag.name }}
+          </span>
+          <fa-icon class="align-middle" (click)="removeTag(tag)" [icon]="faTimes">close</fa-icon>
+        </label>
+      </div>
+      <div class="row mb-3 justify-content-end">
+        <input
+          type="text"
+          class="form-control col"
+          formControlName="typeaheadTag"
+          #typeaheadTag
+          [ngbTypeahead]="search"
+          [inputFormatter]="formatter"
+          [resultFormatter]="formatter"
+          [editable]="false"
+          (selectItem)="selectTypeaheadTag($event, typeaheadTag)"
+        />
+        <button type="submit" class="btn btn-info ml-3 col-lg-1 col-sm-2 col-3">Search</button>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let post of postPage?.content">
+      <div class="card mb-3">
+        <img
+          class="card-img-top img-responsive"
+          *ngIf="post.postImageSrc"
+          [src]="post.postImageSrc"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <a href="{{ getPostLink(post) }}" class="stretched-link"></a>
+          <h4 class="card-title">
+            {{ post.title }}
+          </h4>
+          <p class="card-text">
+            {{ post.description }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <div *ngIf="post.updateDate; then thenBlock; else elseBlock"></div>
+          <ng-template #thenBlock
+            ><small>{{ convertDate(post.updateDate) }}</small></ng-template
+          >
+          <ng-template #elseBlock
+            ><small>{{ convertDate(post.creationDate) }}</small></ng-template
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngb-pagination
+  class="d-flex justify-content-center"
+  [pageSize]="postPageCriteria.pageSize ?? 10"
+  [collectionSize]="postPage?.totalElements ?? 0"
+  [(page)]="postPageCriteria.pageNumber"
+  (pageChange)="getPostPage()"
+  *ngIf="postPage?.totalElements ?? 0 / postPageCriteria.pageSize > 1"
+>
+</ngb-pagination>

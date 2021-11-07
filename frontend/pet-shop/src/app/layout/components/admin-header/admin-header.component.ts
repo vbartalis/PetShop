@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '@app/service/authentication.service';
+import { GlobalService } from '@app/service/global.service';
 import { faUsers, faTags, faAtom, faHome, faNewspaper, faWindowClose } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,22 +13,19 @@ export class AdminHeaderComponent implements OnInit {
   isAdmin = false;
   isUser = false;
 
-  faHome = faHome;
-  faNewspaper = faNewspaper;
   faUsers = faUsers;
   faTags = faTags;
   faAtom = faAtom;
   faWindowClose = faWindowClose;
 
-  constructor() {
-    // private authenticationService: AuthenticationService // private globalService: GlobalService,
-    // this.isUser = this.globalService.isLoggedInUser();
-    // this.isAdmin = this.globalService.isLoggedInAdmin();
+  constructor(private authenticationService: AuthenticationService, private globalService: GlobalService) {
+    this.isUser = this.globalService.isLoggedInUser();
+    this.isAdmin = this.globalService.isLoggedInAdmin();
   }
 
   ngOnInit(): void {}
 
   logout(): void {
-    // this.authenticationService.logout();
+    this.authenticationService.logout();
   }
 }

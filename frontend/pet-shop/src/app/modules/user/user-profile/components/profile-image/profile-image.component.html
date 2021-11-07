@@ -1,0 +1,31 @@
+<div class="card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card-body">
+      <h4 class="card-title">New Profile Image</h4>
+
+      <div class="custom-file">
+        <input
+          formControlName="fileControl"
+          class="custom-file-input {{ !validType ? 'is-invalid' : '' }}"
+          type="file"
+          accept="image/jpeg"
+          (change)="onFileSelected($event)"
+        />
+        <label class="custom-file-label" for="customFile">{{ file ? file.name : 'Choose file' }}</label>
+        <div class="invalid-feedback {{ !validType ? 'd-block' : '' }}">
+          Please upload only <b>{{ allowedExtensions }}</b> files!
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="disableSubmit()"
+        [ngClass]="{ 'btn-success': form.valid, 'btn-danger': !form.valid }"
+      >
+        Save changes
+      </button>
+    </div>
+  </form>
+</div>

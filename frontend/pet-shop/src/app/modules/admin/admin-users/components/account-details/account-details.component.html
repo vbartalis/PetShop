@@ -1,0 +1,65 @@
+<div class="card mb-3">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card-body">
+      <h4 class="card-title">Account Details</h4>
+      <div class="form-group mb-0">
+        <div class="custom-control custom-switch custom-switch-adaptive h4 mb-0">
+          <input class="custom-control-input" type="checkbox" id="inputIsLocked" formControlName="isLocked" />
+          <label class="custom-control-label" for="inputIsLocked"> Is Locked </label>
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="inputDate">Expiration Date</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            formControlName="date"
+            placeholder="yyyy-mm-dd"
+            id="inputDate"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-secondary" (click)="d.toggle()" type="button">
+              <fa-icon [icon]="faCalendar"></fa-icon>
+            </button>
+          </div>
+          <div *ngIf="form.controls.date.errors?.required" class="invalid-feedback">Date is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col">
+          <div class="row">
+            <label class="mr-1">Roles: </label>
+
+            <label class="badge badge-secondary mr-1" *ngFor="let role of userRoles">
+              <span class="align-middle h6">
+                {{ role.name }}
+              </span>
+              <fa-icon class="align-middle" (click)="removeRole(role)" [icon]="faTimes">close</fa-icon>
+            </label>
+          </div>
+          <div class="row">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="typeaheadRole"
+              #typeaheadRole
+              [ngbTypeahead]="search"
+              [inputFormatter]="formatter"
+              [resultFormatter]="formatter"
+              [editable]="false"
+              (selectItem)="selectTypeaheadRole($event, typeaheadRole)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success" [disabled]="disableSubmit()">Save changes</button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()" [disabled]="disableReset()">
+        Reset changes
+      </button>
+    </div>
+  </form>
+</div>

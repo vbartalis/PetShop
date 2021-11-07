@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '@app/service/authentication.service';
+import { GlobalService } from '@app/service/global.service';
 import {
   faHome,
   faNewspaper,
@@ -27,15 +29,14 @@ export class UserHeaderComponent implements OnInit {
   faWindowClose = faWindowClose;
   faUserAstronaut = faUserAstronaut;
 
-  constructor() {
-    // private authenticationService: AuthenticationService, // private globalService: GlobalService,
-    // this.isUser = this.globalService.isLoggedInUser();
-    // this.isAdmin = this.globalService.isLoggedInAdmin();
+  constructor(private authenticationService: AuthenticationService, private globalService: GlobalService) {
+    this.isUser = this.globalService.isLoggedInUser();
+    this.isAdmin = this.globalService.isLoggedInAdmin();
   }
 
   ngOnInit(): void {}
 
   logout(): void {
-    // this.authenticationService.logout();
+    this.authenticationService.logout();
   }
 }

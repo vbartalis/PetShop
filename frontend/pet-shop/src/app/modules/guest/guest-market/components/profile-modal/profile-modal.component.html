@@ -1,0 +1,21 @@
+<div class="card-header">
+  <h4 class="card-title" id="modal-basic-title">Owner</h4>
+</div>
+<div class="card-body mb-3 text-center">
+  <div class="row">
+    <div class="col-md-auto">
+      <img #profileImage class="rounded-circle" src="{{ profileImageSrc }}" />
+    </div>
+    <div class="col-md text-center text-md-left" *ngIf="profile">
+      <p class="h5">
+        {{ profile.name }}
+      </p>
+      <p>{{ profile.description }}</p>
+      <div>{{ 'Email: ' + profile.email }}<br /></div>
+      <div>{{ 'Address: ' + profile.address }}<br /></div>
+    </div>
+  </div>
+</div>
+<div class="card-footer">
+  <div *ngIf="profile">{{ 'Joined: ' + convertDate(profile.joinDate) }}<br /></div>
+</div>

@@ -1,0 +1,27 @@
+<div class="card mb-3" *ngIf="post">
+  <div class="card-header">
+    <h4 class="card-title" id="modal-basic-title">{{ post.title }}</h4>
+  </div>
+
+  <div class="card-body">
+    <p>{{ post.description }}</p>
+    <label class="badge badge-light mr-1" *ngFor="let tag of post.tags">
+      <span class="align-middle h6" ngbTooltip="{{ tag.description }}">
+        {{ tag.name }}
+      </span>
+    </label>
+    <br />
+    <label>
+      <a class="badge badge-secondary align-middle" (click)="openProfile()">
+        <span class="align-middle h6">Publisher</span>
+      </a>
+    </label>
+    <div>
+      <small *ngIf="post.creationDate"> {{ 'Created: ' + convertDate(post.creationDate) }} </small>
+      <small *ngIf="post.creationDate < post.updateDate" class="text-muted float-right">
+        {{ 'Last updated: ' + convertDate(post.updateDate) }}
+      </small>
+    </div>
+  </div>
+  <img *ngIf="postImageSrc" src="{{ postImageSrc }}" class="card-img-bottom" />
+</div>

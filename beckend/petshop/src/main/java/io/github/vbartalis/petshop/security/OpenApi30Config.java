@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration class for swagger SecurityScheme. Allows the usage af a login button in swagger.
+ */
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "My API", version = "v1"))
 @SecurityScheme(

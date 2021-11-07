@@ -1,1 +1,82 @@
-<p>profile works!</p>
+<div class="card mb-3" *ngIf="user">
+  <div class="card-body">
+    <h4 class="card-title">Account Details</h4>
+    <div>
+      <label class="card-text">{{ 'Username: ' + user.username }}</label>
+    </div>
+    <div>
+      <label class="card-text">{{ 'Expiration Date: ' + convertDate(user.expiration) }}</label>
+    </div>
+  </div>
+  <div class="card-footer">
+    <a
+      class="btn btn-secondary"
+      title="Edit Password"
+      [routerLink]="['/user/profile', 'password']"
+      routerLinkActive="active"
+    >
+      <fa-icon [icon]="faKey"></fa-icon>
+    </a>
+  </div>
+</div>
+
+<div class="card mb-3" *ngIf="profile">
+  <div class="card-body">
+    <div>
+      <h4 class="card-title">Profile</h4>
+    </div>
+    <div>
+      <label class="card-text">{{ 'Name: ' + profile.name }}</label>
+    </div>
+    <div>
+      <label class="card-text">{{ 'Email: ' + profile.email }}</label>
+    </div>
+    <div>
+      <label class="card-text">{{ 'Address: ' + profile.address }}</label>
+    </div>
+    <div>
+      <label class="card-text">{{ 'Description: ' + profile.description }}</label>
+    </div>
+    <div>
+      <label class="card-text">{{ 'Join Date: ' + convertDate(profile.joinDate) }}</label>
+    </div>
+  </div>
+  <div class="card-footer">
+    <a
+      class="btn btn-secondary"
+      title="Edit Profile"
+      [routerLink]="['/user/profile', 'form']"
+      routerLinkActive="active"
+    >
+      <fa-icon [icon]="faPen"></fa-icon>
+    </a>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <h4 class="card-title">Profile Image</h4>
+  </div>
+  <div class="mx-3 mb-3">
+    <img #profileImage class="rounded-circle" src="{{ profileImageSrc }}" />
+  </div>
+
+  <div class="card-footer">
+    <a
+      class="btn btn-secondary"
+      title="Edit Profile"
+      [routerLink]="['/user/profile', 'image']"
+      routerLinkActive="active"
+    >
+      <fa-icon [icon]="faPen"></fa-icon>
+    </a>
+    <a
+      class="btn btn-danger mx-1"
+      title="Delete Profile"
+      (click)="openDeleteProfileImageModal(profile)"
+      routerLinkActive="active"
+    >
+      <fa-icon [icon]="faTrash"></fa-icon>
+    </a>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 package io.github.vbartalis.petshop;
 
 import io.github.vbartalis.petshop.entity.*;
-import io.github.vbartalis.petshop.repository.*;
+import io.github.vbartalis.petshop.repository.entityRepository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         Calendar cal = Calendar.getInstance();
-        cal.set(2021, Calendar.JANUARY, 1, 0, 0, 0);
+        cal.set(2031, Calendar.JANUARY, 1, 0, 0, 0);
 
         /*-----------------------------------------------------*/
         // Create Roles
@@ -124,7 +124,7 @@ public class DataInitializer implements CommandLineRunner {
         /*-----------------------------------------------------*/
 
         cal.set(2021, Calendar.JANUARY, 2, 0, 0, 0);
-        Post post1 = new Post("Dogs for free", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1,tag3));
+        Post post1 = new Post("Dogs for free", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1, tag3));
         cal.set(2021, Calendar.JANUARY, 2, 0, 0, 0);
         Post post2 = new Post("Cats for free", "I have a lot of cats and i don't need them.", user2, cal.getTime(), false, List.of(tag2, tag3));
 
@@ -146,35 +146,35 @@ public class DataInitializer implements CommandLineRunner {
         cal.set(2021, Calendar.JANUARY, 3, 6, 0, 0);
         Post post9 = new Post("Dogs for 9", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 3, 7, 0, 0);
-        Post post10= new Post("Dogs for 10", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
+        Post post10 = new Post("Dogs for 10", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 3, 8, 0, 0);
-        Post post11= new Post("Dogs for 11", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
+        Post post11 = new Post("Dogs for 11", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 3, 9, 0, 0);
-        Post post12= new Post("Dogs for 12", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
+        Post post12 = new Post("Dogs for 12", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 3, 10, 0, 0);
 
-        Post post13= new Post("Dogs for 13", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post13 = new Post("Dogs for 13", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 5, 0, 0, 0);
-        Post post14= new Post("Dogs for 14", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post14 = new Post("Dogs for 14", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 5, 1, 0, 0);
-        Post post15= new Post("Dogs for 15", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
+        Post post15 = new Post("Dogs for 15", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 5, 2, 0, 0);
-        Post post16= new Post("Dogs for 16", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
+        Post post16 = new Post("Dogs for 16", "I have a lot of dogs and i don't need them.", user3, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 5, 3, 0, 0);
-        Post post17= new Post("Dogs for 17", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post17 = new Post("Dogs for 17", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 5, 4, 0, 0);
-        Post post18= new Post("Dogs for 18", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post18 = new Post("Dogs for 18", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 5, 5, 0, 0);
-        Post post19= new Post("Dogs for 19", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post19 = new Post("Dogs for 19", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 5, 6, 0, 0);
-        Post post20= new Post("Dogs for 20", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post20 = new Post("Dogs for 20", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
 
         cal.set(2021, Calendar.JANUARY, 7, 0, 0, 0);
-        Post post21= new Post("Dogs for 21", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post21 = new Post("Dogs for 21", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 7, 1, 0, 0);
-        Post post22= new Post("Dogs for 22", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post22 = new Post("Dogs for 22", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
         cal.set(2021, Calendar.JANUARY, 7, 2, 0, 0);
-        Post post23= new Post("Dogs for 23", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
+        Post post23 = new Post("Dogs for 23", "I have a lot of dogs and i don't need them.", user2, cal.getTime(), true, List.of(tag1));
 
         postRepository.save(post3);
         postRepository.save(post4);
@@ -210,7 +210,6 @@ public class DataInitializer implements CommandLineRunner {
 //        postImageRepository.save(postImage2);
 //
         /*-----------------------------------------------------*/
-
 
 
     }
