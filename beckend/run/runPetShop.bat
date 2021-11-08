@@ -1,1 +1,1 @@
-%UserProfile%\.jdks\corretto-11.0.12\bin\java -jar ..\petshop\target\petshop-0.0.1-SNAPSHOT.jar
+%UserProfile%\.jdks\corretto-11.0.12\bin\java -jar ..\petshop\target\petshop-1.0.0.jar
